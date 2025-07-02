@@ -137,7 +137,7 @@ class ViewController: UIViewController {
     
     @IBAction func signUpButtonTapped(_ sender: UIButton) {
         if idValidationLabel.isHidden && pwValidationLabel.isHidden && nicknameValidationLabel.isHidden {
-            print(idTextField.text, pwTextField.text, nicknameTextField.text, placeTextField.text, codeTextField.text)
+            print(idTextField.text!, pwTextField.text!, nicknameTextField.text!, placeTextField.text!, codeTextField.text!)
         } else {
             print("이메일 또는 전화번호, 비밀번호, 닉네임을 모두 입력해 주세요")
         }

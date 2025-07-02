@@ -44,12 +44,10 @@ class SearchViewController: UIViewController {
         if active {
             button.backgroundColor = .white
             button.setTitleColor(.black, for: .normal)
-            button.backgroundColor = .white
             print(button.state)
         } else {
             button.backgroundColor = .black
             button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = .black
         }
     }
     
