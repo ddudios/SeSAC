@@ -43,11 +43,15 @@ class HomeViewController: UIViewController {
     func designImageViewUI(_ imageView: UIImageView) {
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
+        imageView.layer.borderColor = UIColor.gray.cgColor
+        imageView.layer.borderWidth = 1
     }
     
     func designButtonUI(_ button: UIButton) {
         button.layer.cornerRadius = 8
         button.clipsToBounds = true
+        button.layer.borderColor = UIColor.gray.cgColor
+        button.layer.borderWidth = 1
     }
     
     func designWatchLabelUI() {
