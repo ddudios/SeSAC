@@ -29,7 +29,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="happyButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j0b-sh-aX3"/>
+                                    <action selector="getRandomNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gfA-wQ-SC7"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0i-Zk-Ahz">
@@ -39,13 +39,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z36-za-ENK">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z36-za-ENK">
                                 <rect key="frame" x="159" y="265" width="75" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="likeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="99R-Tf-V8n"/>
+                                    <action selector="getRandomNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zub-0U-Xnk"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLf-0A-rh9">
@@ -55,13 +55,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dWN-2J-1od">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dWN-2J-1od">
                                 <rect key="frame" x="268" y="265" width="75" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="loveButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sEM-hl-oGn"/>
+                                    <action selector="getRandomNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8T5-3g-WbO"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0X6-lZ-Iqu">
@@ -71,13 +71,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtg-2O-t3n">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtg-2O-t3n">
                                 <rect key="frame" x="49" y="394" width="75" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="angryButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Toj-7l-9RW"/>
+                                    <action selector="getRandomNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kw6-Os-udO"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cyu-lK-tEs">
@@ -87,13 +87,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z1i-Nu-kn9">
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z1i-Nu-kn9">
                                 <rect key="frame" x="159" y="394" width="75" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="boredButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hru-nE-JR2"/>
+                                    <action selector="getRandomNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EvY-Yw-GuK"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5M-hm-r5r">
@@ -103,13 +103,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDK-It-PJy">
+                            <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDK-It-PJy">
                                 <rect key="frame" x="268" y="394" width="75" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="stuffyButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qge-oa-eET"/>
+                                    <action selector="getRandomNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8be-WI-Giu"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brs-Y6-4sE">
@@ -119,13 +119,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4N-0V-UEd">
+                            <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4N-0V-UEd">
                                 <rect key="frame" x="49" y="515" width="75" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="panicButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Te-6i-Etc"/>
+                                    <action selector="countNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mih-Ow-gsG"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z69-Yr-KXa">
@@ -135,22 +135,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kun-Ku-M7N">
+                            <button opaque="NO" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kun-Ku-M7N">
                                 <rect key="frame" x="159" y="515" width="75" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="patheticButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nHW-P4-P4d"/>
+                                    <action selector="countNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9gA-QE-uDV"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtq-T5-SiM">
+                            <button opaque="NO" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtq-T5-SiM">
                                 <rect key="frame" x="268" y="515" width="75" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
-                                    <action selector="sadButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nha-X8-GrW"/>
+                                    <action selector="countNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vet-Fg-p0F"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rA6-Rf-22u">
@@ -165,24 +165,24 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="angryButton" destination="Jtg-2O-t3n" id="h9F-Nk-79o"/>
-                        <outlet property="angryLabel" destination="0X6-lZ-Iqu" id="rWY-Hd-W7y"/>
-                        <outlet property="boredButton" destination="Z1i-Nu-kn9" id="j3v-Nu-Gzv"/>
-                        <outlet property="boredLabel" destination="Cyu-lK-tEs" id="GLa-Iz-G8J"/>
-                        <outlet property="happyButton" destination="yWp-bN-zTQ" id="Lxh-R8-xId"/>
-                        <outlet property="happyLabel" destination="ggx-dG-xSa" id="uzW-cS-6fY"/>
-                        <outlet property="likeButton" destination="Z36-za-ENK" id="Sjt-5j-x8d"/>
-                        <outlet property="likeLabel" destination="i0i-Zk-Ahz" id="zzs-bA-YyF"/>
-                        <outlet property="loveButton" destination="dWN-2J-1od" id="iG1-mZ-2Pe"/>
-                        <outlet property="loveLabel" destination="OLf-0A-rh9" id="Gha-fl-c0h"/>
-                        <outlet property="panicButton" destination="f4N-0V-UEd" id="lj9-3f-anA"/>
-                        <outlet property="panicLabel" destination="brs-Y6-4sE" id="DbY-6x-nbs"/>
-                        <outlet property="patheticButton" destination="kun-Ku-M7N" id="IWW-LF-re9"/>
-                        <outlet property="patheticLabel" destination="z69-Yr-KXa" id="o1i-2e-jZz"/>
-                        <outlet property="sadButton" destination="gtq-T5-SiM" id="vl5-mo-ZZa"/>
-                        <outlet property="sadLabel" destination="rA6-Rf-22u" id="IRt-js-2JX"/>
-                        <outlet property="stuffyButton" destination="mDK-It-PJy" id="aYp-1H-RiO"/>
-                        <outlet property="stuffyLabel" destination="F5M-hm-r5r" id="V4u-IK-486"/>
+                        <outletCollection property="emotionLabels" destination="ggx-dG-xSa" collectionClass="NSMutableArray" id="O6d-Wu-2vC"/>
+                        <outletCollection property="emotionLabels" destination="i0i-Zk-Ahz" collectionClass="NSMutableArray" id="0xa-Va-Hxg"/>
+                        <outletCollection property="emotionLabels" destination="OLf-0A-rh9" collectionClass="NSMutableArray" id="Ciz-E8-sAv"/>
+                        <outletCollection property="emotionLabels" destination="0X6-lZ-Iqu" collectionClass="NSMutableArray" id="ezE-EG-9cp"/>
+                        <outletCollection property="emotionLabels" destination="Cyu-lK-tEs" collectionClass="NSMutableArray" id="gf5-ly-edw"/>
+                        <outletCollection property="emotionLabels" destination="F5M-hm-r5r" collectionClass="NSMutableArray" id="l2c-6p-ukx"/>
+                        <outletCollection property="emotionLabels" destination="brs-Y6-4sE" collectionClass="NSMutableArray" id="2u3-Rw-iGd"/>
+                        <outletCollection property="emotionLabels" destination="z69-Yr-KXa" collectionClass="NSMutableArray" id="Tdk-At-bQW"/>
+                        <outletCollection property="emotionLabels" destination="rA6-Rf-22u" collectionClass="NSMutableArray" id="b6y-2V-Dmy"/>
+                        <outletCollection property="emotionButtons" destination="yWp-bN-zTQ" collectionClass="NSMutableArray" id="qxK-ek-CCh"/>
+                        <outletCollection property="emotionButtons" destination="Z36-za-ENK" collectionClass="NSMutableArray" id="8sx-ht-pFN"/>
+                        <outletCollection property="emotionButtons" destination="dWN-2J-1od" collectionClass="NSMutableArray" id="i5x-dJ-qD9"/>
+                        <outletCollection property="emotionButtons" destination="Jtg-2O-t3n" collectionClass="NSMutableArray" id="sKc-GK-vAI"/>
+                        <outletCollection property="emotionButtons" destination="Z1i-Nu-kn9" collectionClass="NSMutableArray" id="c3p-GP-vQk"/>
+                        <outletCollection property="emotionButtons" destination="mDK-It-PJy" collectionClass="NSMutableArray" id="zun-es-bmo"/>
+                        <outletCollection property="emotionButtons" destination="f4N-0V-UEd" collectionClass="NSMutableArray" id="Jhb-Y9-RtF"/>
+                        <outletCollection property="emotionButtons" destination="kun-Ku-M7N" collectionClass="NSMutableArray" id="7dk-78-L6O"/>
+                        <outletCollection property="emotionButtons" destination="gtq-T5-SiM" collectionClass="NSMutableArray" id="I7C-CP-MOi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
