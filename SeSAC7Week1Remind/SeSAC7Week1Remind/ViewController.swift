@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        resultLabel.numberOfLines = 0
     }
 
     @IBAction func zodiacSignsTapped(_ sender: UIButton) {
@@ -87,10 +88,47 @@ class ViewController: UIViewController {
         //여기에 코드를 작성해주세요
         //영하~10도라면 페딩을 입으세요, 10도~20도 긴팔을 입으세요, 20~30도 반팔을 입으세요, 30도 이상 나가지마세요
         //비가 온다면 우산을 챙기세요
+        enum Weather: String {
+            case cold = "패딩을 입으세요."
+            case cool = "긴팔을 입으세요."
+            case warm = "반팔을 입으세요"
+            case hot = "나가지 마세요."
+        }
+        
+        enum RainText: String {
+            case isRaining = "비가 오니 우산을 챙겨야 됩니다"
+            case isNotRaining = "비가 오지 않으니 우산은 안챙겨도 됩니다"
+        }
+        
+        var recommandClothingText = ""
+        var rainText = ""
+        
+        switch temperature {
+        case ..<10:
+            recommandClothingText = Weather.cold.rawValue
+        case 10..<20:
+            recommandClothingText = Weather.cool.rawValue
+        case 20..<30:
+            recommandClothingText = Weather.warm.rawValue
+        case 30...:
+            recommandClothingText = Weather.hot.rawValue
+        default:
+            print("error: (getRecommandCloting) temperature")
+        }
+        
+        if isRaining {
+            rainText = RainText.isRaining.rawValue
+        } else if !isRaining {
+            rainText = RainText.isNotRaining.rawValue
+        } else {
+            rainText = "error: (getRecommandCloting) isRaining"
+        }
+        
+        print("온도: \(temperature), 비: \(isRaining)")
         
         resultLabel.text = """
-                            지금 온도가 28도 이니 반팔을 입으세요. 
-                            비가 오지 않으니 우산은 안챙겨도 됩니다.  
+                            지금 온도가 \(temperature)도 이니 \(recommandClothingText) 
+                            \(rainText)
                             """
     }
     
