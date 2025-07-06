@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     
     func getZodiacSign(month: Int) {
         
+        //여기에 코드를 작성해주세요
+        //3월이면 양자리, 4월이면 황소자리 등
         let zodiacSigns = [
             1: "물병",
             2: "물고기자리",
@@ -36,8 +38,6 @@ class ViewController: UIViewController {
             11: "사수자리",
             12: "염소자리"
         ]
-        //여기에 코드를 작성해주세요
-        //3월이면 양자리, 4월이면 황소자리 등
         
         resultLabel.text = "\(month)월은 \(zodiacSigns[month] ?? "error: zodiacSigns")자리입니다."
     }
@@ -52,8 +52,27 @@ class ViewController: UIViewController {
         
         //여기에 코드를 작성해주세요
         //힘(strength)이 높으면 전사, 민첩(agility)이 높으면 도적, 같다면 마법사 추천
+        var statistics = ""
+        var occupation = ""
         
-        resultLabel.text = "strength(힘)이 가장 높으니 OO를 추천드립니다."
+        if strength > agility {
+            statistics = "strength(힘)이 가장 높으니"
+            occupation = "전사를"
+        } else if strength == agility {
+            statistics = "strength(힘)와 agility(민첩)가 같으니"
+            occupation = "마법사를"
+        } else if strength < agility {
+            statistics = "agility(민첩)가 가장 높으니"
+            occupation = "도적을"
+        } else {
+            resultLabel.text = "error: 직업 추천 오류"
+        }
+        
+        print("""
+        strength: \(strength)
+        agility: \(agility)
+        """)
+        resultLabel.text = "\(statistics) \(occupation) 추천드립니다."
     }
     
     @IBAction func recommandClothing(_ sender: UIButton) {
