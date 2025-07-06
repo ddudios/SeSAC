@@ -209,6 +209,10 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldDidEndOnExit:" destination="Dmz-hC-d6u" eventType="editingDidEndOnExit" id="5qh-u1-uLI"/>
+                                    <action selector="textFieldEditingChanged:" destination="Dmz-hC-d6u" eventType="editingChanged" id="MwL-q9-129"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H6M-Ah-ZPC">
                                 <rect key="frame" x="30" y="518" width="333" height="20.333333333333371"/>
@@ -226,11 +230,18 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textFieldDidEndOnExit:" destination="Dmz-hC-d6u" eventType="editingDidEndOnExit" id="ZXg-yx-KDO"/>
+                                            <action selector="textFieldEditingChanged:" destination="Dmz-hC-d6u" eventType="editingChanged" id="M06-Ed-6qt"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ovh-Zq-s2C">
                                         <rect key="frame" x="248" y="8" width="75" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <connections>
+                                            <action selector="secureButtonTapped:" destination="Dmz-hC-d6u" eventType="touchUpInside" id="6tg-CM-EwR"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -250,15 +261,22 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="resultButtonTapped:" destination="Dmz-hC-d6u" eventType="touchUpInside" id="HMy-y3-8x8"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Sw-Cv-orb">
                                 <rect key="frame" x="288" y="608.33333333333337" width="75" height="34.333333333333371"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="randomButtonTapped:" destination="Dmz-hC-d6u" eventType="touchUpInside" id="F0P-Rh-StM"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iSy-OQ-nZ8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="wuS-1T-lzG" firstAttribute="trailing" secondItem="iSy-OQ-nZ8" secondAttribute="trailing" id="10e-8w-hdt"/>
                             <constraint firstItem="Tbf-e6-eia" firstAttribute="leading" secondItem="iSy-OQ-nZ8" secondAttribute="leading" constant="30" id="6If-6x-Hd9"/>
@@ -282,6 +300,9 @@
                             <constraint firstItem="iSy-OQ-nZ8" firstAttribute="trailing" secondItem="eBG-I7-Snm" secondAttribute="trailing" constant="30" id="lcS-t7-uZU"/>
                             <constraint firstItem="383-Md-WdL" firstAttribute="top" secondItem="H6M-Ah-ZPC" secondAttribute="bottom" constant="10" id="ucq-s5-H55"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="zok-4z-il8" appends="YES" id="Nze-nn-5Kt"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="BMI 계산기" id="Xe9-Kp-X5d"/>
                     <connections>
@@ -300,6 +321,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Unf-tF-Glh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="zok-4z-il8">
+                    <connections>
+                        <action selector="backgroundTapped:" destination="Dmz-hC-d6u" id="sb5-LN-Ysz"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1925.9541984732823" y="678.87323943661977"/>
         </scene>
