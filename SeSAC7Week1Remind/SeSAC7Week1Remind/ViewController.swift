@@ -140,9 +140,17 @@ class ViewController: UIViewController {
             return partialResult + grade
         }
         
-        let average = Double(total) / Double(data.count)
+        let average:Double = Double(total) / Double(data.count)
         
-        resultLabel.text = "\(data.count)명의 평균 점수는 \(String(format: "%.1f", average))점입니다."
+//        resultLabel.text = "\(data.count)명의 평균 점수는 \(String(format: "%.1f", average))점입니다."
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.maximumFractionDigits = 1
+        
+        resultLabel.text = "\(data.count)명의 평균 점수는 \(numberFormatter.string(from: average as NSNumber) ?? "errer: average")점입니다."
+//        resultLabel.text = "\(data.count)명의 평균 점수는 \(numberFormatter.string(from: average) ?? "errer: average")점입니다."
+//        resultLabel.text = "\(data.count)명의 평균 점수는 \(numberFormatter.string(from: 123.234)!)점입니다."
+
     }
     
     @IBAction func countFruits(_ sender: UIButton) {
