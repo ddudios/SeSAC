@@ -12,9 +12,16 @@ struct CustomFont {
     let buttonTitle = UIFont.boldSystemFont(ofSize: 15)
 }
 
+class Damagochi {
+    var level: Int = 1
+    var rice: Int = 0
+    var water: Int = 0
+}
+
 class ViewController: UIViewController {
     
     let customFont = CustomFont()
+    let damagochi = Damagochi()
 
     @IBOutlet var statusLabel: UILabel!
     
@@ -46,7 +53,7 @@ class ViewController: UIViewController {
     }
 
     func designStatusLabelUI() {
-        statusLabel.text = "LV1 ∙ 밥알 0개 ∙ 물방울 0개"
+        fetchStatus()
         statusLabel.font = customFont.headline
         statusLabel.textAlignment = .center
         statusLabel.textColor = .mainColor
@@ -58,6 +65,7 @@ class ViewController: UIViewController {
         tf.placeholder = placeholder
         tf.textAlignment = .center
         tf.tintColor = .mainColor
+        tf.keyboardType = .numberPad
     }
     
     func designDividerUI(_ view: UIView) {
@@ -76,6 +84,67 @@ class ViewController: UIViewController {
         bt.setImage(UIImage(systemName: systemImage), for: .normal)
         bt.tintColor = .mainColor
         bt.configuration?.imagePadding = 3
+    }
+    
+    func alert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        present(alert, animated: true)
+    }
+    
+    func fetchStatus() {
+        statusLabel.text = "LV\(damagochi.level) ∙ 밥알 \(damagochi.rice)개 ∙ 물방울 \(damagochi.water)개"
+    }
+    
+    @IBAction func riceButtonTapped(_ sender: UIButton) {
+        guard let rice = riceTextField.text else { return }
+        
+        if rice.isEmpty {
+            damagochi.rice += 1
+        } else if !rice.isEmpty {
+            
+            if let ea = Int(rice) {
+                if ea < 100 {
+                    damagochi.rice += ea
+                } else {
+                    alert(title: "밥알을 먹을 수 없습니다", message: "한 번에 먹을 수 있는 밥의 양은 99개까지 입니다.")
+                }
+            }
+            
+            riceTextField.text = ""
+        } else {
+            print("error: \(#function)")
+        }
+        
+        fetchStatus()
+    }
+    
+    @IBAction func waterButtonTapped(_ sender: UIButton) {
+        guard let water = waterTextField.text else { return }
+        
+        if water.isEmpty {
+            damagochi.water += 1
+        } else if !water.isEmpty {
+            
+            if let ea = Int(water) {
+                if ea < 50 {
+                    damagochi.water += ea
+                } else {
+                    alert(title: "물을 먹을 수 없습니다", message: "한 번에 먹을 수 있는 물의 양은 49개까지 입니다.")
+                }
+            }
+            
+            waterTextField.text = ""
+        } else {
+            print("error: \(#function)")
+        }
+        
+        fetchStatus()
+    }
+    
+    @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
 }
 

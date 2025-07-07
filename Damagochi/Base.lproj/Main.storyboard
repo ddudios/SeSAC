@@ -49,6 +49,9 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <connections>
+                                            <action selector="riceButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vRQ-0f-dHH"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -84,6 +87,9 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <connections>
+                                            <action selector="waterButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wZe-2s-CIn"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -95,6 +101,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="JEk-y2-ylY" firstAttribute="top" secondItem="Mvv-9h-jas" secondAttribute="bottom" constant="30" id="5kr-Jm-Bgz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fBe-lO-dRc" secondAttribute="trailing" constant="30" id="9us-5r-zOJ"/>
@@ -106,6 +113,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Mvv-9h-jas" secondAttribute="trailing" constant="30" id="Zn2-3m-7la"/>
                             <constraint firstItem="fBe-lO-dRc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="iao-up-DPo"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="1cr-ha-ZR2" appends="YES" id="rrc-x0-GaE"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="riceButton" destination="xIh-O2-a9R" id="N3K-lc-Qqr"/>
@@ -118,6 +128,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="1cr-ha-ZR2">
+                    <connections>
+                        <action selector="backgroundTapped:" destination="BYZ-38-t0r" id="gkW-KJ-Bsh"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="138" y="4"/>
         </scene>
