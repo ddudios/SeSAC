@@ -8,8 +8,28 @@
 import UIKit
 
 struct CustomFont {
-    let headline = UIFont.boldSystemFont(ofSize: 14)
-    let buttonTitle = UIFont.boldSystemFont(ofSize: 15)
+    static let headline = UIFont.boldSystemFont(ofSize: 14)
+    static let buttonTitle = UIFont.boldSystemFont(ofSize: 15)
+}
+
+struct CustomUI {
+    static func designDividerUI(_ view: UIView, opacity: Float = 1) {
+        view.backgroundColor = .mainColor
+        view.layer.opacity = opacity
+    }
+    
+    static func designTextFiledUI(_ tf: UITextField, placeholder: String, textAlignment: NSTextAlignment = .center, keyboardType: UIKeyboardType = .default) {
+        tf.backgroundColor = .backgroundColor
+        tf.borderStyle = .none
+        tf.textAlignment = textAlignment
+        tf.tintColor = .mainColor
+        tf.keyboardType = keyboardType
+        tf.attributedPlaceholder = NSAttributedString(
+            string: placeholder,
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+        tf.textColor = .mainColor
+    }
 }
 
 class Damagochi {
@@ -19,10 +39,10 @@ class Damagochi {
 }
 
 class ViewController: UIViewController {
-    
-    let customFont = CustomFont()
     let damagochi = Damagochi()
 
+    @IBOutlet var titleDivider: UIView!
+    
     @IBOutlet var statusLabel: UILabel!
     
     @IBOutlet var riceTextField: UITextField!
@@ -39,43 +59,52 @@ class ViewController: UIViewController {
         configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.title = "\(UserDefaults.standard.string(forKey: "nickname") ?? "대장")님의 다마고치"
+    }
+    
     func configureUI() {
         view.backgroundColor = .backgroundColor
+        designNavigationBarUI()
+        CustomUI.designDividerUI(titleDivider, opacity: 0.1)
+        
         designStatusLabelUI()
         
-        designTextFiledUI(riceTextField, placeholder: "밥주세용")
-        designDividerUI(riceDivider)
+        CustomUI.designTextFiledUI(riceTextField, placeholder: "밥주세용", keyboardType: .numberPad)
+        CustomUI.designDividerUI(riceDivider)
         designFeedButtonUI(riceButton, title: "밥먹기", systemImage: "leaf.circle")
         
-        designTextFiledUI(waterTextField, placeholder: "물주세용")
-        designDividerUI(waterDiveder)
+        CustomUI.designTextFiledUI(waterTextField, placeholder: "물주세용", keyboardType: .numberPad)
+        CustomUI.designDividerUI(waterDiveder)
         designFeedButtonUI(waterButton, title: "물먹기", systemImage: "drop.circle")
+    }
+    
+    func designNavigationBarUI() {
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.mainColor]
+        appearance.backgroundColor = .backgroundColor
+        navigationController?.navigationBar.tintColor = .mainColor
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        let backBarButtonItem = UIBarButtonItem(title: "설정", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .mainColor
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
 
     func designStatusLabelUI() {
         fetchStatus()
-        statusLabel.font = customFont.headline
+        statusLabel.font = CustomFont.headline
         statusLabel.textAlignment = .center
         statusLabel.textColor = .mainColor
-    }
-    
-    func designTextFiledUI(_ tf: UITextField, placeholder: String) {
-        tf.backgroundColor = .backgroundColor
-        tf.borderStyle = .none
-        tf.placeholder = placeholder
-        tf.textAlignment = .center
-        tf.tintColor = .mainColor
-        tf.keyboardType = .numberPad
-    }
-    
-    func designDividerUI(_ view: UIView) {
-        view.backgroundColor = .mainColor
     }
     
     func designFeedButtonUI(_ bt: UIButton, title: String, systemImage: String) {
         bt.backgroundColor = .backgroundColor
         let title = NSAttributedString(string: title,
-                                       attributes: [NSAttributedString.Key.font: customFont.buttonTitle,
+                                       attributes: [NSAttributedString.Key.font: CustomFont.buttonTitle,
                                                     NSAttributedString.Key.foregroundColor: UIColor.mainColor])
         bt.setAttributedTitle(title, for: .normal)
         bt.layer.cornerRadius = 8
@@ -84,13 +113,6 @@ class ViewController: UIViewController {
         bt.setImage(UIImage(systemName: systemImage), for: .normal)
         bt.tintColor = .mainColor
         bt.configuration?.imagePadding = 3
-    }
-    
-    func alert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "확인", style: .default)
-        alert.addAction(ok)
-        present(alert, animated: true)
     }
     
     func fetchStatus() {
@@ -148,11 +170,19 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController {
+    func alert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        present(alert, animated: true)
+    }
+}
+
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
-    static let backgroundColor =
-    UIColor.rgb(red: 246, green: 252, blue: 252)
+    static let backgroundColor = UIColor.rgb(red: 246, green: 252, blue: 252)
     static let mainColor = UIColor.rgb(red: 74, green: 99, blue: 112)
 }
