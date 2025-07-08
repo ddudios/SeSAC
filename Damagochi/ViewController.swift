@@ -149,7 +149,14 @@ class ViewController: UIViewController {
     func fetchStatus() {
         // level up
         let foodTotal = (Double(damagochi.rice) / 5) + (Double(damagochi.water) / 2)
-        damagochi.level = Int(foodTotal) / 10
+        let level = Int(foodTotal) / 10
+        if level > 10 {
+            damagochi.level = 10
+        } else if level > 0 && level < 10 {
+            damagochi.level = level
+        } else {
+            print("error: \(#function) - level up")
+        }
         
         // status
         statusLabel.text = "LV\(damagochi.level) ∙ 밥알 \(damagochi.rice)개 ∙ 물방울 \(damagochi.water)개"
@@ -163,7 +170,7 @@ class ViewController: UIViewController {
         case 10...:
             damagochiImageView.image = UIImage(named: "2-9")
         default:
-            print("error: \(#function)")
+            print("error: \(#function) - image")
         }
         
         // save
