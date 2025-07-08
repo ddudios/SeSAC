@@ -40,9 +40,16 @@ class Damagochi {
 
 class ViewController: UIViewController {
     let damagochi = Damagochi()
+    var nickname = UserDefaults.standard.string(forKey: "nickname") ?? "대장"
 
     @IBOutlet var titleDivider: UIView!
     
+    @IBOutlet var speechbubbleBackgroundView: UIView!
+    @IBOutlet var speechbubbleImageView: UIImageView!
+    @IBOutlet var talkLabel: UILabel!
+    
+    @IBOutlet var damagochiImageView: UIImageView!
+    @IBOutlet var damagochiFeelingLabel: UILabel!
     @IBOutlet var statusLabel: UILabel!
     
     @IBOutlet var riceTextField: UITextField!
@@ -62,6 +69,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "\(UserDefaults.standard.string(forKey: "nickname") ?? "대장")님의 다마고치"
+        fetchTalk()
     }
     
     func configureUI() {
@@ -69,6 +77,9 @@ class ViewController: UIViewController {
         designNavigationBarUI()
         CustomUI.designDividerUI(titleDivider, opacity: 0.1)
         
+        designSpeechbubbleUI()
+        damagochiImageView.image = UIImage(named: "2-1")
+        designDamagochFeelingLabel()
         designStatusLabelUI()
         
         CustomUI.designTextFiledUI(riceTextField, placeholder: "밥주세용", keyboardType: .numberPad)
@@ -92,6 +103,27 @@ class ViewController: UIViewController {
         let backBarButtonItem = UIBarButtonItem(title: "설정", style: .plain, target: self, action: nil)
         backBarButtonItem.tintColor = .mainColor
         self.navigationItem.backBarButtonItem = backBarButtonItem
+    }
+    
+    func designSpeechbubbleUI() {
+        speechbubbleBackgroundView.backgroundColor = .backgroundColor
+        speechbubbleImageView.image = UIImage(named: "bubble")
+        
+        talkLabel.textColor = .mainColor
+        talkLabel.numberOfLines = 0
+        talkLabel.textAlignment = .center
+        fetchTalk()
+    }
+    
+    func designDamagochFeelingLabel() {
+        damagochiFeelingLabel.text = "방실방실 다마고치"
+        damagochiFeelingLabel.font = CustomFont.buttonTitle
+        damagochiFeelingLabel.textColor = .mainColor
+        damagochiFeelingLabel.layer.borderColor = UIColor.mainColor.cgColor
+        damagochiFeelingLabel.layer.borderWidth = 0.9
+        damagochiFeelingLabel.layer.cornerRadius = 8
+        damagochiFeelingLabel.clipsToBounds = true
+        damagochiFeelingLabel.textAlignment = .center
     }
 
     func designStatusLabelUI() {
@@ -119,6 +151,19 @@ class ViewController: UIViewController {
         statusLabel.text = "LV\(damagochi.level) ∙ 밥알 \(damagochi.rice)개 ∙ 물방울 \(damagochi.water)개"
     }
     
+    func fetchTalk() {
+        let talk = [
+            "복습 아직 안하셨다구요? 지금 잠이 오세여? \(nickname)님??",
+            "\(nickname)님 오늘 깃허브 푸시 하셨어영?",
+            "\(nickname)님, 밥주세요",
+            "\(nickname)님, 물주세요",
+            "좋은 하루에요, \(nickname)님",
+            "밥과 물을 잘 먹었더니 레벨업 했어요 고마워요 \(nickname)님"
+        ]
+        
+        talkLabel.text = talk.randomElement()
+    }
+    
     @IBAction func riceButtonTapped(_ sender: UIButton) {
         guard let rice = riceTextField.text else { return }
         
@@ -138,7 +183,7 @@ class ViewController: UIViewController {
         } else {
             print("error: \(#function)")
         }
-        
+        fetchTalk()
         fetchStatus()
     }
     
@@ -161,7 +206,7 @@ class ViewController: UIViewController {
         } else {
             print("error: \(#function)")
         }
-        
+        fetchTalk()
         fetchStatus()
     }
     
