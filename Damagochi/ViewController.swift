@@ -78,7 +78,6 @@ class ViewController: UIViewController {
         CustomUI.designDividerUI(titleDivider, opacity: 0.1)
         
         designSpeechbubbleUI()
-        damagochiImageView.image = UIImage(named: "2-1")
         designDamagochFeelingLabel()
         designStatusLabelUI()
         
@@ -148,7 +147,26 @@ class ViewController: UIViewController {
     }
     
     func fetchStatus() {
+        // level up
+        let foodTotal = (Double(damagochi.rice) / 5) + (Double(damagochi.water) / 2)
+        damagochi.level = Int(foodTotal) / 10
+        
+        // status
         statusLabel.text = "LV\(damagochi.level) ∙ 밥알 \(damagochi.rice)개 ∙ 물방울 \(damagochi.water)개"
+        
+        // image
+        switch damagochi.level {
+        case 0:
+            damagochiImageView.image = UIImage(named: "2-1")
+        case 1...9:
+            damagochiImageView.image = UIImage(named: "2-\(String(damagochi.level))")
+        case 10...:
+            damagochiImageView.image = UIImage(named: "2-9")
+        default:
+            print("error: \(#function)")
+        }
+        
+        // save
     }
     
     func fetchTalk() {
