@@ -33,13 +33,19 @@ struct CustomUI {
 }
 
 class Damagochi {
-    var level: Int = 1
-    var rice: Int = 0
-    var water: Int = 0
+    var level: Int
+    var rice: Int
+    var water: Int
+    
+    init(level: Int, rice: Int, water: Int) {
+        self.level = level
+        self.rice = rice
+        self.water = water
+    }
 }
 
 class ViewController: UIViewController {
-    let damagochi = Damagochi()
+    let damagochi = Damagochi(level: UserDefaults.standard.integer(forKey: "level"), rice: UserDefaults.standard.integer(forKey: "rice"), water: UserDefaults.standard.integer(forKey: "water"))
     var nickname = UserDefaults.standard.string(forKey: "nickname") ?? "대장"
 
     @IBOutlet var titleDivider: UIView!
@@ -154,6 +160,8 @@ class ViewController: UIViewController {
             damagochi.level = 10
         } else if level > 0 && level < 10 {
             damagochi.level = level
+        } else if level == 0 {
+            damagochi.level = 1
         } else {
             print("error: \(#function) - level up")
         }
@@ -174,6 +182,9 @@ class ViewController: UIViewController {
         }
         
         // save
+        UserDefaults.standard.set(damagochi.level, forKey: "level")
+        UserDefaults.standard.set(damagochi.rice, forKey: "rice")
+        UserDefaults.standard.set(damagochi.water, forKey: "water")
     }
     
     func fetchTalk() {
