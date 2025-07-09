@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingViewController: UIViewController {
+class NicknameSettingViewController: UIViewController {
     
     @IBOutlet var titleDivider: UIView!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -46,7 +46,7 @@ class SettingViewController: UIViewController {
     }
 }
 
-extension SettingViewController {
+extension NicknameSettingViewController {
     func alert(title: String?, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "확인", style: .default)
