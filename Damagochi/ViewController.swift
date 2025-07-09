@@ -74,8 +74,9 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "\(UserDefaults.standard.string(forKey: "nickname") ?? "대장")님의 다마고치"
-        fetchTalk()
+        let nickname = UserDefaults.standard.string(forKey: "nickname") ?? "대장"
+        self.title = "\(nickname)님의 다마고치"
+        fetchTalk(nickname: nickname)
     }
     
     func configureUI() {
@@ -117,7 +118,7 @@ class ViewController: UIViewController {
         talkLabel.textColor = .mainColor
         talkLabel.numberOfLines = 0
         talkLabel.textAlignment = .center
-        fetchTalk()
+        fetchTalk(nickname: nickname)
     }
     
     func designDamagochFeelingLabel() {
@@ -187,7 +188,7 @@ class ViewController: UIViewController {
         UserDefaults.standard.set(damagochi.water, forKey: "water")
     }
     
-    func fetchTalk() {
+    func fetchTalk(nickname: String) {
         let talk = [
             "복습 아직 안하셨다구요? 지금 잠이 오세여? \(nickname)님??",
             "\(nickname)님 오늘 깃허브 푸시 하셨어영?",
@@ -219,7 +220,7 @@ class ViewController: UIViewController {
         } else {
             print("error: \(#function)")
         }
-        fetchTalk()
+        fetchTalk(nickname: nickname)
         fetchStatus()
     }
     
@@ -242,7 +243,7 @@ class ViewController: UIViewController {
         } else {
             print("error: \(#function)")
         }
-        fetchTalk()
+        fetchTalk(nickname: nickname)
         fetchStatus()
     }
     
