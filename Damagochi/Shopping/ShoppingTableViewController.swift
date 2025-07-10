@@ -20,13 +20,14 @@ class ShoppingTableViewController: UITableViewController {
     @IBOutlet var itemTextField: UITextField!
     @IBOutlet var addButton: UIButton!
     
-//    var shoppingList = ["그립톡 구매하기", "사이다 구매", "아이패드 케이스 최저가 알아보기", "양말"]
     var shoppingList = [
         ShoppingListManager(shoppingList: "그립톡 구매하기"),
         ShoppingListManager(shoppingList: "사이다 구매"),
         ShoppingListManager(shoppingList: "아이패드 케이스 최저가 알아보기"),
         ShoppingListManager(shoppingList: "양말")
     ]
+    
+    let sectionHeader = ["구매 완료", "구매 예정"]
     
     // MARK: - lifeCycle
     override func viewDidLoad() {
@@ -50,7 +51,13 @@ class ShoppingTableViewController: UITableViewController {
         designLabelUI(cell.shoppingListLabel)
         
         cell.shoppingListLabel.text = shoppingList[indexPath.row].shoppingList
-            
+        
+        cell.checkButton.tag = indexPath.row
+        cell.bookmarkButton.tag = indexPath.row
+        
+        cell.checkButton.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
+        cell.bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped(_:)), for: .touchUpInside)
+        
         return cell
     }
     
@@ -118,4 +125,14 @@ class ShoppingTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    @objc func checkButtonTapped(sender: UIButton) {
+        print(sender)
+        shoppingList[sender.tag].isChecked.toggle()
+        tableView.reloadData()
+    }
+    
+    @objc func bookmarkButtonTapped(_ sender: UIButton) {
+        shoppingList[sender.tag].isBookmark.toggle()
+        tableView.reloadData()
+    }
 }
