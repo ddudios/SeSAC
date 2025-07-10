@@ -27,28 +27,38 @@ class ShoppingTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "shoppinglistCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "shoppinglistCell", for: indexPath) as! ShoppingListTableViewCell
         
-        cell.textLabel?.text = shoppingList[indexPath.row]
+        designBackgroundViewUI(cell.shoppingListBackgroundView)
+        designAccessoryButtonUI(cell.checkButton, image: "checkmark.square")
+        designAccessoryButtonUI(cell.bookmarkButton, image: "star")
+        designLabelUI(cell.shoppingListLabel)
+        
+        cell.shoppingListLabel.text = shoppingList[indexPath.row]
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return 50
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        shoppingList.remove(at: indexPath.row)
+        tableView.reloadData()
     }
     
     // MARK: - design
     func configureUI() {
-        designHeaderBackgroundViewUI()
+        designBackgroundViewUI(headerBackgroundView)
         designItemTextFieldUI()
         designAddButtonUI()
     }
     
-    func designHeaderBackgroundViewUI() {
-        headerBackgroundView.backgroundColor = .systemGray6
-        headerBackgroundView.layer.cornerRadius = 8
-        headerBackgroundView.clipsToBounds = true
+    func designBackgroundViewUI(_ view: UIView) {
+        view.backgroundColor = .systemGray6
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
     }
     
     func designItemTextFieldUI() {
@@ -58,6 +68,7 @@ class ShoppingTableViewController: UITableViewController {
         )
         itemTextField.backgroundColor = .systemGray6
         itemTextField.borderStyle = .none
+        itemTextField.tintColor = .black
     }
     
     func designAddButtonUI() {
@@ -70,6 +81,16 @@ class ShoppingTableViewController: UITableViewController {
         addButton.setAttributedTitle(title, for: .normal)
     }
     
+    func designAccessoryButtonUI(_ bt: UIButton, image: String) {
+        bt.tintColor = .black
+        bt.setImage(UIImage(systemName: image), for: .normal)
+    }
+    
+    func designLabelUI(_ lb: UILabel) {
+        lb.font = CustomFont.shoppingList
+        lb.numberOfLines = 0
+    }
+    
     // MARK: - Action
     @IBAction func addButtonTapped(_ sender: UIButton) {
         print(#function)
@@ -78,6 +99,7 @@ class ShoppingTableViewController: UITableViewController {
         } else {
             print("errer: \(#function) shoppingList.append(itemTextField.text)")
         }
+        
         tableView.reloadData()
     }
     

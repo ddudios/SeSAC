@@ -10,6 +10,7 @@ import UIKit
 struct CustomFont {
     static let headline = UIFont.boldSystemFont(ofSize: 14)
     static let buttonTitle = UIFont.boldSystemFont(ofSize: 15)
+    static let shoppingList = UIFont.systemFont(ofSize: 14)
 }
 
 struct CustomUI {
