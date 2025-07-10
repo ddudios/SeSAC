@@ -62,6 +62,8 @@ class SettingTableViewController: UITableViewController {
 //            }
 //        }
         
+        cell.backgroundColor = .darkGray
+        
         if indexPath.section == 0 {
             cell.textLabel?.text = cellDataSource0[indexPath.row]
         } else if indexPath.section == 1 {
@@ -80,7 +82,6 @@ class SettingTableViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
         return sectionHeader.count
     }
     
