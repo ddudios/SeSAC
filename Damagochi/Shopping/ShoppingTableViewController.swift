@@ -7,6 +7,12 @@
 
 import UIKit
 
+struct ShoppingListManager {
+    var shoppingList: String
+    var isBookmark: Bool = Bool.random()
+    var isChecked: Bool = Bool.random()
+}
+
 class ShoppingTableViewController: UITableViewController {
     
     // MARK: - Properties
@@ -14,7 +20,13 @@ class ShoppingTableViewController: UITableViewController {
     @IBOutlet var itemTextField: UITextField!
     @IBOutlet var addButton: UIButton!
     
-    var shoppingList = ["그립톡 구매하기", "사이다 구매", "아이패드 케이스 최저가 알아보기", "양말"]
+//    var shoppingList = ["그립톡 구매하기", "사이다 구매", "아이패드 케이스 최저가 알아보기", "양말"]
+    var shoppingList = [
+        ShoppingListManager(shoppingList: "그립톡 구매하기"),
+        ShoppingListManager(shoppingList: "사이다 구매"),
+        ShoppingListManager(shoppingList: "아이패드 케이스 최저가 알아보기"),
+        ShoppingListManager(shoppingList: "양말")
+    ]
     
     // MARK: - lifeCycle
     override func viewDidLoad() {
@@ -30,17 +42,20 @@ class ShoppingTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "shoppinglistCell", for: indexPath) as! ShoppingListTableViewCell
         
         designBackgroundViewUI(cell.shoppingListBackgroundView)
-        designAccessoryButtonUI(cell.checkButton, image: "checkmark.square")
-        designAccessoryButtonUI(cell.bookmarkButton, image: "star")
+        
+        shoppingList[indexPath.row].isChecked ? designAccessoryButtonUI(cell.checkButton, image: "checkmark.square.fill") : designAccessoryButtonUI(cell.checkButton, image: "checkmark.square")
+        
+        shoppingList[indexPath.row].isBookmark ? designAccessoryButtonUI(cell.bookmarkButton, image: "star.fill") : designAccessoryButtonUI(cell.bookmarkButton, image: "star")
+        
         designLabelUI(cell.shoppingListLabel)
         
-        cell.shoppingListLabel.text = shoppingList[indexPath.row]
-        
+        cell.shoppingListLabel.text = shoppingList[indexPath.row].shoppingList
+            
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 53
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -95,7 +110,7 @@ class ShoppingTableViewController: UITableViewController {
     @IBAction func addButtonTapped(_ sender: UIButton) {
         print(#function)
         if let text = itemTextField.text {
-            shoppingList.append(text)
+            shoppingList.append(ShoppingListManager(shoppingList: text))
         } else {
             print("errer: \(#function) shoppingList.append(itemTextField.text)")
         }
