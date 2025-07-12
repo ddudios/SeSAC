@@ -130,6 +130,55 @@
                                     <outlet property="cityDetailTitleLabel" destination="p62-PL-BWj" id="Mf6-IA-blm"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cityDetailADCell" rowHeight="141" id="ngF-2f-QF3" customClass="TravelCityDetailADTableViewCell" customModule="Travel" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="191" width="393" height="141"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ngF-2f-QF3" id="kb0-Oi-P7C">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="141"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="woq-cR-k0h">
+                                            <rect key="frame" x="16" y="1" width="361" height="139"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKj-lQ-CdN">
+                                                    <rect key="frame" x="159.66666666666666" y="59" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y77-4g-hA4">
+                                                    <rect key="frame" x="323" y="3" width="35" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="35" id="7al-3T-H0i"/>
+                                                        <constraint firstAttribute="height" constant="25" id="Pj6-gX-b2x"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstItem="MKj-lQ-CdN" firstAttribute="centerX" secondItem="woq-cR-k0h" secondAttribute="centerX" id="3y5-8Q-xpi"/>
+                                                <constraint firstItem="Y77-4g-hA4" firstAttribute="top" secondItem="woq-cR-k0h" secondAttribute="top" constant="3" id="4lH-22-HKk"/>
+                                                <constraint firstItem="MKj-lQ-CdN" firstAttribute="centerY" secondItem="woq-cR-k0h" secondAttribute="centerY" id="CRR-YV-Zhq"/>
+                                                <constraint firstAttribute="trailing" secondItem="Y77-4g-hA4" secondAttribute="trailing" constant="3" id="eDU-5c-xxD"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="woq-cR-k0h" firstAttribute="leading" secondItem="kb0-Oi-P7C" secondAttribute="leading" constant="16" id="AiO-zW-dVJ"/>
+                                        <constraint firstItem="woq-cR-k0h" firstAttribute="top" secondItem="kb0-Oi-P7C" secondAttribute="top" constant="1" id="Msm-gO-vss"/>
+                                        <constraint firstAttribute="bottom" secondItem="woq-cR-k0h" secondAttribute="bottom" constant="1" id="PSP-2n-dis"/>
+                                        <constraint firstAttribute="trailing" secondItem="woq-cR-k0h" secondAttribute="trailing" constant="16" id="kbb-3d-NQ9"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cityDetailADBackgroundView" destination="woq-cR-k0h" id="Jgo-Cg-LnJ"/>
+                                    <outlet property="cityDetailADBedgeLabel" destination="Y77-4g-hA4" id="xzF-TN-SJk"/>
+                                    <outlet property="cityDetailADLabel" destination="MKj-lQ-CdN" id="ifr-CS-Vei"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="ZpI-H2-YmM" id="Ln9-51-BF6"/>

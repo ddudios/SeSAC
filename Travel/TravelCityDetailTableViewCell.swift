@@ -16,10 +16,6 @@ class TravelCityDetailTableViewCell: UITableViewCell {
     
     @IBOutlet var cityDetailImageView: UIImageView!
     @IBOutlet var cityDetailLikeButton: UIButton!
-    
-//    @IBOutlet var cityDetailADBackgroundView: UIView!
-//    @IBOutlet var cityDetailADLabel: UILabel!
-//    @IBOutlet var cityDetailADBedgeLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,20 +37,5 @@ class TravelCityDetailTableViewCell: UITableViewCell {
         cityDetailImageView.clipsToBounds = true
         
         cityDetailLikeButton.tintColor = .white
-        
-        
-//        cityDetailADBackgroundView.backgroundColor = .systemPink
-//        
-//        cityDetailADLabel.numberOfLines = 0
-//        cityDetailADLabel.font = CustomFont.title
-//        cityDetailADLabel.textColor = .black
-//        cityDetailADLabel.textAlignment = .center
-//        
-//        cityDetailADBedgeLabel.text = "AD"
-//        cityDetailADBedgeLabel.textColor = .black
-//        cityDetailADBedgeLabel.font = CustomFont.body
-//        cityDetailADBedgeLabel.layer.cornerRadius = 8
-//        cityDetailADBedgeLabel.clipsToBounds = true
-//        cityDetailADBedgeLabel.backgroundColor = .white
     }
 }
