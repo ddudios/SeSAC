@@ -1,0 +1,92 @@
+//
+//  GameViewController.swift
+//  Travel
+//
+//  Created by Suji Jang on 7/12/25.
+//
+
+import UIKit
+
+class GameViewController: UIViewController {
+
+    @IBOutlet var gameMaxNumberTextField: UITextField!
+    @IBOutlet var gameTextView: UITextView!
+    @IBOutlet var gameResultLabel: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUI()
+    }
+    
+    func configureUI() {
+        view.backgroundColor = .white
+        
+        configureGameMaxNumberTextFieldUI(gameMaxNumberTextField)
+        configureGameTextViewUI(gameTextView)
+        configureGameResultLabelUI(gameResultLabel)
+    }
+    
+    func configureGameMaxNumberTextFieldUI(_ tf: UITextField) {
+        tf.keyboardType = .numbersAndPunctuation
+        tf.layer.borderWidth = 1
+        tf.layer.borderColor = UIColor.gray.cgColor
+        tf.placeholder = "최대 숫자를 입력해주세요"
+        tf.textAlignment = .center
+        tf.tintColor = .black
+        tf.font = CustomFont.title
+    }
+    
+    func configureGameTextViewUI(_ tv: UITextView) {
+        tv.textColor = .gray
+        tv.textAlignment = .center
+        tv.font = CustomFont.subtitle
+        tv.isEditable = false
+    }
+    
+    func configureGameResultLabelUI(_ lb: UILabel) {
+        lb.font = CustomFont.title
+        lb.textAlignment = .center
+        lb.numberOfLines = 0
+        lb.text = ""
+    }
+    
+    func calculateNumber(max: String?) {
+        let maxNumber = Int(max!)
+        
+        guard let nonOptionalMaxNumber = maxNumber else {
+            print("error: \(#function) - max: optional binding - Fail")
+            return
+        }
+        
+        for num in 1...nonOptionalMaxNumber {
+            gameTextView.text += "\(num), "
+        }
+        
+        gameTextView.text.removeLast(2)
+        
+        gameTextView.text = gameTextView.text
+            .replacingOccurrences(of: "3", with: "👏")
+            .replacingOccurrences(of: "6", with: "👏")
+            .replacingOccurrences(of: "9", with: "👏")
+    }
+    
+    func countingClap() {
+        var countClap = 0
+        gameTextView.text.forEach { clap in
+            if clap == "👏" {
+                countClap += 1
+            }
+        }
+        
+        gameResultLabel.text = "숫자 \(gameMaxNumberTextField.text!)까지 총 박수는 \(countClap)번입니다."
+    }
+    
+    @IBAction func backgroundGesture(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @IBAction func textFieldDidEndOnExit(_ sender: UITextField) {
+        calculateNumber(max: gameMaxNumberTextField.text)
+        countingClap()
+    }
+}

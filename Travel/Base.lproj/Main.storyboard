@@ -26,11 +26,21 @@
             </objects>
             <point key="canvasLocation" x="1061.8320610687022" y="3.5211267605633805"/>
         </scene>
+        <!--Game-->
+        <scene sceneID="UbJ-6W-Mc9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Game" id="kO2-cD-tqy" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" id="VFJ-Oy-gi3"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3S2-a7-nxi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="135" y="473"/>
+        </scene>
         <!--Travel Magazine Table View Controller-->
         <scene sceneID="lCN-IY-v7h">
             <objects>
                 <tableViewController id="m3m-nl-27b" customClass="TravelMagazineTableViewController" customModule="Travel" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="9jf-QO-KWB">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="9jf-QO-KWB">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -114,12 +124,14 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="sBA-DW-3hk" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Szq-A0-Nbl">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="NwO-XP-zEi" kind="relationship" relationship="viewControllers" id="XUA-VV-d9k"/>
+                        <segue destination="kO2-cD-tqy" kind="relationship" relationship="viewControllers" id="UvE-Hr-MLL"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aew-zs-BJx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
