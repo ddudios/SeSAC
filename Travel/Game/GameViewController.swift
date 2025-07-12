@@ -108,9 +108,9 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func textFieldDidEndOnExit(_ sender: UITextField) {
-        replaceClap(max: sender.text)
-//        showTextView(max: sender.text)
-//        replaceNumber()
+//        replaceClap(max: sender.text)
+        showTextView(max: sender.text)
+        replaceNumber()
         countingClap()
     }
 }

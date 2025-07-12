@@ -10,7 +10,6 @@ import UIKit
 class TravelCityDetailTableViewController: UITableViewController {
     
     var travelInfo = TravelInfo()
-    let adBackgroundColors: [UIColor] = [.babyPink, .babyGreen]
 
     // MARK: - lifeCycle
     override func viewDidLoad() {
@@ -27,7 +26,11 @@ class TravelCityDetailTableViewController: UITableViewController {
         
         let adCell = tableView.dequeueReusableCell(withIdentifier: "cityDetailADCell", for: indexPath) as! TravelCityDetailADTableViewCell
         adCell.cityDetailADLabel.text = travelInfoIndexPath.title
-        adCell.cityDetailADBackgroundView.backgroundColor = adBackgroundColors.randomElement()
+        if indexPath.row % 2 == 0 {
+            adCell.cityDetailADBackgroundView.backgroundColor = .babyPink
+        } else {
+            adCell.cityDetailADBackgroundView.backgroundColor = .babyGreen
+        }
         
         guard let ad = travelInfoIndexPath.ad else {
             print("error: \(#function) - ad Optional binding")
@@ -35,11 +38,12 @@ class TravelCityDetailTableViewController: UITableViewController {
         }
         
         if ad {
-//            tableView.rowHeight = 100
+            // 왜 버튼을 누르면 높이가 바뀌지?
+            tableView.rowHeight = 100
             return adCell
-        }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cityDetailCell", for: indexPath) as! TravelCityDetailTableViewCell
+        } else {
+            tableView.rowHeight = 180
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cityDetailCell", for: indexPath) as! TravelCityDetailTableViewCell
             
             cell.cityDetailTitleLabel.text = travelInfoIndexPath.title
             cell.cityDetailDescriptionLabel.text = travelInfoIndexPath.description
@@ -48,11 +52,40 @@ class TravelCityDetailTableViewController: UITableViewController {
                 print("error: \(#function) - grade Optional binding")
                 return cell
             }
-        
+            
+            var grades = [false, false, false, false, false]
+            
+            switch grade {
+            case 0..<1:
+                grades = [false, false, false, false, false]
+            case 1..<2:
+                grades = [true, false, false, false, false]
+            case 2..<3:
+                grades = [true, true, false, false, false]
+            case 3..<4:
+                grades = [true, true, true, false, false]
+            case 4..<5:
+                grades = [true, true, true, true, false]
+            case 5..<6:
+                grades = [true, true, true, true, true]
+            default:
+                print("error: \(#function) - grade switch")
+            }
+            
+            for index in 0...cell.cityDetailGradeLabel.count - 1 {
+                cell.cityDetailGradeLabel[index].font = CustomFont.caption
+                if grades[index] {
+                    cell.cityDetailGradeLabel[index].textColor = .orange
+                } else {
+                    cell.cityDetailGradeLabel[index].textColor = .systemGray2
+                }
+            }
+            
             guard let save = travelInfoIndexPath.save else {
                 print("error: \(#function) - save Optional binding")
                 return cell
             }
+            
             
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
@@ -61,7 +94,7 @@ class TravelCityDetailTableViewController: UITableViewController {
                 return cell
             }
             
-            cell.cityDetailSaveLabel.text = "(\(grade)) ∙ 저장 \(numberStyle)"
+            cell.cityDetailSaveLabel.text = "(\(numberStyle)) ∙ 저장 \(numberStyle)"
             
             guard let image = travelInfoIndexPath.travel_image else {
                 print("error: \(#function) - image Optional binding")
@@ -80,12 +113,27 @@ class TravelCityDetailTableViewController: UITableViewController {
             
             cell.cityDetailLikeButton.tag = indexPath.row
             cell.cityDetailLikeButton.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
-        
-        return cell
+            
+            return cell
+        }
     }
     
+    // 왜 안되지?
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if let ad = travelInfo.travel[indexPath.row].ad {
+//            if ad {
+//                return 100
+//            } else {
+//                return 180
+//            }
+//        } else {
+//            print("error: \(#function) - ad Optional binding")
+//            return 0
+//        }
+//    }
+    
     func configureUI() {
-        tableView.rowHeight = 180
+//        tableView.rowHeight = 180
         configureNavigationBarUI()
     }
     
@@ -95,6 +143,16 @@ class TravelCityDetailTableViewController: UITableViewController {
     
     @objc func likeButtonTapped(_ sender: UIButton) {
         travelInfo.travel[sender.tag].like?.toggle()
+        
+        guard let ad = travelInfo.travel[sender.tag].ad else {
+            print("error: \(#function) - ad Optional binding")
+            return
+        }
+        if ad {
+            tableView.rowHeight = 100
+        } else {
+            tableView.rowHeight = 180
+        }
         tableView.reloadData()
     }
 }

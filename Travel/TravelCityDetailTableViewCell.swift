@@ -11,8 +11,8 @@ class TravelCityDetailTableViewCell: UITableViewCell {
     
     @IBOutlet var cityDetailTitleLabel: UILabel!
     @IBOutlet var cityDetailDescriptionLabel: UILabel!
-    @IBOutlet var cityDetailGradeLabel: UILabel!
     @IBOutlet var cityDetailSaveLabel: UILabel!
+    @IBOutlet var cityDetailGradeLabel: [UILabel]!
     
     @IBOutlet var cityDetailImageView: UIImageView!
     @IBOutlet var cityDetailLikeButton: UIButton!
@@ -27,8 +27,9 @@ class TravelCityDetailTableViewCell: UITableViewCell {
         cityDetailDescriptionLabel.font = CustomFont.body
         cityDetailDescriptionLabel.textColor = .gray
         
-        cityDetailGradeLabel.font = CustomFont.caption
-        cityDetailGradeLabel.textColor = .systemGray2
+        for index in 0...cityDetailGradeLabel.count - 1 {
+            cityDetailGradeLabel[index].text = "★"
+        }
         
         cityDetailSaveLabel.font = CustomFont.caption
         cityDetailSaveLabel.textColor = .systemGray2
