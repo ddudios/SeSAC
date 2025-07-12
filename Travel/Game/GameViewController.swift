@@ -50,7 +50,22 @@ class GameViewController: UIViewController {
         lb.text = ""
     }
     
-    func calculateNumber(max: String?) {
+    func showTextView(max: String?) {
+            let maxNumber = Int(max!)
+            
+            guard let nonOptionalMaxNumber = maxNumber else {
+                print("error: \(#function) - max: optional binding - Fail")
+                return
+            }
+            
+            for num in 1...nonOptionalMaxNumber {
+                gameTextView.text += "\(num), "
+            }
+            
+            gameTextView.text.removeLast(2)
+    }
+    
+    func replaceClap(max: String?) {
         let maxNumber = Int(max!)
         
         guard let nonOptionalMaxNumber = maxNumber else {
@@ -59,11 +74,18 @@ class GameViewController: UIViewController {
         }
         
         for num in 1...nonOptionalMaxNumber {
-            gameTextView.text += "\(num), "
+            let numString = String(num)
+            if numString.contains("3") || numString.contains("6") || numString.contains("9") {
+                gameTextView.text += "👏, "
+            } else {
+                gameTextView.text += "\(num), "
+            }
         }
         
         gameTextView.text.removeLast(2)
-        
+    }
+    
+    func replaceNumber() {
         gameTextView.text = gameTextView.text
             .replacingOccurrences(of: "3", with: "👏")
             .replacingOccurrences(of: "6", with: "👏")
@@ -86,7 +108,9 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func textFieldDidEndOnExit(_ sender: UITextField) {
-        calculateNumber(max: gameMaxNumberTextField.text)
+        replaceClap(max: sender.text)
+//        showTextView(max: sender.text)
+//        replaceNumber()
         countingClap()
     }
 }
