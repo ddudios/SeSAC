@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sBA-DW-3hk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZpI-H2-YmM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -35,6 +35,112 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3S2-a7-nxi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="135" y="473"/>
+        </scene>
+        <!--Travel City Detail Table View Controller-->
+        <scene sceneID="zhD-Rk-7Go">
+            <objects>
+                <tableViewController id="ZpI-H2-YmM" customClass="TravelCityDetailTableViewController" customModule="Travel" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="4B9-9l-WeT">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cityDetailCell" rowHeight="141" id="tYd-lG-I2Q" customClass="TravelCityDetailTableViewCell" customModule="Travel" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="141"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tYd-lG-I2Q" id="kNM-ey-kYd">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="141"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VO7-tY-y6W">
+                                            <rect key="frame" x="301" y="23" width="76" height="95"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qQC-ve-p0v">
+                                                    <rect key="frame" x="0.0" y="0.0" width="76" height="95"/>
+                                                    <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IVf-9r-ArN">
+                                                    <rect key="frame" x="25.333333333333311" y="0.0" width="50.666666666666657" height="50.666666666666664"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="IVf-9r-ArN" secondAttribute="height" multiplier="1:1" id="Bkz-QF-KIs"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system" title=""/>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="qQC-ve-p0v" secondAttribute="trailing" id="3iv-sT-t5T"/>
+                                                <constraint firstAttribute="bottom" secondItem="qQC-ve-p0v" secondAttribute="bottom" id="6Nl-CB-MFd"/>
+                                                <constraint firstAttribute="trailing" secondItem="IVf-9r-ArN" secondAttribute="trailing" id="8wZ-ZI-YHA"/>
+                                                <constraint firstAttribute="width" secondItem="VO7-tY-y6W" secondAttribute="height" multiplier="3.2:4" id="DOK-Hh-tUg"/>
+                                                <constraint firstItem="qQC-ve-p0v" firstAttribute="leading" secondItem="VO7-tY-y6W" secondAttribute="leading" id="ErK-em-DZY"/>
+                                                <constraint firstItem="qQC-ve-p0v" firstAttribute="top" secondItem="VO7-tY-y6W" secondAttribute="top" id="T5C-VE-eWg"/>
+                                                <constraint firstAttribute="width" constant="100" id="TL9-r2-scg"/>
+                                                <constraint firstItem="IVf-9r-ArN" firstAttribute="top" secondItem="VO7-tY-y6W" secondAttribute="top" id="VMx-4x-YG8"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="철도 박물관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p62-PL-BWj">
+                                            <rect key="frame" x="16" y="20" width="277" height="20.333333333333329"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일본 철도의 역사를 둘러볼 수 있는 박물관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3M-C1-lpw">
+                                            <rect key="frame" x="16" y="41.333333333333336" width="277" height="20.333333333333336"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="★★★★★" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wj2-fj-JOJ">
+                                            <rect key="frame" x="16" y="64.666666666666671" width="85" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" (3) ∙ 저장 239" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eB4-lD-e0g">
+                                            <rect key="frame" x="101" y="64.666666666666671" width="110" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="VO7-tY-y6W" secondAttribute="trailing" constant="16" id="0aQ-ia-DbR"/>
+                                        <constraint firstItem="p62-PL-BWj" firstAttribute="leading" secondItem="kNM-ey-kYd" secondAttribute="leading" constant="16" id="7dA-1r-38u"/>
+                                        <constraint firstItem="VO7-tY-y6W" firstAttribute="leading" secondItem="p62-PL-BWj" secondAttribute="trailing" constant="8" id="8lF-nk-fWi"/>
+                                        <constraint firstItem="y3M-C1-lpw" firstAttribute="leading" secondItem="kNM-ey-kYd" secondAttribute="leading" constant="16" id="9h7-Wm-CvD"/>
+                                        <constraint firstItem="VO7-tY-y6W" firstAttribute="top" secondItem="kNM-ey-kYd" secondAttribute="top" constant="23" id="ADK-XU-tvi"/>
+                                        <constraint firstAttribute="bottom" secondItem="VO7-tY-y6W" secondAttribute="bottom" constant="23" id="BIA-lK-Y4k"/>
+                                        <constraint firstItem="eB4-lD-e0g" firstAttribute="top" secondItem="y3M-C1-lpw" secondAttribute="bottom" constant="3" id="HnZ-VK-TfU"/>
+                                        <constraint firstItem="wj2-fj-JOJ" firstAttribute="top" secondItem="y3M-C1-lpw" secondAttribute="bottom" constant="3" id="ZPD-Ni-Zdc"/>
+                                        <constraint firstItem="wj2-fj-JOJ" firstAttribute="leading" secondItem="kNM-ey-kYd" secondAttribute="leading" constant="16" id="aPA-y5-paf"/>
+                                        <constraint firstItem="p62-PL-BWj" firstAttribute="top" secondItem="kNM-ey-kYd" secondAttribute="top" constant="20" id="cqC-WH-Voa"/>
+                                        <constraint firstItem="VO7-tY-y6W" firstAttribute="leading" secondItem="y3M-C1-lpw" secondAttribute="trailing" constant="8" id="md5-Oa-cOg"/>
+                                        <constraint firstItem="y3M-C1-lpw" firstAttribute="top" secondItem="p62-PL-BWj" secondAttribute="bottom" constant="1" id="vEe-vA-Ctj"/>
+                                        <constraint firstItem="eB4-lD-e0g" firstAttribute="leading" secondItem="wj2-fj-JOJ" secondAttribute="trailing" id="y2s-rD-mQs"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cityDetailDescriptionLabel" destination="y3M-C1-lpw" id="qyp-rh-eiz"/>
+                                    <outlet property="cityDetailGradeLabel" destination="wj2-fj-JOJ" id="JZs-J8-LMe"/>
+                                    <outlet property="cityDetailImageView" destination="qQC-ve-p0v" id="hFg-sT-YNf"/>
+                                    <outlet property="cityDetailLikeButton" destination="IVf-9r-ArN" id="OQV-iF-zdX"/>
+                                    <outlet property="cityDetailSaveLabel" destination="eB4-lD-e0g" id="nqe-KS-H1z"/>
+                                    <outlet property="cityDetailTitleLabel" destination="p62-PL-BWj" id="Mf6-IA-blm"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ZpI-H2-YmM" id="Ln9-51-BF6"/>
+                            <outlet property="delegate" destination="ZpI-H2-YmM" id="1Ba-wm-zpv"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="GyV-rN-hPm"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TGE-11-6Yk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1852.6717557251907" y="734.50704225352115"/>
         </scene>
         <!--Travel Magazine Table View Controller-->
         <scene sceneID="lCN-IY-v7h">
@@ -132,17 +238,42 @@
                     <connections>
                         <segue destination="NwO-XP-zEi" kind="relationship" relationship="viewControllers" id="XUA-VV-d9k"/>
                         <segue destination="kO2-cD-tqy" kind="relationship" relationship="viewControllers" id="UvE-Hr-MLL"/>
+                        <segue destination="1FY-R1-Thb" kind="relationship" relationship="viewControllers" id="0A0-bi-RyV"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aew-zs-BJx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="135.1145038167939" y="3.5211267605633805"/>
         </scene>
+        <!--Detail-->
+        <scene sceneID="CDA-hS-Efd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1FY-R1-Thb" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Detail" image="list.clipboard.fill" catalog="system" id="ZIS-fj-QXr"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P49-UH-zCL">
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ZpI-H2-YmM" kind="relationship" relationship="rootViewController" id="TDL-Ne-pCD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5wy-Up-gea" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1060" y="735"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="heart" catalog="system" width="128" height="107"/>
         <image name="house.fill" catalog="system" width="128" height="104"/>
+        <image name="list.clipboard.fill" catalog="system" width="98" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

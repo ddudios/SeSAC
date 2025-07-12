@@ -8,9 +8,12 @@
 import UIKit
 
 struct CustomFont {
-    static let title = UIFont.systemFont(ofSize: 28, weight: .semibold)
+    static let headline = UIFont.systemFont(ofSize: 28, weight: .semibold)
     static let subtitle = UIFont.systemFont(ofSize: 18, weight: .medium)
     static let caption = UIFont.systemFont(ofSize: 15, weight: .medium)
+    
+    static let title = UIFont.systemFont(ofSize: 19, weight: .bold)
+    static let body = UIFont.systemFont(ofSize: 16, weight: .semibold)
 }
 
 struct CornerRadiusValue {
@@ -31,7 +34,7 @@ class TravelMagazineTableViewCell: UITableViewCell {
         travelMagazineImageView.clipsToBounds = true
         travelMagazineImageView.backgroundColor = .black
         
-        travelMagazineTitleLabel.font = CustomFont.title
+        travelMagazineTitleLabel.font = CustomFont.headline
         travelMagazineTitleLabel.textColor = .black
         travelMagazineTitleLabel.numberOfLines = 0
         travelMagazineTitleLabel.text = """

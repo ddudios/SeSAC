@@ -39,10 +39,10 @@ class TravelMagazineTableViewController: UITableViewController {
     }
     
     func configureUI() {
-        configureNavigationBar()
+        configureNavigationBarUI()
     }
     
-    func configureNavigationBar() {
+    func configureNavigationBarUI() {
         self.navigationItem.title = "SeSAC TRAVEL"
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .white
