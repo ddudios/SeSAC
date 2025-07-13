@@ -24,12 +24,12 @@ class TravelMagazineTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "travelNewsCell", for: indexPath) as! TravelMagazineTableViewCell
         
-        let magazineIndexPathRow = magazineInfo.magazine[indexPath.row]
-        let url = URL(string: magazineIndexPathRow.photo_image)
+        let magazineValueCorrespondingToIndexPathRow = magazineInfo.magazine[indexPath.row]
+        let url = URL(string: magazineValueCorrespondingToIndexPathRow.photo_image)
         cell.travelMagazineImageView.kf.setImage(with: url)
-        cell.travelMagazineTitleLabel.text = magazineIndexPathRow.title
-        cell.travelMagazinesubtitleLabel.text = magazineIndexPathRow.subtitle
-        cell.travelMagazineDateLabel.text = magazineIndexPathRow.date
+        cell.travelMagazineTitleLabel.text = magazineValueCorrespondingToIndexPathRow.title
+        cell.travelMagazinesubtitleLabel.text = magazineValueCorrespondingToIndexPathRow.subtitle
+        cell.travelMagazineDateLabel.text = magazineValueCorrespondingToIndexPathRow.date
         
         return cell
     }

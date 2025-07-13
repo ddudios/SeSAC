@@ -22,16 +22,16 @@ class TravelCityDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let travelInfoIndexPath = travelInfo.travel[indexPath.row]
+        let travelValueCorrespondingToPath = travelInfo.travel[indexPath.row]
         
-        guard let ad = travelInfoIndexPath.ad else {
+        guard let ad = travelValueCorrespondingToPath.ad else {
             print("error: \(#function) - ad Optional binding")
             return UITableViewCell()
         }
         
         if ad {
             let adCell = tableView.dequeueReusableCell(withIdentifier: "cityDetailADCell", for: indexPath) as! TravelCityDetailADTableViewCell
-            adCell.cityDetailADLabel.text = travelInfoIndexPath.title
+            adCell.cityDetailADLabel.text = travelValueCorrespondingToPath.title
             
             if indexPath.row % 2 == 0 {
                 adCell.cityDetailADBackgroundView.backgroundColor = .babyPink
@@ -43,10 +43,10 @@ class TravelCityDetailTableViewController: UITableViewController {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cityDetailCell", for: indexPath) as! TravelCityDetailTableViewCell
             
-            cell.cityDetailTitleLabel.text = travelInfoIndexPath.title
-            cell.cityDetailDescriptionLabel.text = travelInfoIndexPath.description
+            cell.cityDetailTitleLabel.text = travelValueCorrespondingToPath.title
+            cell.cityDetailDescriptionLabel.text = travelValueCorrespondingToPath.description
             
-            guard let grade = travelInfoIndexPath.grade else {
+            guard let grade = travelValueCorrespondingToPath.grade else {
                 print("error: \(#function) - grade Optional binding")
                 return UITableViewCell()
             }
@@ -79,7 +79,7 @@ class TravelCityDetailTableViewController: UITableViewController {
                 }
             }
             
-            guard let save = travelInfoIndexPath.save else {
+            guard let save = travelValueCorrespondingToPath.save else {
                 print("error: \(#function) - save Optional binding")
                 return UITableViewCell()
             }
@@ -94,7 +94,7 @@ class TravelCityDetailTableViewController: UITableViewController {
             
             cell.cityDetailSaveLabel.text = "(\(numberStyle)) ∙ 저장 \(numberStyle)"
             
-            guard let image = travelInfoIndexPath.travel_image else {
+            guard let image = travelValueCorrespondingToPath.travel_image else {
                 print("error: \(#function) - image Optional binding")
                 return UITableViewCell()
             }
@@ -102,7 +102,7 @@ class TravelCityDetailTableViewController: UITableViewController {
             let url = URL(string: image)
             cell.cityDetailImageView.kf.setImage(with: url)
             
-            guard let like = travelInfoIndexPath.like else {
+            guard let like = travelValueCorrespondingToPath.like else {
                 print("error: \(#function) - like Optional binding")
                 return UITableViewCell()
             }
