@@ -50,21 +50,7 @@ class GameViewController: UIViewController {
         lb.text = ""
     }
     
-    func showTextView(max: String?) {
-            let maxNumber = Int(max!)
-            
-            guard let nonOptionalMaxNumber = maxNumber else {
-                print("error: \(#function) - max: optional binding - Fail")
-                return
-            }
-            
-            for num in 1...nonOptionalMaxNumber {
-                gameTextView.text += "\(num), "
-            }
-            
-            gameTextView.text.removeLast(2)
-    }
-    
+    // 숫자1~입력숫자를 텍스트뷰에 String으로 추가하면서, String에 3, 6, 9가 포함되어 있다면 이모지로 대체
     func replaceClap(max: String?) {
         let maxNumber = Int(max!)
         
@@ -85,6 +71,23 @@ class GameViewController: UIViewController {
         gameTextView.text.removeLast(2)
     }
     
+    // TextView에 숫자1~입력숫자까지 String으로 추가해서 화면에 보여주고 끝의 ", " 제거
+    func showTextView(max: String?) {
+            let maxNumber = Int(max!)
+            
+            guard let nonOptionalMaxNumber = maxNumber else {
+                print("error: \(#function) - max: optional binding - Fail")
+                return
+            }
+            
+            for num in 1...nonOptionalMaxNumber {
+                gameTextView.text += "\(num), "
+            }
+            
+            gameTextView.text.removeLast(2)
+    }
+    
+    // 전체 문자열를 돌면서 "3", "6", "9"를 이모지로 대체
     func replaceNumber() {
         gameTextView.text = gameTextView.text
             .replacingOccurrences(of: "3", with: "👏")
@@ -92,6 +95,7 @@ class GameViewController: UIViewController {
             .replacingOccurrences(of: "9", with: "👏")
     }
     
+    // 전체 문자열을 돌면서 이모지에 해당하면 카운팅+
     func countingClap() {
         var countClap = 0
         gameTextView.text.forEach { clap in
