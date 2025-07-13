@@ -24,25 +24,23 @@ class TravelCityDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let travelInfoIndexPath = travelInfo.travel[indexPath.row]
         
-        let adCell = tableView.dequeueReusableCell(withIdentifier: "cityDetailADCell", for: indexPath) as! TravelCityDetailADTableViewCell
-        adCell.cityDetailADLabel.text = travelInfoIndexPath.title
-        if indexPath.row % 2 == 0 {
-            adCell.cityDetailADBackgroundView.backgroundColor = .babyPink
-        } else {
-            adCell.cityDetailADBackgroundView.backgroundColor = .babyGreen
-        }
-        
         guard let ad = travelInfoIndexPath.ad else {
             print("error: \(#function) - ad Optional binding")
-            return adCell
+            return UITableViewCell()
         }
         
         if ad {
-            // 왜 버튼을 누르면 높이가 바뀌지?
-            tableView.rowHeight = 100
+            let adCell = tableView.dequeueReusableCell(withIdentifier: "cityDetailADCell", for: indexPath) as! TravelCityDetailADTableViewCell
+            adCell.cityDetailADLabel.text = travelInfoIndexPath.title
+            
+            if indexPath.row % 2 == 0 {
+                adCell.cityDetailADBackgroundView.backgroundColor = .babyPink
+            } else {
+                adCell.cityDetailADBackgroundView.backgroundColor = .babyGreen
+            }
+            
             return adCell
         } else {
-            tableView.rowHeight = 180
             let cell = tableView.dequeueReusableCell(withIdentifier: "cityDetailCell", for: indexPath) as! TravelCityDetailTableViewCell
             
             cell.cityDetailTitleLabel.text = travelInfoIndexPath.title
@@ -50,7 +48,7 @@ class TravelCityDetailTableViewController: UITableViewController {
             
             guard let grade = travelInfoIndexPath.grade else {
                 print("error: \(#function) - grade Optional binding")
-                return cell
+                return UITableViewCell()
             }
             
             var grades = [false, false, false, false, false]
@@ -83,7 +81,7 @@ class TravelCityDetailTableViewController: UITableViewController {
             
             guard let save = travelInfoIndexPath.save else {
                 print("error: \(#function) - save Optional binding")
-                return cell
+                return UITableViewCell()
             }
             
             
@@ -91,14 +89,14 @@ class TravelCityDetailTableViewController: UITableViewController {
             numberFormatter.numberStyle = .decimal
             guard let numberStyle = numberFormatter.string(for: save) else {
                 print("error: \(#function) numberStyle Optional binding")
-                return cell
+                return UITableViewCell()
             }
             
             cell.cityDetailSaveLabel.text = "(\(numberStyle)) ∙ 저장 \(numberStyle)"
             
             guard let image = travelInfoIndexPath.travel_image else {
                 print("error: \(#function) - image Optional binding")
-                return cell
+                return UITableViewCell()
             }
             
             let url = URL(string: image)
@@ -106,34 +104,33 @@ class TravelCityDetailTableViewController: UITableViewController {
             
             guard let like = travelInfoIndexPath.like else {
                 print("error: \(#function) - like Optional binding")
-                return cell
+                return UITableViewCell()
             }
             
             like ? cell.cityDetailLikeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal) : cell.cityDetailLikeButton.setImage(UIImage(systemName: "heart"), for: .normal)
             
             cell.cityDetailLikeButton.tag = indexPath.row
             cell.cityDetailLikeButton.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
+            print(cell.cityDetailLikeButton.tag)
             
             return cell
         }
     }
     
-    // 왜 안되지?
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if let ad = travelInfo.travel[indexPath.row].ad {
-//            if ad {
-//                return 100
-//            } else {
-//                return 180
-//            }
-//        } else {
-//            print("error: \(#function) - ad Optional binding")
-//            return 0
-//        }
-//    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let ad = travelInfo.travel[indexPath.row].ad {
+            if ad {
+                return 100
+            } else {
+                return 180
+            }
+        } else {
+            print("error: \(#function) - ad Optional binding")
+            return 0
+        }
+    }
     
     func configureUI() {
-//        tableView.rowHeight = 180
         configureNavigationBarUI()
     }
     
@@ -143,16 +140,6 @@ class TravelCityDetailTableViewController: UITableViewController {
     
     @objc func likeButtonTapped(_ sender: UIButton) {
         travelInfo.travel[sender.tag].like?.toggle()
-        
-        guard let ad = travelInfo.travel[sender.tag].ad else {
-            print("error: \(#function) - ad Optional binding")
-            return
-        }
-        if ad {
-            tableView.rowHeight = 100
-        } else {
-            tableView.rowHeight = 180
-        }
         tableView.reloadData()
     }
 }
