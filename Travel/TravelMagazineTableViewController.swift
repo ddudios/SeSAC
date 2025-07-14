@@ -31,13 +31,10 @@ class TravelMagazineTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 510
-    }
-    
     func configureUI() {
         configureNavigationBarUI(title: "SeSAC TRAVEL")
         let xib = UINib(nibName: "TravelMagazineTableViewCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: "TravelMagazineTableViewCell")
+        tableView.rowHeight = UITableView.automaticDimension
     }
 }
