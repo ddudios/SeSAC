@@ -111,7 +111,6 @@ class TravelCityDetailTableViewController: UITableViewController {
             
             cell.cityDetailLikeButton.tag = indexPath.row
             cell.cityDetailLikeButton.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
-            print(cell.cityDetailLikeButton.tag)
             
             return cell
         }
@@ -131,11 +130,7 @@ class TravelCityDetailTableViewController: UITableViewController {
     }
     
     func configureUI() {
-        configureNavigationBarUI()
-    }
-    
-    func configureNavigationBarUI() {
-        self.navigationItem.title = "도시 상세 정보"
+        configureNavigationBarUI(title: "도시 상세 정보")
     }
     
     @objc func likeButtonTapped(_ sender: UIButton) {

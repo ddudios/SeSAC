@@ -23,7 +23,7 @@ class TravelMagazineTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "travelNewsCell", for: indexPath) as! TravelMagazineTableViewCell
-        
+        // protocol collection
         let magazineValueCorrespondingToIndexPathRow = magazineInfo.magazine[indexPath.row]
         let url = URL(string: magazineValueCorrespondingToIndexPathRow.photo_image)
         cell.travelMagazineImageView.kf.setImage(with: url)
@@ -39,18 +39,6 @@ class TravelMagazineTableViewController: UITableViewController {
     }
     
     func configureUI() {
-        configureNavigationBarUI()
-    }
-    
-    func configureNavigationBarUI() {
-        self.navigationItem.title = "SeSAC TRAVEL"
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        
-        navigationController?.navigationBar.tintColor = .gray
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        configureNavigationBarUI(title: "SeSAC TRAVEL")
     }
 }
