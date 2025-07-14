@@ -38,4 +38,12 @@ class TravelMagazineTableViewCell: UITableViewCell {
         travelMagazineDateLabel.textAlignment = .right
         travelMagazineDateLabel.text = "23년 11월 18일"
     }
+    
+    func configureCell(magazineValueCorrespondingToIndexPathRow: Magazine) {
+        let url = URL(string: magazineValueCorrespondingToIndexPathRow.photo_image)
+        travelMagazineImageView.kf.setImage(with: url)
+        travelMagazineTitleLabel.text = magazineValueCorrespondingToIndexPathRow.title
+        travelMagazinesubtitleLabel.text = magazineValueCorrespondingToIndexPathRow.subtitle
+        travelMagazineDateLabel.text = magazineValueCorrespondingToIndexPathRow.date
+    }
 }

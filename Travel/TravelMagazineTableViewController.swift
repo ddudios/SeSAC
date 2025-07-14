@@ -23,13 +23,10 @@ class TravelMagazineTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TravelMagazineTableViewCell", for: indexPath) as! TravelMagazineTableViewCell
-        // protocol collection
-        let magazineValueCorrespondingToIndexPathRow = magazineInfo.magazine[indexPath.row]
-        let url = URL(string: magazineValueCorrespondingToIndexPathRow.photo_image)
-        cell.travelMagazineImageView.kf.setImage(with: url)
-        cell.travelMagazineTitleLabel.text = magazineValueCorrespondingToIndexPathRow.title
-        cell.travelMagazinesubtitleLabel.text = magazineValueCorrespondingToIndexPathRow.subtitle
-        cell.travelMagazineDateLabel.text = magazineValueCorrespondingToIndexPathRow.date
+        
+        // protocol collection으로 안전하게 처리해보기
+//        let magazineValueCorrespondingToIndexPathRow = magazineInfo.magazine[indexPath.row]
+        cell.configureCell(magazineValueCorrespondingToIndexPathRow: magazineInfo.magazine[indexPath.row])
         
         return cell
     }

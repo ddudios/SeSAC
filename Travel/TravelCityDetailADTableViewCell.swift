@@ -35,4 +35,14 @@ class TravelCityDetailADTableViewCell: UITableViewCell {
         cityDetailADBedgeLabel.backgroundColor = .white
         cityDetailADBedgeLabel.textAlignment = .center
     }
+    
+    func configureCell(travelValueCorrespondingToPath: Travel, indexPath: IndexPath) {
+        cityDetailADLabel.text = travelValueCorrespondingToPath.title
+        
+        if indexPath.row % 2 == 0 {
+            cityDetailADBackgroundView.backgroundColor = .babyPink
+        } else {
+            cityDetailADBackgroundView.backgroundColor = .babyGreen
+        }
+    }
 }
