@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TravelMagazineTableViewCell" rowHeight="590" id="KGk-i7-Jjw" customClass="TravelMagazineTableViewCell" customModule="Travel" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="404" height="590"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="404" height="590"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="85V-xF-otE">
+                        <rect key="frame" x="32" y="16" width="340" height="340"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="85V-xF-otE" secondAttribute="height" multiplier="1:1" id="f78-Tb-9Hf"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="travelNewsTitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtG-x5-wMc">
+                        <rect key="frame" x="32" y="364" width="340" height="156"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="travelNewsBody" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yed-Qd-mfa">
+                        <rect key="frame" x="32" y="524" width="340" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="lmG-LO-60N"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="travelNewsDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dso-OK-A1r">
+                        <rect key="frame" x="32" y="553" width="340" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Iks-dG-DF3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="CtG-x5-wMc" firstAttribute="top" secondItem="85V-xF-otE" secondAttribute="bottom" constant="8" id="31C-ft-xWE"/>
+                    <constraint firstItem="85V-xF-otE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="31T-Qo-2NQ"/>
+                    <constraint firstItem="yed-Qd-mfa" firstAttribute="top" secondItem="CtG-x5-wMc" secondAttribute="bottom" constant="4" id="46Z-ZK-AGF"/>
+                    <constraint firstItem="yed-Qd-mfa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="7pj-oQ-H7y"/>
+                    <constraint firstAttribute="trailing" secondItem="85V-xF-otE" secondAttribute="trailing" constant="32" id="EQk-1j-aIg"/>
+                    <constraint firstItem="Dso-OK-A1r" firstAttribute="top" secondItem="yed-Qd-mfa" secondAttribute="bottom" constant="8" id="Kpm-YD-kOd"/>
+                    <constraint firstItem="CtG-x5-wMc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="LXi-n3-HEc"/>
+                    <constraint firstAttribute="trailing" secondItem="Dso-OK-A1r" secondAttribute="trailing" constant="32" id="QHi-26-5fd"/>
+                    <constraint firstAttribute="bottom" secondItem="Dso-OK-A1r" secondAttribute="bottom" constant="16" id="Rit-iM-bk8"/>
+                    <constraint firstAttribute="trailing" secondItem="CtG-x5-wMc" secondAttribute="trailing" constant="32" id="TgT-Zd-Xe3"/>
+                    <constraint firstAttribute="trailing" secondItem="yed-Qd-mfa" secondAttribute="trailing" constant="32" id="b9E-1k-cJ7"/>
+                    <constraint firstItem="85V-xF-otE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="l3H-kc-qC9"/>
+                    <constraint firstItem="Dso-OK-A1r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="sHu-2T-F9u"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="travelMagazineDateLabel" destination="Dso-OK-A1r" id="dri-Ah-t3P"/>
+                <outlet property="travelMagazineImageView" destination="85V-xF-otE" id="AJr-An-wTA"/>
+                <outlet property="travelMagazineTitleLabel" destination="CtG-x5-wMc" id="DT1-up-nrd"/>
+                <outlet property="travelMagazinesubtitleLabel" destination="yed-Qd-mfa" id="KMk-Ly-qpc"/>
+            </connections>
+            <point key="canvasLocation" x="90.07633587786259" y="211.97183098591552"/>
+        </tableViewCell>
+    </objects>
+</document>

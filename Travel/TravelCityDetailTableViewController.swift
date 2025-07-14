@@ -30,7 +30,7 @@ class TravelCityDetailTableViewController: UITableViewController {
         }
         
         if ad {
-            let adCell = tableView.dequeueReusableCell(withIdentifier: "cityDetailADCell", for: indexPath) as! TravelCityDetailADTableViewCell
+            let adCell = tableView.dequeueReusableCell(withIdentifier: "TravelCityDetailADTableViewCell", for: indexPath) as! TravelCityDetailADTableViewCell
             adCell.cityDetailADLabel.text = travelValueCorrespondingToPath.title
             
             if indexPath.row % 2 == 0 {
@@ -41,7 +41,7 @@ class TravelCityDetailTableViewController: UITableViewController {
             
             return adCell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cityDetailCell", for: indexPath) as! TravelCityDetailTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TravelCityDetailTableViewCell", for: indexPath) as! TravelCityDetailTableViewCell
             
             cell.cityDetailTitleLabel.text = travelValueCorrespondingToPath.title
             cell.cityDetailDescriptionLabel.text = travelValueCorrespondingToPath.description
@@ -131,6 +131,12 @@ class TravelCityDetailTableViewController: UITableViewController {
     
     func configureUI() {
         configureNavigationBarUI(title: "도시 상세 정보")
+        
+        let xib = UINib(nibName: "TravelCityDetailTableViewCell", bundle: nil)
+        tableView.register(xib, forCellReuseIdentifier: "TravelCityDetailTableViewCell")
+        
+        let adXib = UINib(nibName: "TravelCityDetailADTableViewCell", bundle: nil)
+        tableView.register(adXib, forCellReuseIdentifier: "TravelCityDetailADTableViewCell")
     }
     
     @objc func likeButtonTapped(_ sender: UIButton) {

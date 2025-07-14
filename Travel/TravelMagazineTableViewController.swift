@@ -22,7 +22,7 @@ class TravelMagazineTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "travelNewsCell", for: indexPath) as! TravelMagazineTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TravelMagazineTableViewCell", for: indexPath) as! TravelMagazineTableViewCell
         // protocol collection
         let magazineValueCorrespondingToIndexPathRow = magazineInfo.magazine[indexPath.row]
         let url = URL(string: magazineValueCorrespondingToIndexPathRow.photo_image)
@@ -40,5 +40,7 @@ class TravelMagazineTableViewController: UITableViewController {
     
     func configureUI() {
         configureNavigationBarUI(title: "SeSAC TRAVEL")
+        let xib = UINib(nibName: "TravelMagazineTableViewCell", bundle: nil)
+        tableView.register(xib, forCellReuseIdentifier: "TravelMagazineTableViewCell")
     }
 }
