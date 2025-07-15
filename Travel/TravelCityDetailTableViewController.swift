@@ -57,6 +57,10 @@ class TravelCityDetailTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showToast()
+    }
+    
     func configureUI() {
         configureNavigationBarUI(title: "도시 상세 정보")
         

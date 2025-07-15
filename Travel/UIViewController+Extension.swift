@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 struct CustomFont {
     static let headline = UIFont.systemFont(ofSize: 28, weight: .semibold)
@@ -31,6 +32,10 @@ extension UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    func showToast() {
+        view.makeToast("", duration: 1, point: CGPoint(x: 200, y: 650), title: "광고 셀입니다", image: nil, completion: nil)
     }
 }
 
