@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TravelCityDetailTableViewController: UITableViewController {
+class CityDetailListTableViewController: UITableViewController {
     
     var travelInfo = TravelInfo()
 
@@ -30,11 +30,11 @@ class TravelCityDetailTableViewController: UITableViewController {
         }
         
         if ad {
-            let adCell = tableView.dequeueReusableCell(withIdentifier: "TravelCityDetailADTableViewCell", for: indexPath) as! TravelCityDetailADTableViewCell
+            let adCell = tableView.dequeueReusableCell(withIdentifier: "CityDetailListADTableViewCell", for: indexPath) as! CityDetailListADTableViewCell
             adCell.configureCell(travelValueCorrespondingToPath: travelValueCorrespondingToPath, indexPath: indexPath)
             return adCell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TravelCityDetailTableViewCell", for: indexPath) as! TravelCityDetailTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CityDetailListTableViewCell", for: indexPath) as! CityDetailListTableViewCell
             
             cell.configureCell(travelValueCorrespondingToPath: travelValueCorrespondingToPath)
             cell.cityDetailLikeButton.tag = indexPath.row
@@ -58,17 +58,32 @@ class TravelCityDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        showToast()
+        guard let ad = travelInfo.travel[indexPath.row].ad else {
+            print("error: \(#function) - ad Optional binding")
+            return
+        }
+        if ad {
+            showToast()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "AdDetailViewController") as! AdDetailViewController
+            let navigationView = UINavigationController(rootViewController: viewController)
+            navigationView.modalPresentationStyle = .fullScreen
+            present(navigationView, animated: true)
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "CityDetailViewController") as! CityDetailViewController
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func configureUI() {
         configureNavigationBarUI(title: "도시 상세 정보")
         
-        let xib = UINib(nibName: "TravelCityDetailTableViewCell", bundle: nil)
-        tableView.register(xib, forCellReuseIdentifier: "TravelCityDetailTableViewCell")
+        let xib = UINib(nibName: "CityDetailListTableViewCell", bundle: nil)
+        tableView.register(xib, forCellReuseIdentifier: "CityDetailListTableViewCell")
         
-        let adXib = UINib(nibName: "TravelCityDetailADTableViewCell", bundle: nil)
-        tableView.register(adXib, forCellReuseIdentifier: "TravelCityDetailADTableViewCell")
+        let adXib = UINib(nibName: "CityDetailListADTableViewCell", bundle: nil)
+        tableView.register(adXib, forCellReuseIdentifier: "CityDetailListADTableViewCell")
     }
     
     @objc func likeButtonTapped(_ sender: UIButton) {

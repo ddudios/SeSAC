@@ -21,7 +21,7 @@ class TravelMagazineTableViewCell: UITableViewCell {
         travelMagazineImageView.clipsToBounds = true
         travelMagazineImageView.backgroundColor = .black
         
-        travelMagazineTitleLabel.font = CustomFont.headline
+        travelMagazineTitleLabel.font = CustomFont.headline2
         travelMagazineTitleLabel.textColor = .black
         travelMagazineTitleLabel.numberOfLines = 0
         travelMagazineTitleLabel.text = """

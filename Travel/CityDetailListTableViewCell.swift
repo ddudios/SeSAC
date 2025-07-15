@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TravelCityDetailTableViewCell: UITableViewCell {
+class CityDetailListTableViewCell: UITableViewCell {
     
     @IBOutlet var cityDetailTitleLabel: UILabel!
     @IBOutlet var cityDetailDescriptionLabel: UILabel!
@@ -20,7 +20,7 @@ class TravelCityDetailTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        cityDetailTitleLabel.font = CustomFont.title
+        cityDetailTitleLabel.font = CustomFont.title2
         cityDetailTitleLabel.textColor = .black
         
         cityDetailDescriptionLabel.numberOfLines = 0

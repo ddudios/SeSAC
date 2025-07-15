@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TravelCityDetailADTableViewCell: UITableViewCell {
+class CityDetailListADTableViewCell: UITableViewCell {
     
     @IBOutlet var cityDetailADBackgroundView: UIView!
     @IBOutlet var cityDetailADLabel: UILabel!
@@ -23,7 +23,7 @@ class TravelCityDetailADTableViewCell: UITableViewCell {
         cityDetailADBackgroundView.clipsToBounds = true
         
         cityDetailADLabel.numberOfLines = 0
-        cityDetailADLabel.font = CustomFont.title
+        cityDetailADLabel.font = CustomFont.title2
         cityDetailADLabel.textColor = .black
         cityDetailADLabel.textAlignment = .center
         

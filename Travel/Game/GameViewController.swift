@@ -33,7 +33,7 @@ class GameViewController: UIViewController {
         tf.placeholder = "최대 숫자를 입력해주세요"
         tf.textAlignment = .center
         tf.tintColor = .black
-        tf.font = CustomFont.headline
+        tf.font = CustomFont.headline2
     }
     
     func configureGameTextViewUI(_ tv: UITextView) {
@@ -44,7 +44,7 @@ class GameViewController: UIViewController {
     }
     
     func configureGameResultLabelUI(_ lb: UILabel) {
-        lb.font = CustomFont.headline
+        lb.font = CustomFont.headline2
         lb.textAlignment = .center
         lb.numberOfLines = 0
         lb.text = ""
