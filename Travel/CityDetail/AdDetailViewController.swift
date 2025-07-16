@@ -11,6 +11,8 @@ class AdDetailViewController: UIViewController {
 
     @IBOutlet var adLabel: UILabel!
     
+    var adTitle: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -21,15 +23,11 @@ class AdDetailViewController: UIViewController {
         let backBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissButtonTapped))
         self.navigationItem.leftBarButtonItem = backBarButtonItem
         
-        configureLabel(adLabel, text: """
-            도쿄 여행 예약은?
-            수업이 있는데
-            가실 생각은 아니시죠?
-            """)
+        configureLabel(adLabel)
     }
     
-    func configureLabel(_ label: UILabel, text: String) {
-        label.text = text
+    func configureLabel(_ label: UILabel) {
+        label.text = adTitle
         label.font = CustomFont.title1
         label.textColor = .black
         label.textAlignment = .center

@@ -67,16 +67,18 @@ class CityDetailListTableViewController: UITableViewController {
         }
         if ad {
             showToast()
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let viewController = storyboard.instantiateViewController(withIdentifier: adDetailViewController) as! AdDetailViewController
             let viewController = self.storyboard?.instantiateViewController(withIdentifier: adDetailViewController) as! AdDetailViewController
+            
+            viewController.adTitle = travelInfo.travel[indexPath.row].title
+            
             let navigationView = UINavigationController(rootViewController: viewController)
             navigationView.modalPresentationStyle = .fullScreen
             present(navigationView, animated: true)
         } else {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let viewController = storyboard.instantiateViewController(withIdentifier: cityDetailViewController) as! CityDetailViewController
             let viewController = self.storyboard?.instantiateViewController(withIdentifier: cityDetailViewController) as! CityDetailViewController
+            
+            viewController.travel = travelInfo.travel[indexPath.row]
+            
             navigationController?.pushViewController(viewController, animated: true)
         }
     }

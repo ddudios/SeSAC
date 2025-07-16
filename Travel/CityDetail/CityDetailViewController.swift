@@ -14,6 +14,8 @@ class CityDetailViewController: UIViewController {
     @IBOutlet var cityDescriptionLabel: UILabel!
     @IBOutlet var goOtherCityButton: UIButton!
     
+    var travel: Travel = Travel(title: "", description: nil, travel_image: nil, grade: nil, save: nil, like: nil, ad: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -28,19 +30,21 @@ class CityDetailViewController: UIViewController {
     }
     
     func configureImageView(_ imageView: UIImageView) {
-        let url = URL(string:  TravelInfo().travel.first?.travel_image ?? "")
+        let url = URL(string:  travel.travel_image ?? "")
         imageView.kf.setImage(with: url)
         imageView.layer.cornerRadius = 15
         imageView.clipsToBounds = true
     }
     
     func configureTitleLabel(_ label: UILabel) {
+        label.text = travel.title
         label.font = CustomFont.headline1
         label.textColor = .black
         label.textAlignment = .center
     }
     
     func configureDescriptionLabel(_ label: UILabel) {
+        label.text = travel.description
         label.font = CustomFont.title1
         label.textColor = .black
         label.numberOfLines = 0
