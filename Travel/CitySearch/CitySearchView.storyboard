@@ -16,21 +16,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8i0-LK-mRP">
-                                <rect key="frame" x="176" y="359" width="75" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="xtO-QT-SQN">
+                                <rect key="frame" x="0.0" y="162" width="393" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="testButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="hGw-oQ-PaY"/>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="x4r-et-x9m"/>
                                 </connections>
-                            </button>
+                            </searchBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Eyc-eS-yi6">
+                                <rect key="frame" x="30" y="238" width="333" height="32"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Da7-wF-cRo">
+                                <rect key="frame" x="0.0" y="289" width="393" height="446"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="xtO-QT-SQN" secondAttribute="trailing" id="2d7-27-LoA"/>
+                            <constraint firstItem="Da7-wF-cRo" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="K04-yY-hXr"/>
+                            <constraint firstItem="Eyc-eS-yi6" firstAttribute="top" secondItem="xtO-QT-SQN" secondAttribute="bottom" constant="20" id="PBr-1d-Zjz"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Eyc-eS-yi6" secondAttribute="trailing" constant="30" id="UL9-ZP-zbG"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Da7-wF-cRo" secondAttribute="trailing" id="as1-Zl-KAq"/>
+                            <constraint firstItem="Da7-wF-cRo" firstAttribute="top" secondItem="Eyc-eS-yi6" secondAttribute="bottom" constant="20" id="d78-fm-h0I"/>
+                            <constraint firstItem="xtO-QT-SQN" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="lHg-3S-2xa"/>
+                            <constraint firstItem="Eyc-eS-yi6" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="lYD-JM-u6z"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Da7-wF-cRo" secondAttribute="bottom" id="orH-hP-qBS"/>
+                            <constraint firstItem="xtO-QT-SQN" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="sQ1-em-Jn2"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0xj-bW-dTr"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="cityListTableView" destination="Da7-wF-cRo" id="U9Y-tx-8kE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -45,7 +69,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCu-63-2MX">
-                                <rect key="frame" x="175.66666666666666" y="415.66666666666669" width="42" height="21"/>
+                                <rect key="frame" x="30" y="415.66666666666669" width="333" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -54,12 +78,13 @@
                         <viewLayoutGuide key="safeArea" id="FkT-kb-Yni"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="SCu-63-2MX" firstAttribute="centerY" secondItem="XwD-VG-7A6" secondAttribute="centerY" id="ouj-3v-tll"/>
-                            <constraint firstItem="SCu-63-2MX" firstAttribute="centerX" secondItem="XwD-VG-7A6" secondAttribute="centerX" id="w2G-Gk-IPp"/>
+                            <constraint firstItem="SCu-63-2MX" firstAttribute="leading" secondItem="FkT-kb-Yni" secondAttribute="leading" constant="30" id="EUV-lz-Kkq"/>
+                            <constraint firstItem="FkT-kb-Yni" firstAttribute="trailing" secondItem="SCu-63-2MX" secondAttribute="trailing" constant="30" id="q5e-dq-RqZ"/>
+                            <constraint firstItem="SCu-63-2MX" firstAttribute="centerY" secondItem="XwD-VG-7A6" secondAttribute="centerY" id="suy-Gr-G5R"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="testLabel" destination="SCu-63-2MX" id="B20-Dw-gjP"/>
+                        <outlet property="dataLabel" destination="SCu-63-2MX" id="B20-Dw-gjP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="36U-ht-Smf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
