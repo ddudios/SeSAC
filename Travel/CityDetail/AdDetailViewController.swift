@@ -16,7 +16,8 @@ class AdDetailViewController: UIViewController {
         configureUI()
     }
     
-    func configureUI() {        configureNavigationBarUI(title: "광고 화면")
+    func configureUI() {
+        configureNavigationBarUI(title: "광고 화면")
         let backBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissButtonTapped))
         self.navigationItem.leftBarButtonItem = backBarButtonItem
         
