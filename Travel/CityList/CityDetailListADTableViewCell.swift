@@ -9,6 +9,8 @@ import UIKit
 
 class CityDetailListADTableViewCell: UITableViewCell {
     
+    static let identifier = "CityDetailListADTableViewCell"
+    
     @IBOutlet var cityDetailADBackgroundView: UIView!
     @IBOutlet var cityDetailADLabel: UILabel!
     @IBOutlet var cityDetailADBedgeLabel: UILabel!

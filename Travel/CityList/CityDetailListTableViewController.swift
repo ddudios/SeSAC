@@ -10,6 +10,9 @@ import UIKit
 class CityDetailListTableViewController: UITableViewController {
     
     var travelInfo = TravelInfo()
+    
+    let adDetailViewController = "AdDetailViewController"
+    let cityDetailViewController = "CityDetailViewController"
 
     // MARK: - lifeCycle
     override func viewDidLoad() {
@@ -30,11 +33,11 @@ class CityDetailListTableViewController: UITableViewController {
         }
         
         if ad {
-            let adCell = tableView.dequeueReusableCell(withIdentifier: "CityDetailListADTableViewCell", for: indexPath) as! CityDetailListADTableViewCell
+            let adCell = tableView.dequeueReusableCell(withIdentifier: CityDetailListADTableViewCell.identifier, for: indexPath) as! CityDetailListADTableViewCell
             adCell.configureCell(travelValueCorrespondingToPath: travelValueCorrespondingToPath, indexPath: indexPath)
             return adCell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CityDetailListTableViewCell", for: indexPath) as! CityDetailListTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CityDetailListTableViewCell.identifier, for: indexPath) as! CityDetailListTableViewCell
             
             cell.configureCell(travelValueCorrespondingToPath: travelValueCorrespondingToPath)
             cell.cityDetailLikeButton.tag = indexPath.row
@@ -64,14 +67,16 @@ class CityDetailListTableViewController: UITableViewController {
         }
         if ad {
             showToast()
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "AdDetailViewController") as! AdDetailViewController
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let viewController = storyboard.instantiateViewController(withIdentifier: adDetailViewController) as! AdDetailViewController
+            let viewController = self.storyboard?.instantiateViewController(withIdentifier: adDetailViewController) as! AdDetailViewController
             let navigationView = UINavigationController(rootViewController: viewController)
             navigationView.modalPresentationStyle = .fullScreen
             present(navigationView, animated: true)
         } else {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "CityDetailViewController") as! CityDetailViewController
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let viewController = storyboard.instantiateViewController(withIdentifier: cityDetailViewController) as! CityDetailViewController
+            let viewController = self.storyboard?.instantiateViewController(withIdentifier: cityDetailViewController) as! CityDetailViewController
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -79,11 +84,11 @@ class CityDetailListTableViewController: UITableViewController {
     func configureUI() {
         configureNavigationBarUI(title: "도시 상세 정보")
         
-        let xib = UINib(nibName: "CityDetailListTableViewCell", bundle: nil)
-        tableView.register(xib, forCellReuseIdentifier: "CityDetailListTableViewCell")
+        let xib = UINib(nibName: CityDetailListTableViewCell.identifier, bundle: nil)
+        tableView.register(xib, forCellReuseIdentifier: CityDetailListTableViewCell.identifier)
         
-        let adXib = UINib(nibName: "CityDetailListADTableViewCell", bundle: nil)
-        tableView.register(adXib, forCellReuseIdentifier: "CityDetailListADTableViewCell")
+        let adXib = UINib(nibName: CityDetailListADTableViewCell.identifier, bundle: nil)
+        tableView.register(adXib, forCellReuseIdentifier: CityDetailListADTableViewCell.identifier)
     }
     
     @objc func likeButtonTapped(_ sender: UIButton) {

@@ -9,6 +9,8 @@ import UIKit
 
 class CityDetailListTableViewCell: UITableViewCell {
     
+    static let identifier = "CityDetailListTableViewCell"
+    
     @IBOutlet var cityDetailTitleLabel: UILabel!
     @IBOutlet var cityDetailDescriptionLabel: UILabel!
     @IBOutlet var cityDetailSaveLabel: UILabel!
