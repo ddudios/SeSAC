@@ -21,8 +21,10 @@ class CitySearchTableViewCell: UITableViewCell {
         
         cityImageView.contentMode = .scaleAspectFill
         
-        explainBackgroundView.backgroundColor = .black
-        explainBackgroundView.layer.opacity = 0.7
+//        explainBackgroundView.backgroundColor = .red
+        // CALayer는 opacity 전파됨 - cornerRadius
+        
+        explainBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
         titleLabel.textColor = .white
         titleLabel.font = CustomFont.title1

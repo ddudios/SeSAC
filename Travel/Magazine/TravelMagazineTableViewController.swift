@@ -24,7 +24,7 @@ class TravelMagazineTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TravelMagazineTableViewCell", for: indexPath) as! TravelMagazineTableViewCell
         
-        // protocol collection으로 안전하게 처리해보기
+        // protocol collection으로 안전하게 처리해보기 vs Sequence (array에 어떻게 적용되고 있는지)
 //        let magazineValueCorrespondingToIndexPathRow = magazineInfo.magazine[indexPath.row]
         cell.configureCell(magazineValueCorrespondingToIndexPathRow: magazineInfo.magazine[indexPath.row])
         
