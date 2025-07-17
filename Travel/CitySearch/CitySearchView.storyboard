@@ -72,9 +72,13 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Q3e-rZ-d6c">
                                 <rect key="frame" x="20" y="182" width="353" height="32"/>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
+                                    <segment title="모두"/>
+                                    <segment title="국내"/>
+                                    <segment title="해외"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedControlValueChanged:" destination="CRT-wt-Tb0" eventType="valueChanged" id="tgB-QB-uIL"/>
+                                </connections>
                             </segmentedControl>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Xy0-Qb-9RX">
                                 <rect key="frame" x="0.0" y="233" width="393" height="502"/>
@@ -111,6 +115,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="UO0-mH-pEr"/>
                     <connections>
+                        <outlet property="CityFilterSegmentedControl" destination="Q3e-rZ-d6c" id="9FO-ar-yB1"/>
                         <outlet property="cityListCollectionView" destination="Xy0-Qb-9RX" id="js2-2n-x3g"/>
                     </connections>
                 </viewController>

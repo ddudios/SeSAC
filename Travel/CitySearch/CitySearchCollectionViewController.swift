@@ -10,6 +10,7 @@ import UIKit
 class CitySearchCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet var cityListCollectionView: UICollectionView!
+    @IBOutlet var CityFilterSegmentedControl: UISegmentedControl!
     
     let cellIdentifier = "CitySearchCollectionViewCell"
     var cityList: [City] = CityInfo().city
@@ -20,7 +21,35 @@ class CitySearchCollectionViewController: UIViewController, UICollectionViewDele
         configureUI()
     }
     
+    @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        let all = CityInfo().city
+        
+        if sender.selectedSegmentIndex == 0 {
+            cityList = all
+        } else if sender.selectedSegmentIndex == 1 {
+            var domesticArray: [City] = []
+            for item in all {
+                if item.domestic_travel {
+                    domesticArray.append(item)
+                }
+            }
+            cityList = domesticArray
+        } else if sender.selectedSegmentIndex == 2 {
+            var abroadArray: [City] = []
+            for item in all {
+                if !item.domestic_travel {
+                    abroadArray.append(item)
+                }
+            }
+            cityList = abroadArray
+        } else {
+            print("error: \(#function)")
+        }
+        cityListCollectionView.reloadData()
+    }
+    
     func configureUI() {
+        configureNavigation()
         configureCollectionView()
     }
     
