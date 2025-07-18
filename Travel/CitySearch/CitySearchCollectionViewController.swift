@@ -82,16 +82,12 @@ class CitySearchCollectionViewController: UIViewController, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = cityListCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CitySearchCollectionViewCell
-        
-        cell.citySearchCollectionImageView.layer.cornerRadius = itemWidth/4  // (cell이 2개*2) 나누기
+        print(#function, indexPath)
+        cell.citySearchCollectionImageView.layer.cornerRadius = itemWidth / (2 * 2)  // (itemWidth의 반지름)/(cell이 2개)
         cell.citySearchCollectionImageView.clipsToBounds = true
         
-//        cell.cityData = cityList[indexPath.item]
-        let item = cityList[indexPath.item]
-        let url = URL(string: item.city_image)
-        cell.citySearchCollectionImageView.kf.setImage(with: url)
-        cell.cityNameLabel.text = "\(item.city_name) | \(item.city_english_name)"
-        cell.cityExplainLabel.text = item.city_explain
+        // (시점) 데이터의 호출
+        cell.configureData(cityList[indexPath.row])
         
         return cell
     }

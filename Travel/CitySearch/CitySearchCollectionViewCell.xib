@@ -23,7 +23,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="방콕, 파타야, 후아힌, 코사멧, 코사무이" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKA-2t-qbm">
-                        <rect key="frame" x="0.0" y="219" width="184" height="104"/>
+                        <rect key="frame" x="0.0" y="219" width="184" height="20.333333333333343"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -44,7 +44,7 @@
                 <constraint firstAttribute="trailing" secondItem="ZjY-Kh-N7D" secondAttribute="trailing" id="BEE-2Y-q0t"/>
                 <constraint firstItem="ZjY-Kh-N7D" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Mdz-tE-0uq"/>
                 <constraint firstAttribute="trailing" secondItem="SKA-2t-qbm" secondAttribute="trailing" id="b9L-Hp-yn0"/>
-                <constraint firstAttribute="bottom" secondItem="SKA-2t-qbm" secondAttribute="bottom" id="bU5-ZD-scS"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SKA-2t-qbm" secondAttribute="bottom" id="bU5-ZD-scS"/>
                 <constraint firstItem="fzm-ii-nUk" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="knz-PL-zal"/>
                 <constraint firstItem="ZjY-Kh-N7D" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="nAa-La-Wlc"/>
                 <constraint firstItem="SKA-2t-qbm" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="tq9-dJ-f2g"/>
