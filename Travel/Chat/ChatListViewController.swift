@@ -12,9 +12,10 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     // MARK: - Properties
     @IBOutlet private var searchView: UIView!
     @IBOutlet private var searchTextField: UITextField!
-    @IBOutlet var chatListCollectionView: UICollectionView!
+    @IBOutlet private var chatListCollectionView: UICollectionView!
     
-    let chatListCellIdentifier = "ChatListCollectionViewCell"
+    private let chatListCellIdentifier = "ChatListCollectionViewCell"
+    private var chatList = ChatList.list
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     private func configureUI() {
         configureNavigationBarUI(title: "TRAVEL TALK")
         configureTextField()
+        configureCollectionView()
     }
     
     private func configureTextField() {
@@ -43,19 +45,39 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
         chatListCollectionView.delegate = self
         chatListCollectionView.dataSource = self
         
+        chatListCollectionView.backgroundColor = .clear
+        
         let xib = UINib(nibName: chatListCellIdentifier, bundle: nil)
         chatListCollectionView.register(xib, forCellWithReuseIdentifier: chatListCellIdentifier)
+        
+        let layout = UICollectionViewFlowLayout()
+        let deviceWidth = UIScreen.main.bounds.width
+        let itemWidth = deviceWidth - (20 * 2)
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth/5)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 32
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 20)
+        layout.scrollDirection = .vertical
+        chatListCollectionView.collectionViewLayout = layout
     }
     
     // MARK: - Selectors
     
     // MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return chatList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = chatListCollectionView.dequeueReusableCell(withReuseIdentifier: chatListCellIdentifier, for: indexPath) as! ChatListCollectionViewCell
+        
+        DispatchQueue.main.async {
+            cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
+        }
+        
+        let item = chatList[indexPath.item]
+        cell.configureData(item)
+        
         return cell
     }
 }
