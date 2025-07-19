@@ -21,6 +21,7 @@ struct CustomFont {
     
     static let chatBody = UIFont.systemFont(ofSize: 15, weight: .medium)
     static let subhead = UIFont.systemFont(ofSize: 14, weight: .regular)
+    static let footnote = UIFont.systemFont(ofSize: 12, weight: .regular)
 }
 
 struct CornerRadiusValue {

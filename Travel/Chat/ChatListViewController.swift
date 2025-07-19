@@ -14,7 +14,9 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     @IBOutlet private var searchTextField: UITextField!
     @IBOutlet private var chatListCollectionView: UICollectionView!
     
+    private let storyboardName = "Chat"
     private let chatListCellIdentifier = "ChatListCollectionViewCell"
+    private let chatViewControllerIdentifier = "ChatViewController"
     private var chatList = ChatList.list
     
     // MARK: - Life Cycle
@@ -79,5 +81,12 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.configureData(item)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: chatViewControllerIdentifier) as! ChatViewController
+        viewController.configureData(chatList[indexPath.row])
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
