@@ -45,7 +45,17 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Krw-09-lRi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="147" y="429"/>
+            <point key="canvasLocation" x="-194" y="542"/>
+        </scene>
+        <!--Chat-->
+        <scene sceneID="hXe-dO-4vd">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Chat" id="RXB-IB-IFj" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="nfe-QT-cmE"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C0r-kq-iXm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="405" y="542"/>
         </scene>
         <!--City Detail List Table View Controller-->
         <scene sceneID="zhD-Rk-7Go">
@@ -432,6 +442,7 @@
                         <segue destination="kO2-cD-tqy" kind="relationship" relationship="viewControllers" id="UvE-Hr-MLL"/>
                         <segue destination="1FY-R1-Thb" kind="relationship" relationship="viewControllers" id="0A0-bi-RyV"/>
                         <segue destination="Az2-JS-Lp0" kind="relationship" relationship="viewControllers" id="Csa-JM-e2N"/>
+                        <segue destination="RXB-IB-IFj" kind="relationship" relationship="viewControllers" id="jAF-tZ-Coi"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aew-zs-BJx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
