@@ -15,8 +15,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet private var messageTextField: UITextField!
     
     private let userMessageCellIdentifier = "UserMessageTableViewCell"
-    var numberOfRowsInSection = 10
-    var chatList = ChatList.list.first!.chatList
+    private var navigationTitle = ""
+    private var numberOfRowsInSection = 10
+    private var chatList = ChatList.list.first!.chatList
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -27,7 +28,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Helpers
     private func configureUI() {
         view.backgroundColor = .clear
-        configureNavigationBarUI(title: "Den")
+        configureNavigationBarUI(title: navigationTitle)
         configureTableView()
         
         textFieldBackgroundView.backgroundColor = .systemGray6
@@ -51,6 +52,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func configureData(_ chatRoom: ChatRoom) {
+        navigationTitle = chatRoom.chatroomName
         chatList = chatRoom.chatList
         numberOfRowsInSection = chatList.count
     }
