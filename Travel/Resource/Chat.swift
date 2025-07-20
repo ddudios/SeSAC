@@ -36,4 +36,16 @@ struct CustomDate {
         dateStringFormat.locale = Locale(identifier: "ko_KR")
         return dateStringFormat.string(from: dateFormat(chatDate))
     }
+    
+    static func formattingChangeDay(_ chatDate: String) -> String {
+        let dateStringFormat = DateFormatter()
+        dateStringFormat.dateFormat = "  EEEE, MMMM dd, yyyy"
+        return dateStringFormat.string(from: dateFormat(chatDate))
+    }
+    
+    static func chattingDateForm(_ date: Date) -> String {
+        let dateStringFormat = DateFormatter()
+        dateStringFormat.dateFormat = "yyyy-MM-dd HH:mm"
+        return dateStringFormat.string(from: date)
+    }
 }

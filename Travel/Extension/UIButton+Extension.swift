@@ -8,12 +8,12 @@
 import UIKit
 
 extension UIButton {
-    func divider(hidden: Bool = false) {
+    func divider(_ buttonTitle: String, hidden: Bool = true) {
         backgroundColor = UIColor.black.withAlphaComponent(0.2)
         layer.cornerRadius = 15
         clipsToBounds = true
         
-        let title = NSAttributedString(string: " Sunday, July 20, 2025", attributes: [NSAttributedString.Key.font : CustomFont.subhead, NSAttributedString.Key.foregroundColor: UIColor.white])
+        let title = NSAttributedString(string: buttonTitle, attributes: [NSAttributedString.Key.font : CustomFont.subhead, NSAttributedString.Key.foregroundColor: UIColor.white])
         setAttributedTitle(title, for: .normal)
         
         setImage(UIImage(systemName: "calendar"), for: .normal)

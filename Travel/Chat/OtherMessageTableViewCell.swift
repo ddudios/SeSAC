@@ -13,7 +13,7 @@ class OtherMessageTableViewCell: UITableViewCell {
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var messageBackgroundView: UIView!
-    @IBOutlet var messageLabel: UILabel!
+    @IBOutlet private var messageLabel: UILabel!
     @IBOutlet private var dateLabel: UILabel!
     
     override func awakeFromNib() {
@@ -23,8 +23,6 @@ class OtherMessageTableViewCell: UITableViewCell {
     
     private func configureUI() {
         backgroundColor = .clear
-        
-        dateDividerButton.divider()
         
         profileImageView.backgroundColor = .clear
         profileImageView.contentMode = .scaleAspectFit
@@ -50,10 +48,11 @@ class OtherMessageTableViewCell: UITableViewCell {
         dateLabel.textAlignment = .left
     }
     
-    func configureData(_ row: Chat) {
+    func configureData(_ row: Chat, changeDate: Bool = true) {
         profileImageView.image = UIImage(named: row.user.image)
         nameLabel.text = row.user.name
         messageLabel.text = row.message
         dateLabel.text = CustomDate.formattingHour(row.date)
+        dateDividerButton.divider(CustomDate.formattingChangeDay(row.date), hidden: changeDate)
     }
 }

@@ -11,7 +11,7 @@ class UserMessageTableViewCell: UITableViewCell {
 
     @IBOutlet var dateDividerButton: UIButton!
     @IBOutlet private var messageBackgroundView: UIView!
-    @IBOutlet var messageLabel: UILabel!
+    @IBOutlet private var messageLabel: UILabel!
     @IBOutlet private var dateLabel: UILabel!
     
     override func awakeFromNib() {
@@ -21,8 +21,6 @@ class UserMessageTableViewCell: UITableViewCell {
     
     private func configureUI() {
         backgroundColor = .clear
-        
-        dateDividerButton.divider()
         
         messageBackgroundView.backgroundColor = .systemGray5
         messageBackgroundView.layer.borderColor = UIColor.systemGray2.cgColor
@@ -40,8 +38,9 @@ class UserMessageTableViewCell: UITableViewCell {
         dateLabel.textAlignment = .right
     }
     
-    func configureData(_ row: Chat) {
+    func configureData(_ row: Chat, changeDate: Bool = true) {
         messageLabel.text = row.message
         dateLabel.text = CustomDate.formattingHour(row.date)
+        dateDividerButton.divider(CustomDate.formattingChangeDay(row.date), hidden: changeDate)
     }
 }

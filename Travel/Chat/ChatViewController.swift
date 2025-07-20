@@ -13,6 +13,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet private var chatTableView: UITableView!
     @IBOutlet private var textFieldBackgroundView: UIView!
     @IBOutlet private var messageTextField: UITextField!
+    @IBOutlet private var sendButton: UIButton!
     
     private let userMessageCellIdentifier = "UserMessageTableViewCell"
     private let otherMessageCellIdentifier = "OtherMessageTableViewCell"
@@ -55,15 +56,29 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let otherXib = UINib(nibName: otherMessageCellIdentifier, bundle: nil)
         chatTableView.register(otherXib, forCellReuseIdentifier: otherMessageCellIdentifier)
         
-        DispatchQueue.main.async {
-            self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
-        }
+        fetchScroll()
     }
     
     func configureData(_ chatRoom: ChatRoom) {
         navigationTitle = chatRoom.chatroomName
         chatList = chatRoom.chatList
         numberOfRowsInSection = chatList.count
+    }
+    
+    private func fetchScroll() {
+        DispatchQueue.main.async {
+            self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
+        }
+    }
+    
+    @objc
+    private func sendButtonTapped() {
+        chatList.append(Chat(user: ChatList.me, date: CustomDate.chattingDateForm(Date()), message: messageTextField.text ?? ""))
+        
+        numberOfRowsInSection += 1
+        messageTextField.text = ""
+        chatTableView.reloadData()
+        fetchScroll()
     }
     
     // MARK: - Table View
@@ -73,23 +88,38 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = chatList[indexPath.row]
+        // 있는데 왜 안띄우니
         
         if row.user.name == ChatList.me.name {
             let cell = chatTableView.dequeueReusableCell(withIdentifier: userMessageCellIdentifier, for: indexPath) as! UserMessageTableViewCell
             
-            lastDate = row.date
-            cell.configureData(row)
+            // 왜 123465?????
+            print(indexPath.row, lastDate)
+            if lastDate == CustomDate.formattingDay(row.date) {
+                cell.configureData(row)
+            } else {
+                cell.configureData(row, changeDate: false)
+            }
+            lastDate = CustomDate.formattingDay(row.date)
+            
+            sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
             
             return cell
         } else {
             let cell = chatTableView.dequeueReusableCell(withIdentifier: otherMessageCellIdentifier, for: indexPath) as! OtherMessageTableViewCell
             
+            print(indexPath.row, lastDate)
+            
             DispatchQueue.main.async {
                 cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             }
             
-            lastDate = row.date
-            cell.configureData(row)
+            if lastDate == CustomDate.formattingDay(row.date) {
+                cell.configureData(row)
+            } else {
+                cell.configureData(row, changeDate: false)
+            }
+            lastDate = CustomDate.formattingDay(row.date)
             
             return cell
         }

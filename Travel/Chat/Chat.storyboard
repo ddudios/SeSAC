@@ -153,6 +153,7 @@
                     <connections>
                         <outlet property="chatTableView" destination="ckd-JG-MOg" id="8OM-pL-HnZ"/>
                         <outlet property="messageTextField" destination="kSY-kt-DEN" id="724-IO-UOq"/>
+                        <outlet property="sendButton" destination="VUN-ON-uBJ" id="xjA-e3-6YR"/>
                         <outlet property="textFieldBackgroundView" destination="Mrq-iE-vCC" id="vxS-0u-PZD"/>
                     </connections>
                 </viewController>
