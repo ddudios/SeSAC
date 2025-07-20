@@ -64,26 +64,6 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     // MARK: - Selectors
-    private func searchRoom() {
-        var result: [ChatRoom] = []
-        
-        guard let text = searchTextField.text else {
-            print("error: \(#function)")
-            return
-        }
-        
-        if text.isEmpty {
-            list = ChatList.list
-        } else {
-            ChatList.list.forEach { chatRoom in
-                if chatRoom.chatroomName.contains(text) {
-                    result.append(chatRoom)
-                }
-            }
-            list = result
-        }
-    }
-    
     private func searchUser() {
         var result: [ChatRoom] = []
         
@@ -97,7 +77,7 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
         } else {
             ChatList.list.forEach { chatRoom in
                 chatRoom.chatList.forEach { chat in
-                    if chat.user.name.localizedCaseInsensitiveContains(text) {
+                    if chatRoom.chatroomName.localizedCaseInsensitiveContains(text) || chat.user.name.localizedCaseInsensitiveContains(text) {
                         result.append(chatRoom)
                     }
                 }
@@ -134,13 +114,10 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     // MARK: - TextField
     @IBAction func searchTextFieldDidEndOnExit(_ sender: UITextField) {
-        searchUser()
-        chatListCollectionView.reloadData()
     }
     
     @IBAction func searchTextFieldEditingChanged(_ sender: UITextField) {
         searchUser()
-        print(sender.text)
         chatListCollectionView.reloadData()
     }
 }
