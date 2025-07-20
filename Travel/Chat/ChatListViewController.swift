@@ -64,6 +64,25 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     // MARK: - Selectors
+    private func searchRoom() {
+        var result: [ChatRoom] = []
+        
+        guard let text = searchTextField.text else {
+            print("error: \(#function)")
+            return
+        }
+        
+        if text.isEmpty {
+            list = ChatList.list
+        } else {
+            list.forEach { chatRoom in
+                if chatRoom.chatroomName.contains(text) {
+                    result.append(chatRoom)
+                }
+            }
+            list = result
+        }
+    }
     
     // MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -88,5 +107,14 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
         let viewController = storyboard.instantiateViewController(withIdentifier: chatViewControllerIdentifier) as! ChatViewController
         viewController.configureData(list[indexPath.row])
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    // MARK: - TextField
+    @IBAction func searchTextFieldDidEndOnExit(_ sender: UITextField) {
+        searchRoom()
+        chatListCollectionView.reloadData()
+    }
+    
+    @IBAction func searchTextFieldEditingChanged(_ sender: UITextField) {
     }
 }
