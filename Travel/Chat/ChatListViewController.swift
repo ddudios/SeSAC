@@ -17,7 +17,7 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     private let storyboardName = "Chat"
     private let chatListCellIdentifier = "ChatListCollectionViewCell"
     private let chatViewControllerIdentifier = "ChatViewController"
-    private var chatList = ChatList.list
+    var list = ChatList.list
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -67,7 +67,7 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     // MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return chatList.count
+        return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -77,7 +77,7 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
         }
         
-        let item = chatList[indexPath.item]
+        let item = list[indexPath.item]
         cell.configureData(item)
         
         return cell
@@ -86,7 +86,7 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: chatViewControllerIdentifier) as! ChatViewController
-        viewController.configureData(chatList[indexPath.row])
+        viewController.configureData(list[indexPath.row])
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

@@ -15,6 +15,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet private var messageTextField: UITextField!
     
     private let userMessageCellIdentifier = "UserMessageTableViewCell"
+    private let otherMessageCellIdentifier = "OtherMessageTableViewCell"
     private var navigationTitle = ""
     private var numberOfRowsInSection = 10
     private var chatList = ChatList.list.first!.chatList
@@ -49,6 +50,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let userXib = UINib(nibName: userMessageCellIdentifier, bundle: nil)
         chatTableView.register(userXib, forCellReuseIdentifier: userMessageCellIdentifier)
+        let otherXib = UINib(nibName: otherMessageCellIdentifier, bundle: nil)
+        chatTableView.register(otherXib, forCellReuseIdentifier: otherMessageCellIdentifier)
     }
     
     func configureData(_ chatRoom: ChatRoom) {
@@ -71,11 +74,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.configureData(row)
             
             return cell
+        } else {
+            let cell = chatTableView.dequeueReusableCell(withIdentifier: otherMessageCellIdentifier, for: indexPath) as! OtherMessageTableViewCell
+            
+            DispatchQueue.main.async {
+                cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
+            }
+            
+            cell.configureData(row)
+            
+            return cell
         }
-        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 150
     }
 }

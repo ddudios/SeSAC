@@ -18,10 +18,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydp-Vg-xWP">
-                        <rect key="frame" x="113" y="38.666666666666657" width="237" height="40.333333333333343"/>
+                        <rect key="frame" x="121" y="38.666666666666657" width="229" height="40.333333333333343"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=";ajfsdkjf;alsdkjf;asldkjfa;sldkjf;asdljkf;ajsdflkj;asdkljfak;jsdfkja;sldfj;alsdjfal;sdfjka;sdljf" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qJ-yq-mfe">
-                                <rect key="frame" x="10" y="9.9999999999999982" width="217" height="20.333333333333329"/>
+                                <rect key="frame" x="10" y="9.9999999999999982" width="209" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -51,7 +51,7 @@
                     <constraint firstItem="LEY-LR-sqj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="DIf-aT-lYR"/>
                     <constraint firstAttribute="trailing" secondItem="ydp-Vg-xWP" secondAttribute="trailing" constant="20" id="Qkg-SK-AA1"/>
                     <constraint firstItem="LEY-LR-sqj" firstAttribute="bottom" secondItem="ydp-Vg-xWP" secondAttribute="bottom" constant="-4" id="X5f-3A-DL6"/>
-                    <constraint firstItem="ydp-Vg-xWP" firstAttribute="leading" secondItem="LEY-LR-sqj" secondAttribute="trailing" id="zlk-Bf-VUU"/>
+                    <constraint firstItem="ydp-Vg-xWP" firstAttribute="leading" secondItem="LEY-LR-sqj" secondAttribute="trailing" constant="8" id="zlk-Bf-VUU"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

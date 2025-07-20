@@ -1,5 +1,5 @@
 //
-//  UserMessageTableViewCell.swift
+//  OtherMessageTableViewCell.swift
 //  Travel
 //
 //  Created by Suji Jang on 7/20/25.
@@ -7,8 +7,10 @@
 
 import UIKit
 
-class UserMessageTableViewCell: UITableViewCell {
+class OtherMessageTableViewCell: UITableViewCell {
 
+    @IBOutlet var profileImageView: UIImageView!
+    @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var messageBackgroundView: UIView!
     @IBOutlet private var messageLabel: UILabel!
     @IBOutlet private var dateLabel: UILabel!
@@ -21,7 +23,15 @@ class UserMessageTableViewCell: UITableViewCell {
     private func configureUI() {
         backgroundColor = .clear
         
-        messageBackgroundView.backgroundColor = .systemGray5
+        profileImageView.backgroundColor = .clear
+        profileImageView.contentMode = .scaleAspectFit
+        profileImageView.clipsToBounds = true
+        
+        nameLabel.font = CustomFont.chatBody
+        nameLabel.textColor = .black
+        nameLabel.textAlignment = .left
+        
+        messageBackgroundView.backgroundColor = .white
         messageBackgroundView.layer.borderColor = UIColor.systemGray2.cgColor
         messageBackgroundView.layer.borderWidth = 0.8
         messageBackgroundView.layer.cornerRadius = 14
@@ -29,15 +39,17 @@ class UserMessageTableViewCell: UITableViewCell {
         
         messageLabel.font = CustomFont.chatBody
         messageLabel.textColor = .black
-        messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .left
+        messageLabel.numberOfLines = 0
         
         dateLabel.font = CustomFont.footnote
         dateLabel.textColor = .gray
-        dateLabel.textAlignment = .right
+        dateLabel.textAlignment = .left
     }
     
     func configureData(_ row: Chat) {
+        profileImageView.image = UIImage(named: row.user.image)
+        nameLabel.text = row.user.name
         messageLabel.text = row.message
         dateLabel.text = CustomDate.formattingHour(row.date)
     }

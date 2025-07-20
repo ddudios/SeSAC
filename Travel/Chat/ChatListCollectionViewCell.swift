@@ -14,6 +14,8 @@ class ChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var messageLabel: UILabel!
     
+    var customDate = CustomDate()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
@@ -40,15 +42,8 @@ class ChatListCollectionViewCell: UICollectionViewCell {
         profileImageView.image = UIImage(named: item.chatroomImage)
         nameLabel.text = item.chatroomName
         
-        let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyy-MM-dd hh:mm"
-        let dateType = dateFormat.date(from: item.chatList.last?.date ?? "")
+        dateLabel.text = CustomDate.formattingDay(item.chatList.last?.date ?? "error: \(self) - \(#function)")
         
-        let dateStringFormat = DateFormatter()
-        dateStringFormat.dateFormat = "yy.MM.dd"
-        let date = dateStringFormat.string(from: dateType ?? Date())
-        
-        dateLabel.text = date
         messageLabel.text = item.chatList.last?.message
     }
 }
