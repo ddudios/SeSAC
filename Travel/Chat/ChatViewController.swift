@@ -16,9 +16,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private let userMessageCellIdentifier = "UserMessageTableViewCell"
     private let otherMessageCellIdentifier = "OtherMessageTableViewCell"
+    private let dateDividerCellIdentifier = "DateDividerTableViewCell"
     private var navigationTitle = ""
     private var numberOfRowsInSection = 10
     private var chatList = ChatList.list.first!.chatList
+    private var lastDate = ""
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -52,6 +54,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         chatTableView.register(userXib, forCellReuseIdentifier: userMessageCellIdentifier)
         let otherXib = UINib(nibName: otherMessageCellIdentifier, bundle: nil)
         chatTableView.register(otherXib, forCellReuseIdentifier: otherMessageCellIdentifier)
+        
+        DispatchQueue.main.async {
+            self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
+        }
     }
     
     func configureData(_ chatRoom: ChatRoom) {
@@ -71,10 +77,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if row.user.name == ChatList.me.name {
             let cell = chatTableView.dequeueReusableCell(withIdentifier: userMessageCellIdentifier, for: indexPath) as! UserMessageTableViewCell
             
-            DispatchQueue.main.async {
-                self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
-            }
-            
+            lastDate = row.date
             cell.configureData(row)
             
             return cell
@@ -83,10 +86,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             DispatchQueue.main.async {
                 cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
-                
-                self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
             }
             
+            lastDate = row.date
             cell.configureData(row)
             
             return cell

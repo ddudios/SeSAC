@@ -9,6 +9,7 @@ import UIKit
 
 class UserMessageTableViewCell: UITableViewCell {
 
+    @IBOutlet var dateDividerButton: UIButton!
     @IBOutlet private var messageBackgroundView: UIView!
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet private var dateLabel: UILabel!
@@ -20,6 +21,8 @@ class UserMessageTableViewCell: UITableViewCell {
     
     private func configureUI() {
         backgroundColor = .clear
+        
+        dateDividerButton.divider()
         
         messageBackgroundView.backgroundColor = .systemGray5
         messageBackgroundView.layer.borderColor = UIColor.systemGray2.cgColor

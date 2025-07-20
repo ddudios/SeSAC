@@ -9,6 +9,7 @@ import UIKit
 
 class OtherMessageTableViewCell: UITableViewCell {
 
+    @IBOutlet var dateDividerButton: UIButton!
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var messageBackgroundView: UIView!
@@ -22,6 +23,8 @@ class OtherMessageTableViewCell: UITableViewCell {
     
     private func configureUI() {
         backgroundColor = .clear
+        
+        dateDividerButton.divider()
         
         profileImageView.backgroundColor = .clear
         profileImageView.contentMode = .scaleAspectFit
