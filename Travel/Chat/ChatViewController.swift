@@ -71,6 +71,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if row.user.name == ChatList.me.name {
             let cell = chatTableView.dequeueReusableCell(withIdentifier: userMessageCellIdentifier, for: indexPath) as! UserMessageTableViewCell
             
+            DispatchQueue.main.async {
+                self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
+            }
+            
             cell.configureData(row)
             
             return cell
@@ -79,6 +83,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             DispatchQueue.main.async {
                 cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
+                
+                self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
             }
             
             cell.configureData(row)
@@ -88,6 +94,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return UITableView.automaticDimension
     }
 }

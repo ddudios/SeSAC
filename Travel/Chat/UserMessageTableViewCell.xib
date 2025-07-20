@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydp-Vg-xWP">
-                        <rect key="frame" x="121" y="38.666666666666657" width="229" height="40.333333333333343"/>
+                        <rect key="frame" x="121" y="34.666666666666657" width="229" height="40.333333333333343"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=";ajfsdkjf;alsdkjf;asldkjfa;sldkjf;asdljkf;ajsdflkj;asdkljfak;jsdfkja;sldfj;alsdjfal;sdfjka;sdljf" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qJ-yq-mfe">
                                 <rect key="frame" x="10" y="9.9999999999999982" width="209" height="20.333333333333329"/>
@@ -36,7 +36,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88:88 오전" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEY-LR-sqj">
-                        <rect key="frame" x="30" y="54" width="83" height="21"/>
+                        <rect key="frame" x="30" y="50" width="83" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="83" id="vjI-u1-leW"/>
                         </constraints>
@@ -46,8 +46,8 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="ydp-Vg-xWP" secondAttribute="bottom" constant="10" id="4gt-m2-FQQ"/>
-                    <constraint firstItem="ydp-Vg-xWP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="82E-Jv-oaO"/>
+                    <constraint firstAttribute="bottom" secondItem="ydp-Vg-xWP" secondAttribute="bottom" constant="14" id="4gt-m2-FQQ"/>
+                    <constraint firstItem="ydp-Vg-xWP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="82E-Jv-oaO"/>
                     <constraint firstItem="LEY-LR-sqj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="DIf-aT-lYR"/>
                     <constraint firstAttribute="trailing" secondItem="ydp-Vg-xWP" secondAttribute="trailing" constant="20" id="Qkg-SK-AA1"/>
                     <constraint firstItem="LEY-LR-sqj" firstAttribute="bottom" secondItem="ydp-Vg-xWP" secondAttribute="bottom" constant="-4" id="X5f-3A-DL6"/>

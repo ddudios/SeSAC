@@ -12,7 +12,7 @@ class OtherMessageTableViewCell: UITableViewCell {
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var messageBackgroundView: UIView!
-    @IBOutlet private var messageLabel: UILabel!
+    @IBOutlet var messageLabel: UILabel!
     @IBOutlet private var dateLabel: UILabel!
     
     override func awakeFromNib() {
