@@ -13,4 +13,6 @@ extension UIColor {
     }
     
     static let nPayMain = UIColor.rgb(red: 9, green: 171, blue: 129)
+    static let nPayBackground = UIColor.rgb(red: 12, green: 20, blue: 29)
+    static let nPaySegmentedButton = UIColor.rgb(red: 38, green: 52, blue: 71)
 }
