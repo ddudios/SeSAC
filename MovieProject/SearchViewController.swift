@@ -39,12 +39,9 @@ class SearchViewController: UIViewController {
         button.clipsToBounds = true
         button.titleLabel?.font = .boldSystemFont(ofSize: 13)
         
-        print(active)
-        
         if active {
             button.backgroundColor = .white
             button.setTitleColor(.black, for: .normal)
-            print(button.state)
         } else {
             button.backgroundColor = .black
             button.setTitleColor(.white, for: .normal)

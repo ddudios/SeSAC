@@ -54,6 +54,8 @@ class HomeViewController: UIViewController {
         button.layer.borderWidth = 1
     }
     
+    //forEach vs for in 찾아보고 서로 되고안되고 찾아보기
+    
     func designWatchLabelUI() {
         for label in watchLabel {
             label.text = "지금 시청하기"
