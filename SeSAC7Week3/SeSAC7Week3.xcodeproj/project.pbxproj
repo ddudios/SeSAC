@@ -16,9 +16,22 @@
 		B0C2DB872E20A89A00C0F531 /* SeSAC7Week3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC7Week3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B0DB62142E2E472300C64D05 /* Exceptions for "SeSAC7Week3" folder in "SeSAC7Week3" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B0C2DB862E20A89A00C0F531 /* SeSAC7Week3 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B0C2DB892E20A89A00C0F531 /* SeSAC7Week3 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B0DB62142E2E472300C64D05 /* Exceptions for "SeSAC7Week3" folder in "SeSAC7Week3" target */,
+			);
 			path = SeSAC7Week3;
 			sourceTree = "<group>";
 		};
