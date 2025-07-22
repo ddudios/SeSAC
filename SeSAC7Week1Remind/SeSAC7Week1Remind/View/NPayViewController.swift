@@ -34,6 +34,9 @@ final class NPayViewController: UIViewController {
         addSubviews()
         autoLayout()
         setProperties()
+        
+        segmentedMembershipButton.addTarget(self, action: #selector(membershipButtonTapped), for: .touchUpInside)
+        segmentedCouponButton.addTarget(self, action: #selector(couponButtonTapped), for: .touchUpInside)
     }
     
     private func addSubviews() {
@@ -217,5 +220,22 @@ final class NPayViewController: UIViewController {
         DispatchQueue.main.async {
             button.layer.cornerRadius = button.frame.height / 2
         }
+    }
+    
+    @objc private func membershipButtonTapped() {
+        let vc = MembershipViewController()
+        present(vc, animated: true)
+    }
+    
+    @objc func couponButtonTapped() {
+        print(#function)
+        let vc = CouponViewController()
+        
+        // 모달에 네비게이션바 다는 코드
+//        let nc = UINavigationController(rootViewController: vc)
+//        present(nc, animated: true)
+        
+        // 네비게이션 푸시하려면 태초 루트뷰가 네비게이션컨트롤러여야 가능
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
