@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChatListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ChatListViewController: UIViewController {
     
     // MARK: - Properties
     @IBOutlet private var searchView: UIView!
@@ -87,7 +87,18 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
     }
     
-    // MARK: - Collection View
+    // MARK: - TextField
+    @IBAction func searchTextFieldDidEndOnExit(_ sender: UITextField) {
+    }
+    
+    @IBAction func searchTextFieldEditingChanged(_ sender: UITextField) {
+        searchUser()
+        chatListCollectionView.reloadData()
+    }
+}
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+extension ChatListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
@@ -110,14 +121,5 @@ class ChatListViewController: UIViewController, UICollectionViewDelegate, UIColl
         let viewController = storyboard.instantiateViewController(withIdentifier: chatViewControllerIdentifier) as! ChatViewController
         viewController.configureData(list[indexPath.row])
         navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    // MARK: - TextField
-    @IBAction func searchTextFieldDidEndOnExit(_ sender: UITextField) {
-    }
-    
-    @IBAction func searchTextFieldEditingChanged(_ sender: UITextField) {
-        searchUser()
-        chatListCollectionView.reloadData()
     }
 }

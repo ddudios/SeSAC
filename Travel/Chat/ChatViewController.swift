@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChatViewController: UIViewController {
     
     // MARK: - Properties
     @IBOutlet private var chatTableView: UITableView!
@@ -79,8 +79,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTextField.text = ""
         chatTableView.reloadData()
     }
-    
-    // MARK: - Table View
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfRowsInSection
     }
@@ -109,7 +111,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
             print("cell생성끝(lastDate:currentDate): \(lastDate) == \(CustomDate.formattingDay(row.date)): \(lastDate == CustomDate.formattingDay(row.date))")
-            
             
             return cell
         } else {

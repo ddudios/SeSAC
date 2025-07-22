@@ -15,13 +15,15 @@ class ChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet private var messageLabel: UILabel!
     
     var customDate = CustomDate()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
     }
-    
-    private func configureUI() {
+}
+
+extension ChatListCollectionViewCell: CellDesignProtocol {
+    func configureUI() {
         backgroundColor = .clear
         
         profileImageView.backgroundColor = .clear
@@ -37,7 +39,8 @@ class ChatListCollectionViewCell: UICollectionViewCell {
         messageLabel.font = CustomFont.chatBody
         messageLabel.textColor = .gray
     }
-
+    
+    // 옵셔널 프로토콜로 구현하려했지만 @objc는 struct는 Objective-C에서 표현될 수 없기 때문에 @objc로 표시될 수 없다는 에러
     func configureData(_ item: ChatRoom) {
         profileImageView.image = UIImage(named: item.chatroomImage)
         nameLabel.text = item.chatroomName
