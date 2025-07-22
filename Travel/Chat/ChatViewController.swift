@@ -21,12 +21,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var navigationTitle = ""
     private var numberOfRowsInSection = 10
     private var chatList = ChatList.list.first!.chatList
-//    private var lastDate = ""
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        self.fetchScroll()
     }
     
     // MARK: - Helpers
@@ -55,8 +58,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         chatTableView.register(userXib, forCellReuseIdentifier: userMessageCellIdentifier)
         let otherXib = UINib(nibName: otherMessageCellIdentifier, bundle: nil)
         chatTableView.register(otherXib, forCellReuseIdentifier: otherMessageCellIdentifier)
-        
-        fetchScroll()
     }
     
     func configureData(_ chatRoom: ChatRoom) {
@@ -66,9 +67,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func fetchScroll() {
-        DispatchQueue.main.async {
-            self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
-        }
+        print("=====\(self.chatList.count - 1)")
+        self.chatTableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: true)
     }
     
     @objc
@@ -78,7 +78,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         numberOfRowsInSection += 1
         messageTextField.text = ""
         chatTableView.reloadData()
-        fetchScroll()
     }
     
     // MARK: - Table View
@@ -107,20 +106,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 cell.configureData(row, changeDate: false)
             }
-//            lastDate = CustomDate.formattingDay(row.date)
             
             sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-             /*
-             // 왜 123465?????
-            if lastDate == CustomDate.formattingDay(row.date) {
-                cell.configureData(row)
-            } else {
-                cell.configureData(row, changeDate: false)
-            }
-            lastDate = CustomDate.formattingDay(row.date)
-            
-            sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-            */
             print("cell생성끝(lastDate:currentDate): \(lastDate) == \(CustomDate.formattingDay(row.date)): \(lastDate == CustomDate.formattingDay(row.date))")
             
             
@@ -139,7 +126,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 cell.configureData(row, changeDate: false)
             }
-//            lastDate = CustomDate.formattingDay(row.date)
             
             return cell
         }
