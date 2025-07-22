@@ -21,7 +21,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var navigationTitle = ""
     private var numberOfRowsInSection = 10
     private var chatList = ChatList.list.first!.chatList
-    private var lastDate = ""
+//    private var lastDate = ""
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -88,13 +88,30 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = chatList[indexPath.row]
-        // 있는데 왜 안띄우니
+        var lastDate = ""
+        if indexPath.row > 0 {
+            lastDate = CustomDate.formattingDay(chatList[indexPath.row - 1].date)
+        } else {
+            lastDate = CustomDate.formattingDay(row.date)
+        }
         
         if row.user.name == ChatList.me.name {
+            print("cell생성전(lastDate:currentDate): \(lastDate) == \(CustomDate.formattingDay(row.date)): \(lastDate == CustomDate.formattingDay(row.date))")
+            
             let cell = chatTableView.dequeueReusableCell(withIdentifier: userMessageCellIdentifier, for: indexPath) as! UserMessageTableViewCell
             
-            // 왜 123465?????
-            print(indexPath.row, lastDate)
+            
+            print("생성중인Cell: \(indexPath.row)")
+            if lastDate == CustomDate.formattingDay(row.date) {
+                cell.configureData(row)
+            } else {
+                cell.configureData(row, changeDate: false)
+            }
+//            lastDate = CustomDate.formattingDay(row.date)
+            
+            sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+             /*
+             // 왜 123465?????
             if lastDate == CustomDate.formattingDay(row.date) {
                 cell.configureData(row)
             } else {
@@ -103,12 +120,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             lastDate = CustomDate.formattingDay(row.date)
             
             sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+            */
+            print("cell생성끝(lastDate:currentDate): \(lastDate) == \(CustomDate.formattingDay(row.date)): \(lastDate == CustomDate.formattingDay(row.date))")
+            
             
             return cell
         } else {
             let cell = chatTableView.dequeueReusableCell(withIdentifier: otherMessageCellIdentifier, for: indexPath) as! OtherMessageTableViewCell
             
-            print(indexPath.row, lastDate)
+            print("\(indexPath.row) Other(lastDate:currentDate)\(lastDate) == \(CustomDate.formattingDay(row.date)): \(lastDate == CustomDate.formattingDay(row.date))")
             
             DispatchQueue.main.async {
                 cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
@@ -119,7 +139,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 cell.configureData(row, changeDate: false)
             }
-            lastDate = CustomDate.formattingDay(row.date)
+//            lastDate = CustomDate.formattingDay(row.date)
             
             return cell
         }
