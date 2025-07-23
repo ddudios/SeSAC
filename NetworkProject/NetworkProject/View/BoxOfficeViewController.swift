@@ -16,7 +16,11 @@ class BoxOfficeViewController: UIViewController {
 //    var title = "Box Office"
     private let searchTextField = SearchTextField()
     private let textFieldUnderLineView = DividerLine()
-    private let searchButton = SearchButton()
+    private let searchButton = {
+        let button =  SearchButton()
+        button.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+        return button
+    }()
     private let tableView = UITableView()
     
     private var movies = MovieInfo.movies
@@ -32,6 +36,15 @@ class BoxOfficeViewController: UIViewController {
     //MARK: - Selectors
     @objc func closeButtonTapped() {
         dismiss(animated: true)
+    }
+    
+    @objc func searchButtonTapped() {
+        shuffleData()
+    }
+    
+    private func shuffleData() {
+        movies = MovieInfo.movies.shuffled()
+        tableView.reloadData()
     }
 }
 
@@ -132,8 +145,7 @@ extension BoxOfficeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension BoxOfficeViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        movies = MovieInfo.movies.shuffled()
-        tableView.reloadData()
+        shuffleData()
         view.endEditing(true)
         return true
     }
