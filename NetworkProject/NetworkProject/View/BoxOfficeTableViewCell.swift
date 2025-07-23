@@ -10,17 +10,16 @@ import UIKit
 class BoxOfficeTableViewCell: UITableViewCell {
     static let identifier = "BoxOfficeTableViewCell"
     
-    private let numberLabel = {
+    let numberLabel = {
         let label = BoxOfficeCellNumberLabel()
-        label.text = "1"
         return label
     }()
-    private let movieNameLabel = {
+    let movieNameLabel = {
         let label = BoxOfficeMovieNameLabel()
         label.text = "엽문4: 더 파이널"
         return label
     }()
-    private let dateLabel = {
+    let dateLabel = {
         let label = BoxOfficeDateLabel()
         label.text = "8888-88-88"
         return label

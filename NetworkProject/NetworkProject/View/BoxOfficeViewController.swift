@@ -18,6 +18,8 @@ class BoxOfficeViewController: UIViewController {
     private let textFieldUnderLineView = DividerLine()
     private let searchButton = SearchButton()
     private let tableView = UITableView()
+    
+    private var movies = MovieInfo.movies
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -79,6 +81,8 @@ extension BoxOfficeViewController: ViewDesignProtocol {
         view.backgroundColor = .white
         configureNavigationBar()
         configureTableView()
+        
+        searchTextField.delegate = self
     }
     
     func configureNavigationBar() {
@@ -117,8 +121,20 @@ extension BoxOfficeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BoxOfficeTableViewCell.identifier, for: indexPath) as! BoxOfficeTableViewCell
+        
+        cell.numberLabel.text = String(indexPath.row + 1)
+        cell.movieNameLabel.text = movies[indexPath.row].title
+        cell.dateLabel.text = CustomDateFormat.getDateString(dateData: movies[indexPath.row].releaseDate)
+        
         return cell
     }
-    
-    
+}
+
+extension BoxOfficeViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        movies = MovieInfo.movies.shuffled()
+        tableView.reloadData()
+        view.endEditing(true)
+        return true
+    }
 }

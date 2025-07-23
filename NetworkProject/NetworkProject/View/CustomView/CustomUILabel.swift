@@ -97,6 +97,9 @@ class BonusLabel: UILabel {
 }
 
 class BoxOfficeCellNumberLabel: UILabel {
+    //MARK: 이건 어떻게 하는거지..
+//    var numberText: String
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
@@ -105,6 +108,7 @@ class BoxOfficeCellNumberLabel: UILabel {
         clipsToBounds = true
         textAlignment = .center
         font = UIFont.body2Prominent
+//        text = numberText
     }
     
     required init?(coder: NSCoder) {
