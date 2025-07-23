@@ -148,6 +148,7 @@ class ViewController: UIViewController {
     
     // 함수를 실행하고 나면 끝
     @objc func goButtonClicked() {
+        /*
         // 화면 전환: 스토리보드에 ResultViewController가 있다면 present
         // 스토리보드에 더이상 ResultViewController가 없어서 오류
 //        let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "ResultViewController") as! ResultViewController
@@ -259,6 +260,9 @@ class ViewController: UIViewController {
         
         bmi.result = "sesac"
         print(BMI.name)
+         */
+        let vc = AuthViewController()
+        present(vc, animated: true)
     }
     
     // #selector - 이름만 적더라도 찾을 수 있던 이유

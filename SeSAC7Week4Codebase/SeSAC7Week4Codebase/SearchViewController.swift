@@ -72,19 +72,11 @@ class SearchViewController: UIViewController {
     // 이 메서드가 누구의 프로토콜에서 나온지 모른다 -> extension으로 처리
 }
 
-// 같은 소속으로 넣으면 구조가 잡혀있어서 알아보기 쉽다
+// 같은 소속으로 넣으면 구조가 잡혀있어서 알아보기 쉽다 (extension)
 extension SearchViewController: ViewDesignProtocol {
-    func configureHierarchy() {
-        <#code#>
-    }
-    
-    func configureLayout() {
-        <#code#>
-    }
-    
-    func configureView() {
-        <#code#>
-    }
+    func configureHierarchy() {}
+    func configureLayout() {}
+    func configureView() {}
 }
 
 extension SearchViewController: JackNavigationProtocol {
