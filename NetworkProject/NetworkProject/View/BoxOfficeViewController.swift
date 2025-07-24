@@ -16,9 +16,8 @@ class BoxOfficeViewController: UIViewController {
 //    var title = "Box Office"
     private let searchTextField = SearchTextField()
     private let textFieldUnderLineView = DividerLine()
-    private let searchButton = {
+    lazy var searchButton = {
         let button =  SearchButton()
-        //MARK: 수정해보기
         button.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         return button
     }()

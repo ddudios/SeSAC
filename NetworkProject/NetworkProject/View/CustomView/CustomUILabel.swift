@@ -47,17 +47,9 @@ class DateLabel: UILabel {
 class TitleLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        text = "913회 당첨결과"
+        text = "1181회 당첨결과"
         font = UIFont.title1
         textColor = .systemOrange
-        if let title = self.text {
-            let attributedString = NSMutableAttributedString(string: title)
-            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: (title as NSString).range(of: "당첨결과"))
-            self.attributedText = attributedString
-        } else {
-            print("error: \(#function)")
-            return
-        }
     }
     
     required init?(coder: NSCoder) {

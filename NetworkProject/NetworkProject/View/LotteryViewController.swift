@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class LotteryViewController: UIViewController {
 
@@ -14,8 +15,12 @@ class LotteryViewController: UIViewController {
         view.backgroundColor = .white
         return view
     }()
-    
-    private let roundTextField = PickerTextField()
+    lazy var roundTextField = {
+        let textField = PickerTextField()
+        textField.text = "1181회차"
+        textField.inputView = self.lotteryPickerView
+        return textField
+    }()
     private let categoryLabel = {
        let label = CategoryLabel()
         label.text = "당첨번호 안내"
@@ -92,6 +97,9 @@ class LotteryViewController: UIViewController {
     private let bonusLabel = BonusLabel()
     
     private let resultLabelSize = 39
+    
+    private let lotteryPickerView = UIPickerView()
+    private let numberList: [Int] = Array(1...1181).reversed()
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -99,11 +107,41 @@ class LotteryViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+        networkService(1181)
     }
     
     //MARK: - Selectors
     @objc func closeButtonTapped() {
         dismiss(animated: true)
+    }
+    
+    func networkService(_ row: Int) {
+        let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(row)"
+        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Lottery.self) { response in
+            switch response.result {
+            case .success(let value):
+                self.firstResultLabel.text = "\(value.drwtNo1)"
+                self.secondResultLabel.text = "\(value.drwtNo2)"
+                self.thirdResultLabel.text = "\(value.drwtNo3)"
+                self.fourthResultLabel.text = "\(value.drwtNo4)"
+                self.fifthResultLabel.text = "\(value.drwtNo5)"
+                self.sixthResultLabel.text = "\(value.drwtNo6)"
+                self.eighthdResultLabel.text = "\(value.bnusNo)"
+                self.dateLabel.text = "\(value.drwNoDate)"
+                self.titleLabel.text = "\(row)회 당첨결과"
+                
+                if let title = self.titleLabel.text {
+                    let attributedString = NSMutableAttributedString(string: title)
+                    attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: (title as NSString).range(of: "당첨결과"))
+                    self.titleLabel.attributedText = attributedString
+                } else {
+                    print("error: \(#function)")
+                    return
+                }
+            case .failure(let error):
+                print("fail: \(error)")
+            }
+        }
     }
 }
 
@@ -117,6 +155,7 @@ extension LotteryViewController: ViewDesignProtocol {
         view.addSubview(dateLabel)
         view.addSubview(titleLabel)
         view.addSubview(resultStackView)
+        //MARK: lazy 활용해서 스택뷰 묶어주기
         resultStackView.addArrangedSubview(firstResultLabel)
         resultStackView.addArrangedSubview(secondResultLabel)
         resultStackView.addArrangedSubview(thirdResultLabel)
@@ -207,6 +246,7 @@ extension LotteryViewController: ViewDesignProtocol {
     func configureView() {
         view.backgroundColor = .white
         configureNavigationBar()
+        configurePickerView()
     }
     
     func configureNavigationBar() {
@@ -216,12 +256,33 @@ extension LotteryViewController: ViewDesignProtocol {
         appearance.backgroundColor = .white
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = .lotteryGray
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-        let backBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
-        self.navigationItem.rightBarButtonItem = backBarButtonItem
+    }
+    
+    private func configurePickerView() {
+        lotteryPickerView.delegate = self
+        lotteryPickerView.dataSource = self
+    }
+}
+
+extension LotteryViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return numberList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        roundTextField.text = "\(numberList[row])회차"
+        networkService(numberList[row])
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(numberList[row])회차"
     }
 }

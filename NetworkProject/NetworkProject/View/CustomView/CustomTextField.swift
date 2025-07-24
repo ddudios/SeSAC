@@ -14,6 +14,7 @@ class PickerTextField: UITextField {
         self.backgroundColor = .clear
         self.borderStyle = .roundedRect
         self.tintColor = .lotteryGray
+        textAlignment = .center
     }
     
     required init?(coder: NSCoder) {
