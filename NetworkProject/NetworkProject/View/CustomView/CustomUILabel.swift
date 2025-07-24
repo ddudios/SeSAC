@@ -134,3 +134,19 @@ class BoxOfficeDateLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+class EasyBoxOfficeLabel: UILabel {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        textColor = .white
+        font = UIFont.body4Prominent
+        backgroundColor = .lotteryBlue
+        self.layer.cornerRadius = 8
+        clipsToBounds = true
+        textAlignment = .center
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

@@ -130,6 +130,7 @@ class LotteryViewController: UIViewController {
                 self.dateLabel.text = "\(value.drwNoDate)"
                 self.titleLabel.text = "\(row)회 당첨결과"
                 
+                //MARK: 왜 클래스 안에 넣으면 색깔변경이 안되지..
                 if let title = self.titleLabel.text {
                     let attributedString = NSMutableAttributedString(string: title)
                     attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: (title as NSString).range(of: "당첨결과"))

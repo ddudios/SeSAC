@@ -22,9 +22,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func BoxOfficeButtonTapped(_ sender: UIButton) {
-        let viewController = BoxOfficeViewController()
+//        let viewController = BoxOfficeViewController()
+        let viewController = EasyBoxOfficeViewController()
         let navigationView = UINavigationController(rootViewController: viewController)
-        navigationView.modalPresentationStyle = .fullScreen
+//        navigationView.modalPresentationStyle = .fullScreen
         present(navigationView, animated: true)
     }
 }

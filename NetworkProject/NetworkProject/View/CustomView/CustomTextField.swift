@@ -10,7 +10,6 @@ import UIKit
 class PickerTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.inputView = UIPickerView()
         self.backgroundColor = .clear
         self.borderStyle = .roundedRect
         self.tintColor = .lotteryGray
@@ -25,7 +24,12 @@ class PickerTextField: UITextField {
 class SearchTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        borderStyle = .none
+    }
+    
+    init(borderStyle: UITextField.BorderStyle, keyboardType: UIKeyboardType) {
+        super.init(frame: .zero)
+        self.borderStyle = borderStyle
+        self.keyboardType = keyboardType
         tintColor = .black
         backgroundColor = .clear
     }

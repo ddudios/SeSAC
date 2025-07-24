@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 class BoxOfficeViewController: UIViewController {
     //MARK: 왜 CGRect설정하라고하지 (ImageView는 아마 설정하는 법이 다를 것이다)
@@ -31,6 +32,7 @@ class BoxOfficeViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+        networking()
     }
     
     //MARK: - Selectors
@@ -45,6 +47,20 @@ class BoxOfficeViewController: UIViewController {
     private func shuffleData() {
         movies = MovieInfo.movies.shuffled()
         tableView.reloadData()
+    }
+    
+    private func networking() {
+        let key = "5b169fc7c3f7c25eda2c695ea9a970d6"
+        let date = "20250723"
+        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=\(key)&targetDt=\(date)"
+        AF.request(url, method: .get).responseDecodable(of: BoxOfficeResult.self) { response in
+            switch response.result {
+            case .success(let value):
+                print(value)
+            case .failure(let error):
+                print("fail: \(error)")
+            }
+        }
     }
 }
 
