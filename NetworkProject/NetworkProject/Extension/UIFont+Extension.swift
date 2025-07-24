@@ -9,6 +9,7 @@ import UIKit
 
 extension UIFont {
     /// for Header
+    //MARK: struct로 묶어서 써보기
     static let heading1 = UIFont.systemFont(ofSize: 28, weight: .bold)
     static let heading2 = UIFont.systemFont(ofSize: 24, weight: .bold)
     static let heading3 = UIFont.systemFont(ofSize: 22, weight: .bold)

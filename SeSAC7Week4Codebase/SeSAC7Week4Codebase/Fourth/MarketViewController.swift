@@ -102,24 +102,44 @@ class MarketViewController: UIViewController {
         configureView()
         
         callRequest()
+        callBoxOffice()
     }
     
     func callRequest() {
         // 문서에서 보고 복붙
         let url = "https://api.upbit.com/v1/market/all"
         // responseString으로 서버에서 잘 뜨는지 먼저 확인 후 이 코드 사용 (최소한의 디버깅)
-        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: [Coin].self) { response in
+//        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: [Coin].self) { response in
+//            switch response.result {
+//            case .success(let value):
+//                print("success", value)
+//                print(value[2].korean_name)
+//                print(value[2].english_name)
+//                print(value[2].market)
+//            case .failure(let error):
+//                print("fail", error)
+//            }
+//        }
+    }
+    
+    func callBoxOffice() {
+        // http(X) -> ats 대응 (https로 사이트에서 대응하지 않았으면 안된다)
+            // "가 중간에 나오면 String이 끝나버리기떄문에 \"처리를해서 \가 많이 들어있는 것임
+        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=5b169fc7c3f7c25eda2c695ea9a970d6&targetDt=20200808"
+        // responseString으로 서버에서 잘 뜨는지 먼저 확인 후 이 코드 사용 (최소한의 디버깅)
+        AF.request(url, method: .get).validate(statusCode: 200..<300)
+//            .responseString { resonse in
+//            print(resonse)
+            .responseDecodable(of: BoxOfficeResult.self) { response in
             switch response.result {
             case .success(let value):
                 print("success", value)
-                print(value[2].korean_name)
-                print(value[2].english_name)
-                print(value[2].market)
+                dump(value)
+                print(value.boxOfficeResult.dailyBoxOfficeList[0].movieNm)
             case .failure(let error):
                 print("fail", error)
             }
         }
-
     }
 }
 

@@ -20,3 +20,4 @@ struct CustomDateFormat {
         return dateFormat.string(from: getDateData(dateString: dateData))
     }
 }
+//MARK: 8글자 고정이라면, String->Date->String이 아니라 String 중간에 -를 넣어주는 방식으로도 구성해볼 수 있다

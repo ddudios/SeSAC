@@ -94,6 +94,7 @@ class AuthViewController: UIViewController {
         
         emailTextField.inputView = picker // 키보드 영역에 키보드 대신 다른 것을 넣을 수 있음 (뷰의 성격을 띈 누구라도 다 들어갈 수 있음 - 테이블뷰도 가능)*/
         let emailTextField = PurpleTextField(placeholder: "나이를 선택해주세요", keyboard: .numberPad)
+        emailTextField.inputView = picker
         return emailTextField
     }()
         
@@ -111,8 +112,9 @@ class AuthViewController: UIViewController {
         configureView()
         print("viewDidLoad 끝")
         
+//        ageTextField.inputView = picker
         picker.preferredDatePickerStyle = .wheels
-        picker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged) // 쓰는 이유 (9:45)
+        picker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
         
         // 원래 모두 연결시켜줘야 프로토콜이 가지고 있는 메서드를 모두 사용할 수 있는데
         // 하나의 텍스트필드에만 기능을 사용하고 싶다면 하나의 텍스트필드에만 델리게이트를 연결하면 부하직원의 분기처리는 하지 않아도된다

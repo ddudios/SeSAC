@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class BoxOfficeViewController: UIViewController {
-    //MARK: 왜 CGRect설정하라고하지
+    //MARK: 왜 CGRect설정하라고하지 (ImageView는 아마 설정하는 법이 다를 것이다)
 //    private let boxOfficeBackgroundImageView = BoxOfficeBackgroundImageView()
     private let searchBackgroundView = SearchBackgroundView()
     //MARK: ?? 왜안되는거지
@@ -18,6 +18,7 @@ class BoxOfficeViewController: UIViewController {
     private let textFieldUnderLineView = DividerLine()
     private let searchButton = {
         let button =  SearchButton()
+        //MARK: 수정해보기
         button.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -132,6 +133,7 @@ extension BoxOfficeViewController: NavigationDesignProtocol {
     }
 }
 
+//MARK: 수정
 extension BoxOfficeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 100
