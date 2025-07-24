@@ -261,7 +261,7 @@ class ViewController: UIViewController {
         bmi.result = "sesac"
         print(BMI.name)
          */
-        let vc = AuthViewController()
+        let vc = MarketViewController()
         present(vc, animated: true)
     }
     

@@ -9,6 +9,12 @@ import UIKit
 
 class LotteryViewController: UIViewController {
 
+    private let navigationSeparatorLine = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     private let roundTextField = PickerTextField()
     private let categoryLabel = {
        let label = CategoryLabel()
@@ -104,6 +110,7 @@ class LotteryViewController: UIViewController {
 //MARK: - ViewDesignProtocol
 extension LotteryViewController: ViewDesignProtocol {
     func configureHierarchy() {
+//        view.addSubview(navigationSeparatorLine)
         view.addSubview(roundTextField)
         view.addSubview(categoryLabel)
         view.addSubview(separatorView)
@@ -122,6 +129,11 @@ extension LotteryViewController: ViewDesignProtocol {
     }
     
     func configureLayout() {
+//        navigationSeparatorLine.snp.makeConstraints { make in
+//            make.height.equalTo(1)
+//            make.centerY.equalTo(view.safeAreaLayoutGuide)
+//        }
+        
         roundTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.horizontalEdges.equalToSuperview().inset(35)

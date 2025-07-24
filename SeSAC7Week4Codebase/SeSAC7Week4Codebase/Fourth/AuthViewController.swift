@@ -38,6 +38,7 @@ class AuthViewController: UIViewController {
         // 익명 함수 / 클로저 / 즉시 실행 함수
 //    let emailTextField = setEmailTextField()
     let emailTextField = {  // 함수가 실행된 결과가 담김
+        /*
         print("emailTextField 익명함수")
         let emailTextField = UITextField()
         emailTextField.placeholder = "이메일을 작성해주세요"
@@ -48,14 +49,16 @@ class AuthViewController: UIViewController {
         emailTextField.layer.borderColor = UIColor.systemPurple.cgColor
         emailTextField.layer.cornerRadius = 8
         emailTextField.backgroundColor = .white
-        emailTextField.tintColor = .systemPurple
+        emailTextField.tintColor = .systemPurple*/
+        let emailTextField = PurpleTextField(placeholder: "이메일을 작성해 주세요", keyboard: .emailAddress)
         return emailTextField
     }()  // 이 함수 실행할게 - 실행 결과를 emailTextField에 담는다
 //    let passTextField = setPasswordTextField()
 //    let ageTextField = UITextField()
-    // 타입메서드는 많은 공간들을 차지했다가 사라졌다가를 반복하는데, 두 번다시 어쓰뷰컨트롤러에 들어올 일이 없음에도 불구하고 앱이 강제적으로 종료하기 전까지 공간을 차지하고 있다 (불필요한 공간들이 남아있음) (10:17)
+
     let passTextField = {
 //        let emailTextField = UITextField()
+        /*
         let emailTextField = PurpleTextField()
         emailTextField.placeholder = "비밀번호를 작성해주세요"
         emailTextField.keyboardType = .default
@@ -66,32 +69,40 @@ class AuthViewController: UIViewController {
 //        emailTextField.layer.borderColor = UIColor.systemPurple.cgColor
 //        emailTextField.layer.cornerRadius = 8
 //        emailTextField.backgroundColor = .white
-//        emailTextField.tintColor = .systemPurple
-        return emailTextField
-    }()
-    let ageTextField = {
-        print(#function)
-//        let emailTextField = UITextField()
-        let emailTextField = PurpleTextField()
-        emailTextField.placeholder = "나이를 선택해주세요"
-        emailTextField.keyboardType = .numberPad
-//        emailTextField.borderStyle = .none
-//        emailTextField.font = .boldSystemFont(ofSize: 15)
-//        emailTextField.layer.borderWidth = 1
-//        emailTextField.layer.borderColor = UIColor.systemPurple.cgColor
-//        emailTextField.layer.cornerRadius = 8
-//        emailTextField.backgroundColor = .white
-//        emailTextField.tintColor = .systemPurple
-        
-        let picker = UIDatePicker()
-        picker.preferredDatePickerStyle = .wheels
-        
-        emailTextField.inputView = picker // 키보드 영역에 키보드 대신 다른 것을 넣을 수 있음 (뷰의 성격을 띈 누구라도 다 들어갈 수 있음 - 테이블뷰도 가능)
+//        emailTextField.tintColor = .systemPurple*/
+        let emailTextField = PurpleTextField(placeholder: "비밀번호를 작성해주세요", keyboard: .default)
         return emailTextField
     }()
     
-//    let a = Jack(name: "J", age: 22)  // 인스턴스 메서드가 만들어진 후에야 인스턴스 메서드, 프로퍼티에 접근할 수 있는데 인스턴스를 만들어야 하는 시점에 메서드를 가져다가 쓰려고하니까 애초에 안만들어진 것을 어떻게 가져다 쓰냐
+    // lazy는 var밖에 사용하 수 없다
+    // 옵셔널처럼 처음에 nil값이 들어왔다가 바뀌는 형태
+        // 따라서 let은 사용할 수 없다
+    lazy var ageTextField = {
+        print(#function)
+        //        let emailTextField = UITextField()
+        /*
+        let emailTextField = PurpleTextField()
+        emailTextField.placeholder = "나이를 선택해주세요"
+        emailTextField.keyboardType = .numberPad
+        //        emailTextField.borderStyle = .none
+        //        emailTextField.font = .boldSystemFont(ofSize: 15)
+        //        emailTextField.layer.borderWidth = 1
+        //        emailTextField.layer.borderColor = UIColor.systemPurple.cgColor
+        //        emailTextField.layer.cornerRadius = 8
+        //        emailTextField.backgroundColor = .white
+        //        emailTextField.tintColor = .systemPurple
+        
+        emailTextField.inputView = picker // 키보드 영역에 키보드 대신 다른 것을 넣을 수 있음 (뷰의 성격을 띈 누구라도 다 들어갈 수 있음 - 테이블뷰도 가능)*/
+        let emailTextField = PurpleTextField(placeholder: "나이를 선택해주세요", keyboard: .numberPad)
+        return emailTextField
+    }()
+        
 
+    
+//    let a = Jack(name: "J", age: 22)  // 인스턴스 메서드가 만들어진 후에야 인스턴스 메서드, 프로퍼티에 접근할 수 있는데 인스턴스를 만들어야 하는 시점에 메서드를 가져다가 쓰려고하니까 애초에 안만들어진 것을 어떻게 가져다 쓰냐
+    
+    let picker = UIDatePicker()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad 시작")
@@ -100,10 +111,19 @@ class AuthViewController: UIViewController {
         configureView()
         print("viewDidLoad 끝")
         
+        picker.preferredDatePickerStyle = .wheels
+        picker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged) // 쓰는 이유 (9:45)
+        
         // 원래 모두 연결시켜줘야 프로토콜이 가지고 있는 메서드를 모두 사용할 수 있는데
         // 하나의 텍스트필드에만 기능을 사용하고 싶다면 하나의 텍스트필드에만 델리게이트를 연결하면 부하직원의 분기처리는 하지 않아도된다
         passTextField.delegate = self
         emailTextField.delegate = self
+    }
+    
+    // 휠이 멈추면 값이 달라짐
+    @objc func datePickerValueChanged() {
+        print(#function)
+        ageTextField.text = "\(picker.date)"
     }
 }
 

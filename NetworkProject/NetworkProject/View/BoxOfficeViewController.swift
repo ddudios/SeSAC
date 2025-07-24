@@ -120,12 +120,17 @@ extension BoxOfficeViewController: ViewDesignProtocol {
         
         tableView.rowHeight = 50
         tableView.register(BoxOfficeTableViewCell.self, forCellReuseIdentifier: BoxOfficeTableViewCell.identifier)
+        
+        tableView.separatorStyle = .none  // 셀 구분선 스타일
     }
 }
 
 //MARK: 왜안되는거지
-//extension BoxOfficeViewController: NavigationDesignProtocol {
-//}
+extension BoxOfficeViewController: NavigationDesignProtocol {
+    var navigationTitle: String {
+        "Box Office"
+    }
+}
 
 extension BoxOfficeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

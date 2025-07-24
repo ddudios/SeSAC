@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 /*
 @objc protocol Mentor1 {
@@ -40,7 +41,28 @@ struct Den {}
 
 class MarketViewController: UIViewController {
     
-    let tableView = UITableView()
+    // 이름없는함수 실행할 수 있는 환경(즉시실행함수) (엄청 선호하는 방식은 아님)
+    lazy var tableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .orange
+        tableView.rowHeight = 60
+        
+        // 같은 시점에 어떻게 만들어 -> 테이블뷰를 조금 늦게 만ㄷ르자
+        tableView.delegate = self
+        tableView.dataSource = self  // self == 인스턴스, MarketViewController인스턴스에 있는 tableView에 접근
+        // MarketViewController: UITableViewDelegate, UITableViewDataSource에서 채택하지 않으면 에러: 클래스가 그 프로토콜을 가지고 있지 않아서 타입으로서의 프로토콜이 되고 있지 않음
+        // 프로토콜의 기능 중 하나가 타입처럼 사용할 수 있다
+        
+//        let xib = UINib(nibName: <#T##String#>, bundle: <#T##Bundle?#>)  // xib파일명을 가져옴
+        // 코드 기반으로 가져옴
+        tableView.register(MarketTableViewCell.self, forCellReuseIdentifier: MarketTableViewCell.self.identifier)
+        // self는 MarketViewController클래스의 인스턴스와 상관없음
+        // 여기서의 self는 이 MarketTableViewCell클래스 자체
+        // 클래스 자체의 무언가를 가져올 때는 생략가능하지만 그 자체를 가져올 때는 생략하면 안됨
+//        Mentor2().hello
+//        Mentor2.self.welcome
+        return tableView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +100,26 @@ class MarketViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+        
+        callRequest()
+    }
+    
+    func callRequest() {
+        // 문서에서 보고 복붙
+        let url = "https://api.upbit.com/v1/market/all"
+        // responseString으로 서버에서 잘 뜨는지 먼저 확인 후 이 코드 사용 (최소한의 디버깅)
+        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: [Coin].self) { response in
+            switch response.result {
+            case .success(let value):
+                print("success", value)
+                print(value[2].korean_name)
+                print(value[2].english_name)
+                print(value[2].market)
+            case .failure(let error):
+                print("fail", error)
+            }
+        }
+
     }
 }
 
@@ -106,21 +148,6 @@ extension MarketViewController: ViewDesignProtocol {
     
     func configureView() {
         view.backgroundColor = .white
-        tableView.backgroundColor = .orange
-        tableView.rowHeight = 60
-        tableView.delegate = self
-        self.tableView.dataSource = self  // self == 인스턴스, MarketViewController인스턴스에 있는 tableView에 접근
-        // MarketViewController: UITableViewDelegate, UITableViewDataSource에서 채택하지 않으면 에러: 클래스가 그 프로토콜을 가지고 있지 않아서 타입으로서의 프로토콜이 되고 있지 않음
-        // 프로토콜의 기능 중 하나가 타입처럼 사용할 수 있다
-        
-//        let xib = UINib(nibName: <#T##String#>, bundle: <#T##Bundle?#>)  // xib파일명을 가져옴
-        // 코드 기반으로 가져옴
-        tableView.register(MarketTableViewCell.self, forCellReuseIdentifier: MarketTableViewCell.self.identifier)
-        // self는 MarketViewController클래스의 인스턴스와 상관없음
-        // 여기서의 self는 이 MarketTableViewCell클래스 자체
-        // 클래스 자체의 무언가를 가져올 때는 생략가능하지만 그 자체를 가져올 때는 생략하면 안됨
-//        Mentor2().hello
-//        Mentor2.self.welcome
     }
 }
 

@@ -47,7 +47,20 @@ class PurpleTextField: UITextField {
         super.init(frame: frame)  // override일때 super의 init을 불러야 한다
         
         print("코드 Init")
+    }
+    
+    // 내껄 초기화하더라도 부모클래스의 프로퍼티도 모두 초기화를 먼저 해야함!
+    init(placeholder: String, keyboard: UIKeyboardType) {
+        // 부모클래스 전에 너 나오면안되지
+            // 일단 가상으로 만들어놓고
+        super.init(frame: .zero)
+        //        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+            // == 직접 쓸래, 애플이만들어준걸 쓸래 / 길이 차이
+        print("코드 custom Init")
+        
         // 자식이 재정의도고 있기 때문에
+        self.placeholder = placeholder
+        self.keyboardType = keyboard
         self.borderStyle = .none
         self.font = .boldSystemFont(ofSize: 15)
         self.layer.borderWidth = 1

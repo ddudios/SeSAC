@@ -8,5 +8,5 @@
 import Foundation
 
 protocol NavigationDesignProtocol {
-    var title: String { get }
+    var navigationTitle: String { get }
 }

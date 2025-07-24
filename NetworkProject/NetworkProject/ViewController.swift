@@ -15,9 +15,10 @@ class ViewController: UIViewController {
     
     @IBAction func lotteryButtonTapped(_ sender: UIButton) {
         let viewController = LotteryViewController()
-        let navigationView = UINavigationController(rootViewController: viewController)
-        navigationView.modalPresentationStyle = .fullScreen
-        present(navigationView, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
+//        let navigationView = UINavigationController(rootViewController: viewController)
+//        navigationView.modalPresentationStyle = .fullScreen
+//        present(navigationView, animated: true)
     }
     
     @IBAction func BoxOfficeButtonTapped(_ sender: UIButton) {
