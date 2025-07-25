@@ -6,8 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B027627A2E33EBDF00FA18C1 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B02762792E33EBDF00FA18C1 /* Secrets.xcconfig */; };
+		B02762F42E33FECA00FA18C1 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B02762F32E33FECA00FA18C1 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B02762462E33E1F900FA18C1 /* ShoppingShopping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingShopping.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B02762792E33EBDF00FA18C1 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B02762F42E33FECA00FA18C1 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +54,7 @@
 			children = (
 				B02762482E33E1F900FA18C1 /* ShoppingShopping */,
 				B02762472E33E1F900FA18C1 /* Products */,
+				B02762792E33EBDF00FA18C1 /* Secrets.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +86,7 @@
 			);
 			name = ShoppingShopping;
 			packageProductDependencies = (
+				B02762F32E33FECA00FA18C1 /* SnapKit */,
 			);
 			productName = ShoppingShopping;
 			productReference = B02762462E33E1F900FA18C1 /* ShoppingShopping.app */;
@@ -107,6 +116,9 @@
 			);
 			mainGroup = B027623D2E33E1F900FA18C1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B02762F22E33FECA00FA18C1 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B02762472E33E1F900FA18C1 /* Products */;
 			projectDirPath = "";
@@ -122,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B027627A2E33EBDF00FA18C1 /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +153,7 @@
 /* Begin XCBuildConfiguration section */
 		B027625A2E33E1FB00FA18C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B02762792E33EBDF00FA18C1 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -173,6 +187,7 @@
 		};
 		B027625B2E33E1FB00FA18C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B02762792E33EBDF00FA18C1 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -347,6 +362,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B02762F22E33FECA00FA18C1 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B02762F32E33FECA00FA18C1 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B02762F22E33FECA00FA18C1 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B027623E2E33E1F900FA18C1 /* Project object */;
 }
