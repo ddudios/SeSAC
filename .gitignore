@@ -94,3 +94,6 @@ iOSInjectionProject/
 
 # 프로젝트의 모든 경로에서 GoogleService-Info.plist 파일을 포함하지 않도록 함
 **/GoogleService-Info.plist
+
+# 모든 하위 디렉토리를 포함한 .xcconfig 파일 전체를 대상으로 포함하지 않도록 함
+**/*.xcconfig
