@@ -15,14 +15,14 @@ protocol ViewDesignProtocol {
 
 
 extension ViewDesignProtocol {
-    func configureUI() {
+    func configureUI(_ viewController: UIViewController) {
+        viewController.view.backgroundColor = .black
         configureHierarchy()
         configureLayout()
         configureView()
     }
     
     func setNavigationBar(_ viewController: UIViewController, title: String) {
-        print("기본구현")
         viewController.navigationItem.title = title
         
         let appearance = UINavigationBarAppearance()

@@ -8,47 +8,52 @@
 import UIKit
 import SnapKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     
-    let shoppingSearchBar = UISearchBar()
-    
-    lazy var testButton = {
-        let button = UIButton()
-        button.setTitle("dfasdf", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .yellow
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        return button
-    }()
+    private let shoppingSearchBar = ShoppingSearchBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-    }
-    
-    @objc func buttonTapped() {
-        let viewController = SearchResultViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
+        configureUI(self)
     }
 }
 
+//MARK: - UISearchBarDelegate
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else {
+            print("error: \(#function)")
+            return
+        }
+        
+        if text.count > 1 {
+            let viewController = SearchResultViewController()
+            viewController.searchText = text
+            navigationController?.pushViewController(viewController, animated: true)
+        } else {
+            print("error: \(#function) - 2글자 이상 입력해야 합니다")
+        }
+    }
+}
+
+//MARK: - ViewDesignProtocol
 extension SearchViewController: ViewDesignProtocol {
     func configureHierarchy() {
-        view.addSubview(testButton)
+        view.addSubview(shoppingSearchBar)
     }
     
     func configureLayout() {
-        testButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(100)
-            make.height.width.equalTo(20)
-            make.leading.equalToSuperview().offset(20)
+        shoppingSearchBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview().inset(ConstraintValue.searchBarEdge)
         }
     }
     
     func configureView() {
-        view.backgroundColor = .black
         setNavigationBar(self, title: "영캠러의 쇼핑쇼핑")
         setNavigationBackButton()
+        
+        shoppingSearchBar.delegate = self
     }
     
     func setNavigationBackButton() {
