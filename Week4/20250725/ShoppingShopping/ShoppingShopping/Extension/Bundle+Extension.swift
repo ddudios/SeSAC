@@ -7,6 +7,16 @@
 
 import Foundation
 
+enum APIKeyHeader: String {
+    case naverClientId = "X-Naver-Client-Id"
+    case naverClientSecret = "X-Naver-Client-Secret"
+}
+
+enum APIKeyType: String {
+    case naverClientId = "NaverClientId"
+    case naverClientSecret = "NaverClientSecret"
+}
+
 extension Bundle {
     static func getAPIKey(for key: APIKeyType) -> String {
         guard let filePath = Bundle.main.path(forResource: "Info", ofType: "plist"),
@@ -19,10 +29,5 @@ extension Bundle {
         }
         
         return value
-    }
-    
-    enum APIKeyType: String {
-        case naverClientId = "NaverClientId"
-        case naverClientSecret = "NaverClientSecret"
     }
 }
