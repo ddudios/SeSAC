@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8x6-gw-IZX">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--City Search View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="CitySearchViewController" id="Y6W-OH-hqX" customClass="CitySearchViewController" customModule="Travel" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="xtO-QT-SQN">
+                                <rect key="frame" x="0.0" y="162" width="393" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="x4r-et-x9m"/>
+                                </connections>
+                            </searchBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Eyc-eS-yi6">
+                                <rect key="frame" x="30" y="238" width="333" height="32"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <connections>
+                                    <action selector="filterSegmentedControlValueChanged:" destination="Y6W-OH-hqX" eventType="valueChanged" id="T4l-hf-Nib"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Da7-wF-cRo">
+                                <rect key="frame" x="0.0" y="289" width="393" height="446"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="xtO-QT-SQN" secondAttribute="trailing" id="2d7-27-LoA"/>
+                            <constraint firstItem="Da7-wF-cRo" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="K04-yY-hXr"/>
+                            <constraint firstItem="Eyc-eS-yi6" firstAttribute="top" secondItem="xtO-QT-SQN" secondAttribute="bottom" constant="20" id="PBr-1d-Zjz"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Eyc-eS-yi6" secondAttribute="trailing" constant="30" id="UL9-ZP-zbG"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Da7-wF-cRo" secondAttribute="trailing" id="as1-Zl-KAq"/>
+                            <constraint firstItem="Da7-wF-cRo" firstAttribute="top" secondItem="Eyc-eS-yi6" secondAttribute="bottom" constant="20" id="d78-fm-h0I"/>
+                            <constraint firstItem="xtO-QT-SQN" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="lHg-3S-2xa"/>
+                            <constraint firstItem="Eyc-eS-yi6" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="lYD-JM-u6z"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Da7-wF-cRo" secondAttribute="bottom" id="orH-hP-qBS"/>
+                            <constraint firstItem="xtO-QT-SQN" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="sQ1-em-Jn2"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="0xj-bW-dTr"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="cityListTableView" destination="Da7-wF-cRo" id="U9Y-tx-8kE"/>
+                        <outlet property="filterSegmentedControl" destination="Eyc-eS-yi6" id="SuJ-pi-wVk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1063.3587786259541" y="3.5211267605633805"/>
+        </scene>
+        <!--City Search Collection View Controller-->
+        <scene sceneID="hLO-Wr-hEl">
+            <objects>
+                <viewController storyboardIdentifier="CitySearchCollectionViewController" id="CRT-wt-Tb0" customClass="CitySearchCollectionViewController" customModule="Travel" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Sz5-2f-CJu">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Q3e-rZ-d6c">
+                                <rect key="frame" x="20" y="182" width="353" height="32"/>
+                                <segments>
+                                    <segment title="모두"/>
+                                    <segment title="국내"/>
+                                    <segment title="해외"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlValueChanged:" destination="CRT-wt-Tb0" eventType="valueChanged" id="tgB-QB-uIL"/>
+                                </connections>
+                            </segmentedControl>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Xy0-Qb-9RX">
+                                <rect key="frame" x="0.0" y="233" width="393" height="502"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="W6l-cr-eRg">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="OGz-cP-hsg">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lis-fm-n8Y">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PhU-NK-N3n"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Q3e-rZ-d6c" firstAttribute="top" secondItem="PhU-NK-N3n" secondAttribute="top" constant="20" id="0sw-0h-sgf"/>
+                            <constraint firstItem="PhU-NK-N3n" firstAttribute="trailing" secondItem="Xy0-Qb-9RX" secondAttribute="trailing" id="HvE-gH-OGr"/>
+                            <constraint firstItem="PhU-NK-N3n" firstAttribute="trailing" secondItem="Q3e-rZ-d6c" secondAttribute="trailing" constant="20" id="LDm-J2-Q3X"/>
+                            <constraint firstItem="Xy0-Qb-9RX" firstAttribute="leading" secondItem="PhU-NK-N3n" secondAttribute="leading" id="Lr8-JK-hFG"/>
+                            <constraint firstItem="PhU-NK-N3n" firstAttribute="bottom" secondItem="Xy0-Qb-9RX" secondAttribute="bottom" id="fuC-Tc-hFY"/>
+                            <constraint firstItem="Q3e-rZ-d6c" firstAttribute="leading" secondItem="PhU-NK-N3n" secondAttribute="leading" constant="20" id="o2V-mK-xV0"/>
+                            <constraint firstItem="Xy0-Qb-9RX" firstAttribute="top" secondItem="Q3e-rZ-d6c" secondAttribute="bottom" constant="20" id="ygN-n8-MqX"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="UO0-mH-pEr"/>
+                    <connections>
+                        <outlet property="CityFilterSegmentedControl" destination="Q3e-rZ-d6c" id="9FO-ar-yB1"/>
+                        <outlet property="cityListCollectionView" destination="Xy0-Qb-9RX" id="js2-2n-x3g"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d8O-v1-zMr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1063" y="727"/>
+        </scene>
+        <!--City Search Detail View Controller-->
+        <scene sceneID="qc9-F4-Wq8">
+            <objects>
+                <viewController storyboardIdentifier="CitySearchDetailViewController" id="vb9-0H-nvn" customClass="CitySearchDetailViewController" customModule="Travel" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XwD-VG-7A6">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCu-63-2MX">
+                                <rect key="frame" x="30" y="415.66666666666669" width="333" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="FkT-kb-Yni"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="SCu-63-2MX" firstAttribute="leading" secondItem="FkT-kb-Yni" secondAttribute="leading" constant="30" id="EUV-lz-Kkq"/>
+                            <constraint firstItem="FkT-kb-Yni" firstAttribute="trailing" secondItem="SCu-63-2MX" secondAttribute="trailing" constant="30" id="q5e-dq-RqZ"/>
+                            <constraint firstItem="SCu-63-2MX" firstAttribute="centerY" secondItem="XwD-VG-7A6" secondAttribute="centerY" id="suy-Gr-G5R"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dataLabel" destination="SCu-63-2MX" id="B20-Dw-gjP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="36U-ht-Smf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1956" y="4"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="rxT-o6-Gjz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7IP-OM-Aoh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="H5A-Do-oWT"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dyR-jj-trQ">
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="LEK-zp-HdM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e6y-EA-Qd8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.64122137404578" y="3.5211267605633805"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="0lh-G8-JnF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8x6-gw-IZX" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="ndZ-FP-vcC"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Rgj-e5-fU1">
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="CRT-wt-Tb0" kind="relationship" relationship="rootViewController" id="2g6-JR-2Rq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0gR-xv-vEr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="135" y="727"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

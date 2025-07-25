@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CitySearchTableViewCell" rowHeight="172" id="KGk-i7-Jjw" customClass="CitySearchTableViewCell" customModule="Travel" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="452" height="172"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="452" height="172"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCQ-bQ-rz8">
+                        <rect key="frame" x="16" y="8" width="420" height="156"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mKj-UC-lj5">
+                                <rect key="frame" x="0.0" y="0.0" width="420" height="156"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="방콕 | BangKok" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lV0-KQ-7Ph">
+                                <rect key="frame" x="300" y="10" width="110" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wIh-Tj-NYC">
+                                <rect key="frame" x="0.0" y="126" width="420" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="방콕, 파타야, 후아현, 코사멧, 코사무이" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dub-6X-ENr">
+                                        <rect key="frame" x="8" y="1" width="256.66666666666669" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="dub-6X-ENr" secondAttribute="bottom" constant="1" id="PY4-vw-tm3"/>
+                                    <constraint firstItem="dub-6X-ENr" firstAttribute="leading" secondItem="wIh-Tj-NYC" secondAttribute="leading" constant="8" id="dPf-MX-7Ns"/>
+                                    <constraint firstAttribute="height" constant="30" id="dWd-yE-MPJ"/>
+                                    <constraint firstItem="dub-6X-ENr" firstAttribute="top" secondItem="wIh-Tj-NYC" secondAttribute="top" constant="1" id="qL5-jz-b2z"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wIh-Tj-NYC" firstAttribute="leading" secondItem="NCQ-bQ-rz8" secondAttribute="leading" id="28h-as-xkc"/>
+                            <constraint firstItem="mKj-UC-lj5" firstAttribute="top" secondItem="NCQ-bQ-rz8" secondAttribute="top" id="GHA-gp-VuZ"/>
+                            <constraint firstAttribute="trailing" secondItem="lV0-KQ-7Ph" secondAttribute="trailing" constant="10" id="Hlk-8s-uHE"/>
+                            <constraint firstAttribute="trailing" secondItem="mKj-UC-lj5" secondAttribute="trailing" id="UYP-GA-oYf"/>
+                            <constraint firstItem="mKj-UC-lj5" firstAttribute="leading" secondItem="NCQ-bQ-rz8" secondAttribute="leading" id="cNB-2i-Ozp"/>
+                            <constraint firstAttribute="bottom" secondItem="mKj-UC-lj5" secondAttribute="bottom" id="nUc-AU-lCT"/>
+                            <constraint firstAttribute="bottom" secondItem="wIh-Tj-NYC" secondAttribute="bottom" id="o7C-op-iEm"/>
+                            <constraint firstAttribute="trailing" secondItem="wIh-Tj-NYC" secondAttribute="trailing" id="rjw-6P-g5P"/>
+                            <constraint firstItem="lV0-KQ-7Ph" firstAttribute="top" secondItem="NCQ-bQ-rz8" secondAttribute="top" constant="10" id="uTI-ay-uct"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="NCQ-bQ-rz8" secondAttribute="bottom" constant="8" id="4Ui-Rk-IAE"/>
+                    <constraint firstItem="NCQ-bQ-rz8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Irw-yh-Diz"/>
+                    <constraint firstAttribute="trailing" secondItem="NCQ-bQ-rz8" secondAttribute="trailing" constant="16" id="uYA-gb-bDD"/>
+                    <constraint firstItem="NCQ-bQ-rz8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="vHo-d5-DFa"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cellBackgroundView" destination="NCQ-bQ-rz8" id="Y5g-a7-PaG"/>
+                <outlet property="cityImageView" destination="mKj-UC-lj5" id="uDC-rR-dsI"/>
+                <outlet property="explainBackgroundView" destination="wIh-Tj-NYC" id="mjC-NC-uJa"/>
+                <outlet property="explainLabel" destination="dub-6X-ENr" id="Oa5-jC-pSV"/>
+                <outlet property="titleLabel" destination="lV0-KQ-7Ph" id="fKU-M2-Gtg"/>
+            </connections>
+            <point key="canvasLocation" x="239.69465648854961" y="64.788732394366207"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
