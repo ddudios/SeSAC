@@ -11,6 +11,13 @@ import SnapKit
 final class SearchViewController: UIViewController {
     
     private let shoppingSearchBar = ShoppingSearchBar()
+    private let emptySearchBarTextImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "noMoney")
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    private let emptySearchBarTextLabel = EmptySearchBarTextLabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +47,24 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: ViewDesignProtocol {
     func configureHierarchy() {
         view.addSubview(shoppingSearchBar)
+        view.addSubview(emptySearchBarTextImageView)
+        view.addSubview(emptySearchBarTextLabel)
     }
     
     func configureLayout() {
         shoppingSearchBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.horizontalEdges.equalToSuperview().inset(ConstraintValue.searchBarEdge)
+        }
+        
+        emptySearchBarTextImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
+        }
+        
+        emptySearchBarTextLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(emptySearchBarTextImageView.snp.bottom)
         }
     }
     
