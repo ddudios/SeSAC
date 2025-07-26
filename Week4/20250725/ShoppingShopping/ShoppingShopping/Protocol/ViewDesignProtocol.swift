@@ -22,6 +22,12 @@ extension ViewDesignProtocol {
         configureView()
     }
     
+    func configureItem(_ item: UICollectionViewCell) {
+        configureHierarchy()
+        configureLayout()
+        configureView()
+    }
+    
     func setNavigationBar(_ viewController: UIViewController, title: String) {
         viewController.navigationItem.title = title
         

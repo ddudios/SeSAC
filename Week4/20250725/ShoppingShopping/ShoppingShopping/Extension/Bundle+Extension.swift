@@ -12,13 +12,13 @@ enum APIKeyHeader: String {
     case naverClientSecret = "X-Naver-Client-Secret"
 }
 
-enum APIKeyType: String {
+enum APIKeyHeaderValue: String {
     case naverClientId = "NaverClientId"
     case naverClientSecret = "NaverClientSecret"
 }
 
 extension Bundle {
-    static func getAPIKey(for key: APIKeyType) -> String {
+    static func getAPIKey(for key: APIKeyHeaderValue) -> String {
         guard let filePath = Bundle.main.path(forResource: "Info", ofType: "plist"),
               let plistDict = NSDictionary(contentsOfFile: filePath) else {
             fatalError("error: Couldn't find file 'Info.plist'.")
