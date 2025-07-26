@@ -49,6 +49,7 @@ extension SearchViewController: UISearchBarDelegate {
             AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { request in
                 switch request.result {
                 case .success(let value):
+                    viewController.numberOfItemsInSection = value.total
                     viewController.totalLabel.text = "\(value.total) 개의 검색 결과"
                 case .failure(let error):
                     print("fail: \(error)")
@@ -93,7 +94,7 @@ extension SearchViewController: ViewDesignProtocol {
         shoppingSearchBar.delegate = self
     }
     
-    func setNavigationBackButton() {
+    private func setNavigationBackButton() {
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         backBarButtonItem.tintColor = .white
         self.navigationItem.backBarButtonItem = backBarButtonItem

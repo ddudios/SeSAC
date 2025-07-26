@@ -75,6 +75,7 @@ final class SearchResultTitleLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // titleLabel이 만들어지는 시점보다 이 함수가 먼저 만들어져 있어야지 titleLabel의 title을 받아와서 가공한 후 표시해줄 수 있다
     static func filter(title: String) -> String {
         print(title)
         var text = title

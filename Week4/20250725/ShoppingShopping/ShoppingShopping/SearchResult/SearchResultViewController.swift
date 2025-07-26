@@ -13,9 +13,9 @@ import Kingfisher
 final class SearchResultViewController: UIViewController {
     
     lazy var totalLabel = SearchResultTotalLabel(text: "0 개의 검색 결과")
-    lazy var accuracySortButton = SortButton(title: "  정확도  ", isActive: true)
-    lazy var dateSortButton = SortButton(title: "  날짜순  ")
-    lazy var highPriceSortButton = SortButton(title: "  가격높은순  ")
+    private lazy var accuracySortButton = SortButton(title: "  정확도  ", isActive: true)
+    private lazy var dateSortButton = SortButton(title: "  날짜순  ")
+    private lazy var highPriceSortButton = SortButton(title: "  가격높은순  ")
     private let lowPriceSortButton = SortButton(title: "  가격낮은순  ")
     private lazy var buttonStackView = {
         let stackView = UIStackView(arrangedSubviews: [accuracySortButton, dateSortButton, highPriceSortButton, lowPriceSortButton])
@@ -44,16 +44,19 @@ final class SearchResultViewController: UIViewController {
     }()
     
     var searchText: String = ""
-    lazy var url = URL(string: NaverShoppingService(query: searchText, sort: "").url)
+    var numberOfItemsInSection = 0
+    private lazy var url = URL(string: NaverShoppingService(query: searchText, sort: "").url)
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI(self)
+        print(#function, numberOfItemsInSection)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        print(#function, numberOfItemsInSection)
+        collectionView.reloadData()
     }
     
     //MARK: - Selectors
@@ -101,8 +104,7 @@ final class SearchResultViewController: UIViewController {
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //MARK: 어떻게 갯수 가져오지..
-        return 100
+        return numberOfItemsInSection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -133,7 +135,6 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         
         return cell
     }
-    
 }
 
 //MARK: - ViewDesignProtocol
@@ -172,7 +173,7 @@ extension SearchResultViewController: ViewDesignProtocol {
         lowPriceSortButton.addTarget(self, action: #selector(lowPriceButtonTapped), for: .touchUpInside)
     }
     
-    func configureCollectionView() {
+    private func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
     }

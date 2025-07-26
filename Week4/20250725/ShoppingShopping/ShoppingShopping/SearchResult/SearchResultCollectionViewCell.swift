@@ -20,11 +20,11 @@ final class SearchResultCollectionViewCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
-    let likeButton = LikeButton(isActive: false)
+    private let likeButton = LikeButton(isActive: false)
     let mallNameLabel = MallNameLabel(text: "월드캠핑카")
     let titleLabel = SearchResultTitleLabel(text: "스타리아 2층 캠핑카dddddddd")
     let lpriceLabel = LpriceLabel(text: "19,000,000")
-    lazy var stackView = {
+    private lazy var stackView = {
         let stackView = UIStackView(arrangedSubviews: [imageBackgroundView, mallNameLabel, titleLabel, lpriceLabel])
         stackView.axis = .vertical
         stackView.spacing = ConstraintValue.CollectionView.stackViewSpacing
