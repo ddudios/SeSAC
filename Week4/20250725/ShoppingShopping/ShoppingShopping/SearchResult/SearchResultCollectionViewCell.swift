@@ -13,19 +13,17 @@ final class SearchResultCollectionViewCell: UICollectionViewCell {
     static let identifier = "SearchResultCollectionViewCell"
     
     private let imageBackgroundView = UIView()
-    private let imageView = {
+    let imageView = {
         let imageView = UIImageView()
-        let url = URL(string: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTA0MTVfMjQ5%2FMDAxNzQ0NjkzMzAxNTcz.7EWlzhyt_c1C0F4g_GVGFoQaFZ2f4U2JIo6Jp9__RgYg.ixU4ijrAcm4RIew7uawLdA-Lm_F8_NsolgP7mGCIUckg.JPEG%2F24-11-26_1861400224851468738_p0.jpg&type=a340")
-        imageView.kf.setImage(with: url)
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = ConstraintValue.CornerRadius.imageView
         imageView.clipsToBounds = true
         return imageView
     }()
-    lazy var likeButton = LikeButton(isActive: false)
-    lazy var mallNameLabel = MallNameLabel(text: "월드캠핑카")
-    lazy var titleLabel = SearchResultTitleLabel(text: "스타리아 2층 캠핑카dddddddd")
-    lazy var lpriceLabel = LpriceLabel(text: "19,000,000")
+    let likeButton = LikeButton(isActive: false)
+    let mallNameLabel = MallNameLabel(text: "월드캠핑카")
+    let titleLabel = SearchResultTitleLabel(text: "스타리아 2층 캠핑카dddddddd")
+    let lpriceLabel = LpriceLabel(text: "19,000,000")
     lazy var stackView = {
         let stackView = UIStackView(arrangedSubviews: [imageBackgroundView, mallNameLabel, titleLabel, lpriceLabel])
         stackView.axis = .vertical

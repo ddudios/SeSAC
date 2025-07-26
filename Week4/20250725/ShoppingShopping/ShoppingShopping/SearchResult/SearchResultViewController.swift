@@ -7,16 +7,18 @@
 
 import UIKit
 import SnapKit
+import Alamofire
+import Kingfisher
 
 final class SearchResultViewController: UIViewController {
     
-    private let totalLabel = SearchResultTotalLabel(text: "1 개의 검색 결과")
-    private let accuracySortButton = SortButton(title: "  정확도  ", isActive: true)
-    private let DateSortButton = SortButton(title: "  날짜순  ")
-    private let highPriceSortButton = SortButton(title: "  가격높은순  ")
+    lazy var totalLabel = SearchResultTotalLabel(text: "0 개의 검색 결과")
+    lazy var accuracySortButton = SortButton(title: "  정확도  ", isActive: true)
+    lazy var dateSortButton = SortButton(title: "  날짜순  ")
+    lazy var highPriceSortButton = SortButton(title: "  가격높은순  ")
     private let lowPriceSortButton = SortButton(title: "  가격낮은순  ")
     private lazy var buttonStackView = {
-        let stackView = UIStackView(arrangedSubviews: [accuracySortButton, DateSortButton, highPriceSortButton, lowPriceSortButton])
+        let stackView = UIStackView(arrangedSubviews: [accuracySortButton, dateSortButton, highPriceSortButton, lowPriceSortButton])
         stackView.axis = .horizontal
         stackView.spacing = ConstraintValue.CornerRadius.button
         stackView.alignment = .leading
@@ -42,25 +44,94 @@ final class SearchResultViewController: UIViewController {
     }()
     
     var searchText: String = ""
+    lazy var url = URL(string: NaverShoppingService(query: searchText, sort: "").url)
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI(self)
-        NaverShoppingService.callRequest(searchText)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    //MARK: - Selectors
+    private func getUrl(sort: String) -> URL? {
+        return URL(string: NaverShoppingService(query: searchText, sort: sort).url)
+    }
+    
+    @objc private func accuracySortButtonTapped() {
+        accuracySortButton.buttonTapped(isActive: true)
+        dateSortButton.buttonTapped(isActive: false)
+        highPriceSortButton.buttonTapped(isActive: false)
+        lowPriceSortButton.buttonTapped(isActive: false)
+        url = getUrl(sort: "&sort=sim")
+        collectionView.reloadData()
+    }
+    
+    @objc private func dateSortButtonTapped() {
+        accuracySortButton.buttonTapped(isActive: false)
+        dateSortButton.buttonTapped(isActive: true)
+        highPriceSortButton.buttonTapped(isActive: false)
+        lowPriceSortButton.buttonTapped(isActive: false)
+        url = getUrl(sort: "&sort=date")
+        collectionView.reloadData()
+    }
+    
+    @objc private func highPriceButtonTapped() {
+        accuracySortButton.buttonTapped(isActive: false)
+        dateSortButton.buttonTapped(isActive: false)
+        highPriceSortButton.buttonTapped(isActive: true)
+        lowPriceSortButton.buttonTapped(isActive: false)
+        url = getUrl(sort: "&sort=dsc")
+        collectionView.reloadData()
+    }
+    
+    @objc private func lowPriceButtonTapped() {
+        accuracySortButton.buttonTapped(isActive: false)
+        dateSortButton.buttonTapped(isActive: false)
+        highPriceSortButton.buttonTapped(isActive: false)
+        lowPriceSortButton.buttonTapped(isActive: true)
+        url = getUrl(sort: "&sort=asc")
+        collectionView.reloadData()
     }
 }
 
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        //MARK: 어떻게 갯수 가져오지..
+        return 100
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
-        print(#function)
-        return item
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
+        
+        guard let url else {
+            print("error: URL - \(#function)")
+            return UICollectionViewCell()
+        }
+        
+        let header: HTTPHeaders = [
+            APIKeyHeader.naverClientId.rawValue: Bundle.getAPIKey(for: .naverClientId),
+            APIKeyHeader.naverClientSecret.rawValue: Bundle.getAPIKey(for: .naverClientSecret)
+        ]
+        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { request in
+            switch request.result {
+            case .success(let value):
+                let item = value.items[indexPath.item]
+                let url = URL(string: item.image)
+                cell.imageView.kf.setImage(with: url)
+                cell.mallNameLabel.text = item.mallName
+                cell.titleLabel.text = SearchResultTitleLabel.filter(title: item.title)
+                cell.lpriceLabel.text = item.lprice
+            case .failure(let error):
+                print("fail: \(error)")
+            }
+        }
+        
+        return cell
     }
     
 }
@@ -94,6 +165,11 @@ extension SearchResultViewController: ViewDesignProtocol {
     func configureView() {
         setNavigationBar(self, title: searchText)
         configureCollectionView()
+        
+        accuracySortButton.addTarget(self, action: #selector(accuracySortButtonTapped), for: .touchUpInside)
+        dateSortButton.addTarget(self, action: #selector(dateSortButtonTapped), for: .touchUpInside)
+        highPriceSortButton.addTarget(self, action: #selector(highPriceButtonTapped), for: .touchUpInside)
+        lowPriceSortButton.addTarget(self, action: #selector(lowPriceButtonTapped), for: .touchUpInside)
     }
     
     func configureCollectionView() {

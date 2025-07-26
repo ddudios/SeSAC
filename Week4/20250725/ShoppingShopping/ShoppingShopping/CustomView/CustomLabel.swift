@@ -74,6 +74,19 @@ final class SearchResultTitleLabel: UILabel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    static func filter(title: String) -> String {
+        print(title)
+        var text = title
+        if let range = text.range(of: "<b>", options: .caseInsensitive) {
+            text.removeSubrange(range)
+            if let range = text.range(of: "</b>", options: .caseInsensitive) {
+                text.removeSubrange(range)
+                return text
+            }
+        }
+        return text
+    }
 }
 
 final class LpriceLabel: UILabel {
@@ -86,7 +99,6 @@ final class LpriceLabel: UILabel {
         font = UIFont.Prominent.medium16
         textColor = .white
         self.text = text
-        textAlignment = .left
     }
     
     required init?(coder: NSCoder) {

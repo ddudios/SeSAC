@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 final class SearchViewController: UIViewController {
     
@@ -36,6 +37,23 @@ extension SearchViewController: UISearchBarDelegate {
         if text.count > 1 {
             let viewController = SearchResultViewController()
             viewController.searchText = text
+            
+            guard let url = URL(string: NaverShoppingService(query: text, sort: "").url) else {
+                print("error: URL - \(#function)")
+                return
+            }
+            let header: HTTPHeaders = [
+                APIKeyHeader.naverClientId.rawValue: Bundle.getAPIKey(for: .naverClientId),
+                APIKeyHeader.naverClientSecret.rawValue: Bundle.getAPIKey(for: .naverClientSecret)
+            ]
+            AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { request in
+                switch request.result {
+                case .success(let value):
+                    viewController.totalLabel.text = "\(value.total) 개의 검색 결과"
+                case .failure(let error):
+                    print("fail: \(error)")
+                }
+            }
             navigationController?.pushViewController(viewController, animated: true)
         } else {
             print("error: \(#function) - 2글자 이상 입력해야 합니다")
