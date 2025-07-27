@@ -39,5 +39,11 @@ extension ViewDesignProtocol {
         viewController.navigationController?.navigationBar.standardAppearance = appearance
         viewController.navigationController?.navigationBar.compactAppearance = appearance
         viewController.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        setNavigationBackButton(viewController)
+    }
+    
+    func setNavigationBackButton(_ viewController: UIViewController) {
+        viewController.navigationItem.backButtonDisplayMode = .minimal
     }
 }

@@ -89,14 +89,7 @@ extension SearchViewController: ViewDesignProtocol {
     
     func configureView() {
         setNavigationBar(self, title: "영캠러의 쇼핑쇼핑")
-        setNavigationBackButton()
         
         shoppingSearchBar.delegate = self
-    }
-    
-    private func setNavigationBackButton() {
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .white
-        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
 }
