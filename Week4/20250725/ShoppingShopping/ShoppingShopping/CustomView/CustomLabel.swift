@@ -77,7 +77,6 @@ final class SearchResultTitleLabel: UILabel {
     
     // titleLabel이 만들어지는 시점보다 이 함수가 먼저 만들어져 있어야지 titleLabel의 title을 받아와서 가공한 후 표시해줄 수 있다
     static func filter(title: String) -> String {
-        print(title)
         var text = title
         if let range = text.range(of: "<b>", options: .caseInsensitive) {
             text.removeSubrange(range)
@@ -87,6 +86,12 @@ final class SearchResultTitleLabel: UILabel {
             }
         }
         return text
+    }
+    
+    static func highlight(title: String, searchText: String) -> NSMutableAttributedString {
+            let attributedString = NSMutableAttributedString(string: title)
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.naverSigniture, range: (title as NSString).range(of: searchText))
+        return attributedString
     }
 }
 

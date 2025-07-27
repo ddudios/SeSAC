@@ -51,11 +51,9 @@ final class SearchResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI(self)
-        print(#function, numberOfItemsInSection)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print(#function, numberOfItemsInSection)
         collectionView.reloadData()
     }
     
@@ -70,6 +68,7 @@ final class SearchResultViewController: UIViewController {
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
         url = getUrl(sort: "&sort=sim")
+        
         collectionView.reloadData()
     }
     
@@ -126,13 +125,19 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
                 let url = URL(string: item.image)
                 cell.imageView.kf.setImage(with: url)
                 cell.mallNameLabel.text = item.mallName
+                
                 cell.titleLabel.text = SearchResultTitleLabel.filter(title: item.title)
+                // 통신이 끝난 시점에 커스텀해주면 제대로 뜰 것 같다 - .filter(title:), .hightlight(title:searchText)
+//                let attribute = SearchResultTitleLabel.highlight(title: item.title, searchText: self.searchText)
+//                cell.titleLabel.attributedText = attribute
+//                print(item.title)
+//                print(SearchResultTitleLabel.filter(title: item.title))
+                
                 cell.lpriceLabel.text = item.lprice
             case .failure(let error):
                 print("fail: \(error)")
             }
         }
-        
         return cell
     }
 }
