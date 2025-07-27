@@ -29,21 +29,6 @@ extension ViewDesignProtocol {
     }
     
     func setNavigationBar(_ viewController: UIViewController, title: String) {
-        viewController.navigationItem.title = title
-        
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .black
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        
-        viewController.navigationController?.navigationBar.tintColor = .white
-        viewController.navigationController?.navigationBar.standardAppearance = appearance
-        viewController.navigationController?.navigationBar.compactAppearance = appearance
-        viewController.navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-        setNavigationBackButton(viewController)
-    }
-    
-    func setNavigationBackButton(_ viewController: UIViewController) {
-        viewController.navigationItem.backButtonDisplayMode = .minimal
+
     }
 }

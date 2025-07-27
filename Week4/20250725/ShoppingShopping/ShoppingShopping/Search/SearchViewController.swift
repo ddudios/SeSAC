@@ -88,8 +88,7 @@ extension SearchViewController: ViewDesignProtocol {
     }
     
     func configureView() {
-        setNavigationBar(self, title: "영캠러의 쇼핑쇼핑")
-        
+        title = "영캠러의 쇼핑쇼핑"
         shoppingSearchBar.delegate = self
     }
 }
