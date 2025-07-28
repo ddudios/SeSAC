@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SnapKit
+//import SnapKit
 
 //extension UITextField {  // 여기저기에서 사용되는게 아니니까 굳이 모든 텍스트필드가 이 함수를 설정할 수 있으니까 쓸 준비를 하는건 아니다
 //    func setUI() {
@@ -30,7 +30,7 @@ class Jack {
 }*/
 
 class AuthViewController: UIViewController {
-    
+    /*
     // 인스턴스 프로퍼티
     //1. 타입메서드로 활용했을 때 공간이 영영 남아있는 이슈
     //2. 각 뷰 객체마다 메서드 수가 늘어나는 이슈, 이 메서드는 재활용도 안된다
@@ -78,7 +78,6 @@ class AuthViewController: UIViewController {
     // 옵셔널처럼 처음에 nil값이 들어왔다가 바뀌는 형태
         // 따라서 let은 사용할 수 없다
     lazy var ageTextField = {
-        print(#function)
         //        let emailTextField = UITextField()
         /*
         let emailTextField = PurpleTextField()
@@ -102,67 +101,73 @@ class AuthViewController: UIViewController {
     
 //    let a = Jack(name: "J", age: 22)  // 인스턴스 메서드가 만들어진 후에야 인스턴스 메서드, 프로퍼티에 접근할 수 있는데 인스턴스를 만들어야 하는 시점에 메서드를 가져다가 쓰려고하니까 애초에 안만들어진 것을 어떻게 가져다 쓰냐
     
-    let picker = UIDatePicker()
+    let picker = UIDatePicker()*/
+    
+    let mainView = AuthView()  // 실제 RooteView 교체하는 역할
+    
+    // loadView는 super를 호출하지 않는다
+        // 밑바탕뷰를
+    override func loadView() {
+        self.view = mainView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad 시작")
-        configureHierarchy()
-        configureLayout()
-        configureView()
+//        configureHierarchy()
+//        configureLayout()
+//        configureView()
         print("viewDidLoad 끝")
         
 //        ageTextField.inputView = picker
-        picker.preferredDatePickerStyle = .wheels
-        picker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+//        picker.preferredDatePickerStyle = .wheels
+        mainView.picker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
         
         // 원래 모두 연결시켜줘야 프로토콜이 가지고 있는 메서드를 모두 사용할 수 있는데
         // 하나의 텍스트필드에만 기능을 사용하고 싶다면 하나의 텍스트필드에만 델리게이트를 연결하면 부하직원의 분기처리는 하지 않아도된다
-        passTextField.delegate = self
-        emailTextField.delegate = self
+        mainView.passTextField.delegate = self
+        mainView.emailTextField.delegate = self
     }
     
     // 휠이 멈추면 값이 달라짐
     @objc func datePickerValueChanged() {
         print(#function)
-        ageTextField.text = "\(picker.date)"
+        mainView.ageTextField.text = "\(mainView.picker.date)"
     }
 }
 
+/*
 //MARK: UI 속성 정의
 extension AuthViewController: ViewDesignProtocol {
     func configureHierarchy() {
-        view.addSubview(emailTextField)
-        view.addSubview(passTextField)
-        view.addSubview(ageTextField)
+//        view.addSubview(emailTextField)
+//        view.addSubview(passTextField)
+//        view.addSubview(ageTextField)
     }
     
     func configureLayout() {
-        emailTextField.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.height.equalTo(50)
-        }
-        
-        passTextField.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.top.equalTo(emailTextField.snp.bottom).offset(20)
-            make.height.equalTo(50)
-        }
-        
-        ageTextField.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.top.equalTo(passTextField.snp.bottom).offset(20)
-            make.height.equalTo(50)
-        }
+//        emailTextField.snp.makeConstraints { make in
+//            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+//            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+//            make.height.equalTo(50)
+//        }
+//        
+//        passTextField.snp.makeConstraints { make in
+//            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+//            make.top.equalTo(emailTextField.snp.bottom).offset(20)
+//            make.height.equalTo(50)
+//        }
+//        
+//        ageTextField.snp.makeConstraints { make in
+//            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+//            make.top.equalTo(passTextField.snp.bottom).offset(20)
+//            make.height.equalTo(50)
+//        }
     }
     
     func configureView() {
         view.backgroundColor = .white
-        
-        ageTextField.placeholder = "dfasdf"
-        print(#function)
-    }
+    }*/
     
     /*
     // 인스턴스 메서드 -> 타입메서드로 만들면 어느 시점에서나 사용할 수 있으니까 에러를 해결할 수 있다
@@ -211,8 +216,8 @@ extension AuthViewController: ViewDesignProtocol {
         emailTextField.backgroundColor = .white
         emailTextField.tintColor = .systemPurple
         return emailTextField
-    }*/
-}
+    }
+}*/
 
 // UITextFieldDelegate프로토콜이 여러가지 기능을 가지고 있다
 // 3개의 텍스트필드라고 같은 부하직원을 3명을 부를 수 없다 -> 조건처리로 나눠서 사용해야한다
@@ -221,7 +226,7 @@ extension AuthViewController: UITextFieldDelegate {
     
     // didEndOnExit Action 대신
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == passTextField {
+        if textField == mainView.passTextField {
             print(#function)
             view.endEditing(true)
             return true
@@ -230,3 +235,5 @@ extension AuthViewController: UITextFieldDelegate {
         }
     }
 }
+
+// self가 들어있는 코드들은 안쪽에 안넣는게 좋다 (뷰컨뷰디드로드에 넣는게 좋음) 12:32

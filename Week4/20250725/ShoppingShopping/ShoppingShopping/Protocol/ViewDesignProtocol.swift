@@ -27,8 +27,4 @@ extension ViewDesignProtocol {
         configureLayout()
         configureView()
     }
-    
-    func setNavigationBar(_ viewController: UIViewController, title: String) {
-
-    }
 }

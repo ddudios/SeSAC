@@ -169,7 +169,7 @@ extension SearchResultViewController: ViewDesignProtocol {
     }
     
     func configureView() {
-        setNavigationBar(self, title: searchText)
+        title = searchText
         configureCollectionView()
         
         accuracySortButton.addTarget(self, action: #selector(accuracySortButtonTapped), for: .touchUpInside)

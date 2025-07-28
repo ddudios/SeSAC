@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InitialNavigationController: UINavigationController {
+final class InitialNavigationController: UINavigationController {
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
