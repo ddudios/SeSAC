@@ -53,6 +53,7 @@ final class SearchResultViewController: UIViewController {
     var list: NaverSearch = NaverSearch(total: 0, items: [Item(title: "", image: "", lprice: "", mallName: "")])
     var searchText: String = ""
     var startPosition = 1
+    var remainingData = 100
     var lastData = false
 
     //MARK: - Lifecycle
@@ -73,7 +74,7 @@ final class SearchResultViewController: UIViewController {
             APIKeyHeader.naverClientId.rawValue: Bundle.getAPIKey(for: .naverClientId),
             APIKeyHeader.naverClientSecret.rawValue: Bundle.getAPIKey(for: .naverClientSecret)
         ]
-        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { response in
+        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { [self] response in
             switch response.result {
             case .success(let value):
                 self.totalLabel.text = "\(value.total) 개의 검색 결과"
@@ -84,6 +85,7 @@ final class SearchResultViewController: UIViewController {
                 
                 if self.startPosition == 1 {
                     self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+                    self.remainingData = value.total
                 }
             case .failure(let error):
                 print("fail: \(error)")
@@ -157,7 +159,8 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if list.total == 0 {
+        print(remainingData, lastData)
+        if remainingData < 1 {
             lastData = true
         }
         if indexPath.item == (list.items.count - 6) && lastData == false {
@@ -173,8 +176,8 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             } else {
                 print("errer: \(#function)")
             }
-            list.total -= 30
         }
+        remainingData -= 30
     }
 }
 
