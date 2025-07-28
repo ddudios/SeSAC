@@ -12,6 +12,7 @@ import SnapKit
 class AuthView: BaseView {
     let emailTextField = {
         let emailTextField = PurpleTextField(placeholder: "이메일을 작성해 주세요", keyboard: .emailAddress)
+        print("pppppp")
         return emailTextField
     }()
 

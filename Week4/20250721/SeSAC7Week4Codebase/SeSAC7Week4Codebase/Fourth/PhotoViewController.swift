@@ -26,7 +26,7 @@ class PhotoViewController: BaseViewController {
     }
     
     override func setupView() {
-        super.setupView()
+//        super.setupView()
         print("Photo", #function)  // 세개중 하나만 슈퍼클래스 호출
     }
 }

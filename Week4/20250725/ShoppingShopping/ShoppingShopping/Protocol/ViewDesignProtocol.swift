@@ -13,7 +13,6 @@ protocol ViewDesignProtocol {
     func configureView()
 }
 
-
 extension ViewDesignProtocol {
     func configureUI(_ viewController: UIViewController) {
         viewController.view.backgroundColor = .black

@@ -11,11 +11,11 @@ class BaseView: UIView {
     // UIView는 모든 뷰의 최종 단계
     override init(frame: CGRect) {
         super.init(frame: frame)
+        print(self, #function)
         configureHierarchy()
         configureLayout()
         configureView()
     }
-    
     
     // required를 안쓸 걸앎
     // 버전대응에 쓰는 코드

@@ -12,7 +12,7 @@ import Kingfisher
 
 final class SearchResultViewController: UIViewController {
     
-    lazy var totalLabel = SearchResultTotalLabel(text: "0 개의 검색 결과")
+    private lazy var totalLabel = SearchResultTotalLabel(text: "0 개의 검색 결과")
     private lazy var accuracySortButton = SortButton(title: "  정확도  ", isActive: true)
     private lazy var dateSortButton = SortButton(title: "  날짜순  ")
     private lazy var highPriceSortButton = SortButton(title: "  가격높은순  ")
@@ -43,23 +43,36 @@ final class SearchResultViewController: UIViewController {
         return collectionView
     }()
     
+    var list: NaverSearch = NaverSearch(total: 0, items: [Item(title: "", image: "", lprice: "", mallName: "")])
     var searchText: String = ""
-    var numberOfItemsInSection = 0
-    private lazy var url = URL(string: NaverShoppingService(query: searchText, sort: "").url)
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI(self)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        collectionView.reloadData()
+        callRequest(query: searchText, sort: "&sort=sim")
     }
     
     //MARK: - Selectors
-    private func getUrl(sort: String) -> URL? {
-        return URL(string: NaverShoppingService(query: searchText, sort: sort).url)
+    func callRequest(query: String, sort: String) {
+        guard let url = URL(string: NaverShoppingService(query: query, sort: sort).url) else {
+            print("error: URL - \(#function)")
+            return
+        }
+        let header: HTTPHeaders = [
+            APIKeyHeader.naverClientId.rawValue: Bundle.getAPIKey(for: .naverClientId),
+            APIKeyHeader.naverClientSecret.rawValue: Bundle.getAPIKey(for: .naverClientSecret)
+        ]
+        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { request in
+            switch request.result {
+            case .success(let value):
+                self.list = value
+                self.totalLabel.text = "\(value.total) 개의 검색 결과"
+                self.collectionView.reloadData()
+            case .failure(let error):
+                print("fail: \(error)")
+            }
+        }
     }
     
     @objc private func accuracySortButtonTapped() {
@@ -67,8 +80,7 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
-        url = getUrl(sort: "&sort=sim")
-        
+        callRequest(query: searchText, sort: "&sort=sim")
         collectionView.reloadData()
     }
     
@@ -77,7 +89,7 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: true)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
-        url = getUrl(sort: "&sort=date")
+        callRequest(query: searchText, sort: "&sort=date")
         collectionView.reloadData()
     }
     
@@ -86,7 +98,7 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: true)
         lowPriceSortButton.buttonTapped(isActive: false)
-        url = getUrl(sort: "&sort=dsc")
+        callRequest(query: searchText, sort: "&sort=dsc")
         collectionView.reloadData()
     }
     
@@ -95,7 +107,7 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: true)
-        url = getUrl(sort: "&sort=asc")
+        callRequest(query: searchText, sort: "&sort=asc")
         collectionView.reloadData()
     }
 }
@@ -103,41 +115,23 @@ final class SearchResultViewController: UIViewController {
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfItemsInSection
+        return list.total
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         
-        guard let url else {
-            print("error: URL - \(#function)")
-            return UICollectionViewCell()
-        }
-        
-        let header: HTTPHeaders = [
-            APIKeyHeader.naverClientId.rawValue: Bundle.getAPIKey(for: .naverClientId),
-            APIKeyHeader.naverClientSecret.rawValue: Bundle.getAPIKey(for: .naverClientSecret)
-        ]
-        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { request in
-            switch request.result {
-            case .success(let value):
-                let item = value.items[indexPath.item]
-                let url = URL(string: item.image)
-                cell.imageView.kf.setImage(with: url)
-                cell.mallNameLabel.text = item.mallName
-                
-                cell.titleLabel.text = SearchResultTitleLabel.filter(title: item.title)
-                // 통신이 끝난 시점에 커스텀해주면 제대로 뜰 것 같다 - .filter(title:), .hightlight(title:searchText)
-//                let attribute = SearchResultTitleLabel.highlight(title: item.title, searchText: self.searchText)
-//                cell.titleLabel.attributedText = attribute
-//                print(item.title)
-//                print(SearchResultTitleLabel.filter(title: item.title))
-                
-                cell.lpriceLabel.text = item.lprice
-            case .failure(let error):
-                print("fail: \(error)")
-            }
-        }
+        let item = list.items[indexPath.item]
+        let url = URL(string: item.image)
+        cell.imageView.kf.setImage(with: url)
+        cell.mallNameLabel.text = item.mallName
+        cell.titleLabel.text = SearchResultTitleLabel.filter(title: item.title)
+        print(item.title)
+        print(SearchResultTitleLabel.filter(title: item.title))
+        let attribute = SearchResultTitleLabel.highlight(title: item.title, searchText: self.searchText)
+        cell.titleLabel.attributedText = attribute
+        cell.lpriceLabel.text = item.lprice
+
         return cell
     }
 }
