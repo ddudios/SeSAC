@@ -9,8 +9,8 @@ import UIKit
 import Alamofire
 
 struct NaverSearch: Codable {
-    let total: Int
-    let items: [Item]
+    var total: Int
+    var items: [Item]
 }
 
 struct Item: Codable {
@@ -25,10 +25,10 @@ struct NaverShoppingService {
     var sort: String
     var url: String
     
-    init(query: String, sort: String) {
+    init(query: String, sort: String, start: Int) {
         self.query = query
         self.sort = sort
-        self.url = "https://openapi.naver.com/v1/search/shop.json?query=\(query)&display=30\(sort)"
+        self.url = "https://openapi.naver.com/v1/search/shop.json?query=\(query)&display=30\(sort)&=\(String(start))"
     }
     
     // 결과를 날려주는 것은 할 수 없음

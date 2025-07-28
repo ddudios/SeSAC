@@ -9,17 +9,19 @@ import UIKit
 
 final class SortButton: UIButton {
     private var title: String = ""
+    var isTapped: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     init(title: String, isActive: Bool = false) {
+        isTapped = isActive
         super.init(frame: .zero)
         self.title = title
         layer.cornerRadius = ConstraintValue.CornerRadius.button
         clipsToBounds = true
-        if isActive {
+        if isTapped {
             let attributedTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont.Prominent.medium16, NSAttributedString.Key.foregroundColor: UIColor.black])
             setAttributedTitle(attributedTitle, for: .normal)
             backgroundColor = .white
@@ -37,7 +39,8 @@ final class SortButton: UIButton {
     }
     
     func buttonTapped(isActive: Bool) {
-        if isActive {
+        isTapped = isActive
+        if isTapped {
             let attributedTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont.Prominent.medium16, NSAttributedString.Key.foregroundColor: UIColor.black])
         setAttributedTitle(attributedTitle, for: .normal)
         backgroundColor = .white

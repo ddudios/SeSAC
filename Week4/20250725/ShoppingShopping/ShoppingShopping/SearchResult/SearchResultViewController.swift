@@ -10,6 +10,13 @@ import SnapKit
 import Alamofire
 import Kingfisher
 
+enum SortType: String {
+    case accuracy = "&sort=sim"
+    case date = "&sort=date"
+    case high = "&sort=dsc"
+    case low = "&sort=asc"
+}
+
 final class SearchResultViewController: UIViewController {
     
     private lazy var totalLabel = SearchResultTotalLabel(text: "0 개의 검색 결과")
@@ -45,17 +52,20 @@ final class SearchResultViewController: UIViewController {
     
     var list: NaverSearch = NaverSearch(total: 0, items: [Item(title: "", image: "", lprice: "", mallName: "")])
     var searchText: String = ""
+    var startPosition = 1
+    var lastData = false
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI(self)
-        callRequest(query: searchText, sort: "&sort=sim")
+        //MARK: 첫번째 데이터 어디갔지..?
+        callRequest(query: searchText, sort: SortType.accuracy.rawValue)
     }
     
     //MARK: - Selectors
     func callRequest(query: String, sort: String) {
-        guard let url = URL(string: NaverShoppingService(query: query, sort: sort).url) else {
+        guard let url = URL(string: NaverShoppingService(query: query, sort: sort, start: startPosition).url) else {
             print("error: URL - \(#function)")
             return
         }
@@ -63,12 +73,18 @@ final class SearchResultViewController: UIViewController {
             APIKeyHeader.naverClientId.rawValue: Bundle.getAPIKey(for: .naverClientId),
             APIKeyHeader.naverClientSecret.rawValue: Bundle.getAPIKey(for: .naverClientSecret)
         ]
-        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { request in
-            switch request.result {
+        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { response in
+            switch response.result {
             case .success(let value):
-                self.list = value
                 self.totalLabel.text = "\(value.total) 개의 검색 결과"
+                
+                self.list.items.append(contentsOf: value.items)
+                
                 self.collectionView.reloadData()
+                
+                if self.startPosition == 1 {
+                    self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+                }
             case .failure(let error):
                 print("fail: \(error)")
             }
@@ -80,8 +96,9 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
-        callRequest(query: searchText, sort: "&sort=sim")
-        collectionView.reloadData()
+        list.items.removeAll()
+        startPosition = 1
+        callRequest(query: searchText, sort: SortType.accuracy.rawValue)
     }
     
     @objc private func dateSortButtonTapped() {
@@ -89,8 +106,9 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: true)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
-        callRequest(query: searchText, sort: "&sort=date")
-        collectionView.reloadData()
+        list.items.removeAll()
+        startPosition = 1
+        callRequest(query: searchText, sort: SortType.date.rawValue)
     }
     
     @objc private func highPriceButtonTapped() {
@@ -98,8 +116,9 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: true)
         lowPriceSortButton.buttonTapped(isActive: false)
-        callRequest(query: searchText, sort: "&sort=dsc")
-        collectionView.reloadData()
+        list.items.removeAll()
+        startPosition = 1
+        callRequest(query: searchText, sort: SortType.high.rawValue)
     }
     
     @objc private func lowPriceButtonTapped() {
@@ -107,15 +126,16 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: true)
-        callRequest(query: searchText, sort: "&sort=asc")
-        collectionView.reloadData()
+        list.items.removeAll()
+        startPosition = 1
+        callRequest(query: searchText, sort: SortType.low.rawValue)
     }
 }
 
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.total
+        return list.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -132,7 +152,29 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         cell.titleLabel.attributedText = attribute
         cell.lpriceLabel.text = item.lprice
 
+        print(indexPath.item)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if list.total == 0 {
+            lastData = true
+        }
+        if indexPath.item == (list.items.count - 6) && lastData == false {
+            startPosition += 30
+            if accuracySortButton.isTapped {
+                callRequest(query: searchText, sort: SortType.accuracy.rawValue)
+            } else if dateSortButton.isTapped {
+                callRequest(query: searchText, sort: SortType.date.rawValue)
+            } else if highPriceSortButton.isTapped {
+                callRequest(query: searchText, sort: SortType.high.rawValue)
+            } else if lowPriceSortButton.isTapped {
+                callRequest(query: searchText, sort: SortType.low.rawValue)
+            } else {
+                print("errer: \(#function)")
+            }
+            list.total -= 30
+        }
     }
 }
 
