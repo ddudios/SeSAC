@@ -17,22 +17,7 @@ enum SortType: String {
     case low = "&sort=asc"
 }
 
-extension UIViewController {
-    
-    static func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let deviceWidth = UIScreen.main.bounds.width
-        let itemWidth = deviceWidth - (ConstraintValue.CollectionView.sideSpacingQuantity * ConstraintValue.CollectionView.inset) - (ConstraintValue.CollectionView.itemSpacingQuantity * ConstraintValue.CollectionView.itemSpacing)
-        layout.itemSize = CGSize(width: itemWidth/ConstraintValue.CollectionView.itemQuantity, height: ConstraintValue.CollectionView.height)
-        layout.minimumLineSpacing = ConstraintValue.CollectionView.lineSpacing
-        layout.minimumInteritemSpacing = ConstraintValue.CollectionView.itemSpacing
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: ConstraintValue.CollectionView.inset, left: ConstraintValue.CollectionView.inset, bottom: ConstraintValue.CollectionView.inset, right: ConstraintValue.CollectionView.inset)
-        return layout
-    }
-}
-
-final class SearchResultViewController: UIViewController {
+final class SearchResultViewController: BaseViewController {
     
     private lazy var totalLabel = SearchResultTotalLabel(text: "0 개의 검색 결과")
     private lazy var accuracySortButton = SortButton(title: "  정확도  ", isActive: true)
@@ -56,6 +41,7 @@ final class SearchResultViewController: UIViewController {
         return collectionView
     }()
     
+    //MARK: 첫번째 데이터에 쓰레기값이 들어가고 있음 -> 빈배열로 시작하도록 개선
 //    var list: NaverSearch = NaverSearch(total: 0, items: [Item(title: "", image: "", lprice: "", mallName: "")])
     var list: [Item] = []
     var searchText: String = ""
@@ -66,9 +52,47 @@ final class SearchResultViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI(self)
-        //MARK: 첫번째 데이터 어디갔지..?
         callRequest(query: searchText, sort: SortType.accuracy.rawValue)
+    }
+    
+    //MARK: - Helpers
+    override func configureHierarchy() {
+        view.addSubview(totalLabel)
+        view.addSubview(buttonStackView)
+        view.addSubview(collectionView)
+    }
+    
+    override func configureLayout() {
+        totalLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(ConstraintValue.edge)
+            make.leading.equalToSuperview().offset(ConstraintValue.edge)
+        }
+        
+        buttonStackView.snp.makeConstraints { make in
+            make.leading.equalTo(totalLabel.snp.leading)
+            make.top.equalTo(totalLabel.snp.bottom).offset(ConstraintValue.lineSpacing)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalTo(buttonStackView.snp.bottom).offset(ConstraintValue.lineSpacing)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    override func configureView() {
+        title = searchText
+        configureCollectionView()
+        
+        accuracySortButton.addTarget(self, action: #selector(accuracySortButtonTapped), for: .touchUpInside)
+        dateSortButton.addTarget(self, action: #selector(dateSortButtonTapped), for: .touchUpInside)
+        highPriceSortButton.addTarget(self, action: #selector(highPriceButtonTapped), for: .touchUpInside)
+        lowPriceSortButton.addTarget(self, action: #selector(lowPriceButtonTapped), for: .touchUpInside)
+    }
+    
+    private func configureCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
     //MARK: - Selectors
@@ -95,11 +119,15 @@ final class SearchResultViewController: UIViewController {
                     self.remainingData = value.total
                 }
             case .failure(let error):
-                print("fail: \(error)")
+                self.showAlert {
+                    self.navigationController?.popViewController(animated: true)
+                }
+                print("error: \(error)")
             }
         }
     }
     
+    //TODO: 하나로 합쳐보기
     @objc private func accuracySortButtonTapped() {
         accuracySortButton.buttonTapped(isActive: true)
         dateSortButton.buttonTapped(isActive: false)
@@ -170,6 +198,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         if remainingData < 1 {
             lastData = true
         }
+        //TODO: 하나로 개선해보기
         if indexPath.item == (list.count - 6) && lastData == false {
             startPosition += 30
             if accuracySortButton.isTapped {
@@ -185,47 +214,5 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             }
         }
         remainingData -= 30
-    }
-}
-
-//MARK: - ViewDesignProtocol
-extension SearchResultViewController: ViewDesignProtocol {
-    func configureHierarchy() {
-        view.addSubview(totalLabel)
-        view.addSubview(buttonStackView)
-        view.addSubview(collectionView)
-    }
-    
-    func configureLayout() {
-        totalLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(ConstraintValue.edge)
-            make.leading.equalToSuperview().offset(ConstraintValue.edge)
-        }
-        
-        buttonStackView.snp.makeConstraints { make in
-            make.leading.equalTo(totalLabel.snp.leading)
-            make.top.equalTo(totalLabel.snp.bottom).offset(ConstraintValue.lineSpacing)
-        }
-        
-        collectionView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
-            make.top.equalTo(buttonStackView.snp.bottom).offset(ConstraintValue.lineSpacing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
-    
-    func configureView() {
-        title = searchText
-        configureCollectionView()
-        
-        accuracySortButton.addTarget(self, action: #selector(accuracySortButtonTapped), for: .touchUpInside)
-        dateSortButton.addTarget(self, action: #selector(dateSortButtonTapped), for: .touchUpInside)
-        highPriceSortButton.addTarget(self, action: #selector(highPriceButtonTapped), for: .touchUpInside)
-        lowPriceSortButton.addTarget(self, action: #selector(lowPriceButtonTapped), for: .touchUpInside)
-    }
-    
-    private func configureCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
     }
 }

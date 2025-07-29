@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Alamofire
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: BaseViewController {
     
     private let shoppingSearchBar = ShoppingSearchBar()
     private let emptySearchBarTextImageView = {
@@ -20,9 +20,44 @@ final class SearchViewController: UIViewController {
     }()
     private let emptySearchBarTextLabel = EmptySearchBarTextLabel()
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI(self)
+//        configureUI(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        shoppingSearchBar.text = ""
+    }
+    
+    //MARK: - Helpers
+    override func configureHierarchy() {
+        view.addSubview(shoppingSearchBar)
+        view.addSubview(emptySearchBarTextImageView)
+        view.addSubview(emptySearchBarTextLabel)
+    }
+    
+    override func configureLayout() {
+        shoppingSearchBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview().inset(ConstraintValue.searchBarEdge)
+        }
+        
+        emptySearchBarTextImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
+        }
+        
+        emptySearchBarTextLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(emptySearchBarTextImageView.snp.bottom)
+        }
+    }
+    
+    override func configureView() {
+        title = "영캠러의 쇼핑쇼핑"
+        shoppingSearchBar.delegate = self
     }
 }
 
@@ -44,33 +79,35 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-//MARK: - ViewDesignProtocol
-extension SearchViewController: ViewDesignProtocol {
-    func configureHierarchy() {
-        view.addSubview(shoppingSearchBar)
-        view.addSubview(emptySearchBarTextImageView)
-        view.addSubview(emptySearchBarTextLabel)
-    }
-    
-    func configureLayout() {
-        shoppingSearchBar.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.horizontalEdges.equalToSuperview().inset(ConstraintValue.searchBarEdge)
-        }
-        
-        emptySearchBarTextImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.horizontalEdges.equalToSuperview()
-        }
-        
-        emptySearchBarTextLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(emptySearchBarTextImageView.snp.bottom)
-        }
-    }
-    
-    func configureView() {
-        title = "영캠러의 쇼핑쇼핑"
-        shoppingSearchBar.delegate = self
-    }
-}
+/*
+ //MARK: - ViewDesignProtocol
+ extension SearchViewController: ViewDesignProtocol {
+ func configureHierarchy() {
+ view.addSubview(shoppingSearchBar)
+ view.addSubview(emptySearchBarTextImageView)
+ view.addSubview(emptySearchBarTextLabel)
+ }
+ 
+ func configureLayout() {
+ shoppingSearchBar.snp.makeConstraints { make in
+ make.top.equalTo(view.safeAreaLayoutGuide)
+ make.horizontalEdges.equalToSuperview().inset(ConstraintValue.searchBarEdge)
+ }
+ 
+ emptySearchBarTextImageView.snp.makeConstraints { make in
+ make.centerY.equalToSuperview()
+ make.horizontalEdges.equalToSuperview()
+ }
+ 
+ emptySearchBarTextLabel.snp.makeConstraints { make in
+ make.centerX.equalToSuperview()
+ make.top.equalTo(emptySearchBarTextImageView.snp.bottom)
+ }
+ }
+ 
+ func configureView() {
+ title = "영캠러의 쇼핑쇼핑"
+ shoppingSearchBar.delegate = self
+ }
+ }
+ */
