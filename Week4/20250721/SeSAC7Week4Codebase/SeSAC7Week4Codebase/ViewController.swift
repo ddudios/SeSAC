@@ -261,7 +261,7 @@ class ViewController: UIViewController {
         bmi.result = "sesac"
         print(BMI.name)
          */
-        let vc = AuthViewController()
+        let vc = BookViewController()
         present(vc, animated: true)
     }
     

@@ -17,6 +17,21 @@ enum SortType: String {
     case low = "&sort=asc"
 }
 
+extension UIViewController {
+    
+    static func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let deviceWidth = UIScreen.main.bounds.width
+        let itemWidth = deviceWidth - (ConstraintValue.CollectionView.sideSpacingQuantity * ConstraintValue.CollectionView.inset) - (ConstraintValue.CollectionView.itemSpacingQuantity * ConstraintValue.CollectionView.itemSpacing)
+        layout.itemSize = CGSize(width: itemWidth/ConstraintValue.CollectionView.itemQuantity, height: ConstraintValue.CollectionView.height)
+        layout.minimumLineSpacing = ConstraintValue.CollectionView.lineSpacing
+        layout.minimumInteritemSpacing = ConstraintValue.CollectionView.itemSpacing
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: ConstraintValue.CollectionView.inset, left: ConstraintValue.CollectionView.inset, bottom: ConstraintValue.CollectionView.inset, right: ConstraintValue.CollectionView.inset)
+        return layout
+    }
+}
+
 final class SearchResultViewController: UIViewController {
     
     private lazy var totalLabel = SearchResultTotalLabel(text: "0 개의 검색 결과")
@@ -35,22 +50,14 @@ final class SearchResultViewController: UIViewController {
     //MARK: 원래...안되는건지... 내가 못한건지....
 //    var collectionView = SearchResultCollectionViewUI()
     private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let deviceWidth = UIScreen.main.bounds.width
-        let itemWidth = deviceWidth - (ConstraintValue.CollectionView.sideSpacingQuantity * ConstraintValue.CollectionView.inset) - (ConstraintValue.CollectionView.itemSpacingQuantity * ConstraintValue.CollectionView.itemSpacing)
-        layout.itemSize = CGSize(width: itemWidth/ConstraintValue.CollectionView.itemQuantity, height: ConstraintValue.CollectionView.height)
-        layout.minimumLineSpacing = ConstraintValue.CollectionView.lineSpacing
-        layout.minimumInteritemSpacing = ConstraintValue.CollectionView.itemSpacing
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: ConstraintValue.CollectionView.inset, left: ConstraintValue.CollectionView.inset, bottom: ConstraintValue.CollectionView.inset, right: ConstraintValue.CollectionView.inset)
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
         collectionView.backgroundColor = .clear
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
         return collectionView
     }()
     
-    var list: NaverSearch = NaverSearch(total: 0, items: [Item(title: "", image: "", lprice: "", mallName: "")])
+//    var list: NaverSearch = NaverSearch(total: 0, items: [Item(title: "", image: "", lprice: "", mallName: "")])
+    var list: [Item] = []
     var searchText: String = ""
     var startPosition = 1
     var remainingData = 100
@@ -74,12 +81,12 @@ final class SearchResultViewController: UIViewController {
             APIKeyHeader.naverClientId.rawValue: Bundle.getAPIKey(for: .naverClientId),
             APIKeyHeader.naverClientSecret.rawValue: Bundle.getAPIKey(for: .naverClientSecret)
         ]
-        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { [self] response in
+        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { response in
             switch response.result {
             case .success(let value):
                 self.totalLabel.text = "\(value.total) 개의 검색 결과"
-                
-                self.list.items.append(contentsOf: value.items)
+                print(value)
+                self.list = value.items
                 
                 self.collectionView.reloadData()
                 
@@ -98,7 +105,7 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
-        list.items.removeAll()
+        list.removeAll()
         startPosition = 1
         callRequest(query: searchText, sort: SortType.accuracy.rawValue)
     }
@@ -108,7 +115,7 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: true)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
-        list.items.removeAll()
+        list.removeAll()
         startPosition = 1
         callRequest(query: searchText, sort: SortType.date.rawValue)
     }
@@ -118,7 +125,7 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: true)
         lowPriceSortButton.buttonTapped(isActive: false)
-        list.items.removeAll()
+        list.removeAll()
         startPosition = 1
         callRequest(query: searchText, sort: SortType.high.rawValue)
     }
@@ -128,7 +135,7 @@ final class SearchResultViewController: UIViewController {
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: true)
-        list.items.removeAll()
+        list.removeAll()
         startPosition = 1
         callRequest(query: searchText, sort: SortType.low.rawValue)
     }
@@ -137,13 +144,13 @@ final class SearchResultViewController: UIViewController {
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.items.count
+        return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         
-        let item = list.items[indexPath.item]
+        let item = list[indexPath.item]
         let url = URL(string: item.image)
         cell.imageView.kf.setImage(with: url)
         cell.mallNameLabel.text = item.mallName
@@ -163,7 +170,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         if remainingData < 1 {
             lastData = true
         }
-        if indexPath.item == (list.items.count - 6) && lastData == false {
+        if indexPath.item == (list.count - 6) && lastData == false {
             startPosition += 30
             if accuracySortButton.isTapped {
                 callRequest(query: searchText, sort: SortType.accuracy.rawValue)

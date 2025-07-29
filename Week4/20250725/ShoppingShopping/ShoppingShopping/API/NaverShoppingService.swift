@@ -8,12 +8,12 @@
 import UIKit
 import Alamofire
 
-struct NaverSearch: Codable {
+struct NaverSearch: Decodable {
     var total: Int
     var items: [Item]
 }
 
-struct Item: Codable {
+struct Item: Decodable {
     let title: String
     let image: String
     let lprice: String

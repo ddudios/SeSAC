@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import Alamofire
+//import Alamofire
 
 /*
 @objc protocol Mentor1 {
@@ -40,7 +40,7 @@ struct Finn: Mentor3 {}
 struct Den {}
 
 // 서버 통신 결과를 테이블뷰에 보여주고 싶다
-    // 배열을 테이블뷰에 보여주고 싶다
+// 배열을 테이블뷰에 보여주고 싶다
 class MarketViewController: UIViewController {
     
 //    var list: [String] = ["비트코인", "이더리움", "리플", "도지코인"]
@@ -114,51 +114,34 @@ class MarketViewController: UIViewController {
 //        callBoxOffice()
     }
     
+    //MARK: 12:26 파일링~~
     func callRequest() {
-        print(#function, "첫번째")
-        // 문서에서 보고 복붙
-        let url = "https://api.upbit.com/v1/market/all"
-        // responseString으로 서버에서 잘 뜨는지 먼저 확인 후 이 코드 사용 (최소한의 디버깅)
-        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: [Coin].self) { response in
-            print(#function, "두번째")
-            switch response.result {
-            case .success(let value):
-                print("success", value)
-                
-                // list에 내용을 담고
-                // 테이블뷰 갱신
-                self.list = value
-                self.tableView.reloadData()  // 네트워크 통신이 끝난 이후에 실행: 성공했을 때만 내용을 담아주고 -> 데이터가 바뀌었으니까 갱신
-                
-                print(value[2].korean_name)
-                print(value[2].english_name)
-                print(value[2].market)
-            case .failure(let error):
-                print("fail", error)
-            }
+        //MARK: 별도의 공간에서 호출하는 것이 아니라 인스턴스 ~~~~ (2:32)
+        NetworkManager.shared.callRequest { value in
+            self.list = value
+            self.tableView.reloadData()
         }
-        print(#function, "세번째")
     }
     
-    func callBoxOffice() {
-        // http(X) -> ats 대응 (https로 사이트에서 대응하지 않았으면 안된다)
-            // "가 중간에 나오면 String이 끝나버리기떄문에 \"처리를해서 \가 많이 들어있는 것임
-        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=5b169fc7c3f7c25eda2c695ea9a970d6&targetDt=20200808"
-        // responseString으로 서버에서 잘 뜨는지 먼저 확인 후 이 코드 사용 (최소한의 디버깅)
-        AF.request(url, method: .get).validate(statusCode: 200..<300)
-//            .responseString { resonse in
-//            print(resonse)
-            .responseDecodable(of: BoxOfficeResult.self) { response in
-            switch response.result {
-            case .success(let value):
-                print("success", value)
-                dump(value)
-                print(value.boxOfficeResult.dailyBoxOfficeList[0].movieNm)
-            case .failure(let error):
-                print("fail", error)
-            }
-        }
-    }
+//    func callBoxOffice() {
+//        // http(X) -> ats 대응 (https로 사이트에서 대응하지 않았으면 안된다)
+//            // "가 중간에 나오면 String이 끝나버리기떄문에 \"처리를해서 \가 많이 들어있는 것임
+//        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=5b169fc7c3f7c25eda2c695ea9a970d6&targetDt=20200808"
+//        // responseString으로 서버에서 잘 뜨는지 먼저 확인 후 이 코드 사용 (최소한의 디버깅)
+//        AF.request(url, method: .get).validate(statusCode: 200..<300)
+////            .responseString { resonse in
+////            print(resonse)
+//            .responseDecodable(of: BoxOfficeResult.self) { response in
+//            switch response.result {
+//            case .success(let value):
+//                print("success", value)
+//                dump(value)
+//                print(value.boxOfficeResult.dailyBoxOfficeList[0].movieNm)
+//            case .failure(let error):
+//                print("fail", error)
+//            }
+//        }
+//    }
 }
 
 extension MarketViewController: UITableViewDelegate, UITableViewDataSource {

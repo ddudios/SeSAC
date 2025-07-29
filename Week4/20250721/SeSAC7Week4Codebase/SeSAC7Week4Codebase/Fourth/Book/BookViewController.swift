@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Alamofire
+//import Alamofire
 import SnapKit
 
 class Hello {
@@ -18,6 +18,8 @@ class Hello {
 }
 
 class BookViewController: UIViewController {
+    
+    
     lazy var tableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .orange
@@ -42,43 +44,15 @@ class BookViewController: UIViewController {
         configureLayout()
         configureView()
         print(#function, list)
+        
+        
+        // 아키텍쳐, 디자인 패턴...
+            // 너무 매몰되지말자, 왜 등장했고, 다른 것 대비 어떤 장단점이 있는지 가 중요하다 (AI가 다 변형해줌)
+        // 싱글턴 패턴
+//        UserDefaults.standard
+            // 굳이 불필요한 공간을 만들지 말자
+            // 모든 인스턴스는 shared를 통해 접근
     }
-    
-    func callRequestKakao(query: String) {
-        print("첫번째")
-        let url = "https://dapi.kakao.com/v3/search/book?query=\(query)&size=20&page=\(page)"
-        let header: HTTPHeaders = [
-            "Authorization": "KakaoAK 5eefae3d8336814cb36cbd87d26acb89"
-        ]
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200..<300).responseDecodable(of: KaKaoBookInfo.self) { response in
-            print(#function, "두번째")
-            switch response.result {
-            case .success(let value):
-                print("success", value)
-//                dump(value)
-                
-                self.is_end = value.meta.is_end
-                
-//                self.list = value.documents
-//                value.documents  // 여기서도 내가 쓸 내용만 필터링 가능
-                
-                // 위의 셀 내용이 없어짐
-                // 배열의 갯수는 이전 데이터를 보여주기 위해서 계속 추가해줘야한다
-                self.list.append(contentsOf: value.documents)
-                self.tableView.reloadData()
-                
-                // 리로드 데이터 뒤에 작성해야 데이터가 있는 상태에서 최상단으로 보내줄 수 있다
-                if self.page == 1 {
-                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-                }
-                
-            case .failure(let error):
-                print("fail", error)
-            }
-        }
-        print(#function, "세번째")
-    }
-
     
 //    func callRequest(query: String) {
 //        print(#function, "첫번째")
@@ -101,6 +75,27 @@ class BookViewController: UIViewController {
 //        }
 //        print(#function, "세번째")
 //    }
+    
+    func callRequestKakao(query: String) {
+        //MARK: 하나의 프로퍼티에서 나오는 ~(2:22)
+        NetworkManager.shared.callRequestKakao(query: query) { value in
+            print("성공했습니다!!!!!!!!!!", value)
+            self.is_end = value.meta.is_end
+            
+            // 위의 셀 내용이 없어짐
+            // 배열의 갯수는 이전 데이터를 보여주기 위해서 계속 추가해줘야한다
+            self.list.append(contentsOf: value.documents)
+            self.tableView.reloadData()
+            
+            // 리로드 데이터 뒤에 작성해야 데이터가 있는 상태에서 최상단으로 보내줄 수 있다
+            if self.page == 1 {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+        } fail: {
+            print("실패했습니다!!!!!!!!!!")  // 바로실패?(2:19)
+        }
+
+    }
 }
 
 // addTarget아니면 거의 다 Delegate 연결
