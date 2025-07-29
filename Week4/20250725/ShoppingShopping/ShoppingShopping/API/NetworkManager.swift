@@ -26,8 +26,6 @@ class NetworkManager {
             switch response.result {
             case .success(let value):
                 success(value)
-                print(value)
-
             case .failure(let error):
                 print("error: \(error)")
             }

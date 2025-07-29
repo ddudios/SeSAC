@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Alamofire
 import Kingfisher
 
 enum SortType: String {
@@ -33,11 +32,18 @@ final class SearchResultViewController: BaseViewController {
     }()
     
     //MARK: 원래...안되는건지... 내가 못한건지....
-//    var collectionView = SearchResultCollectionViewUI()
-    private let collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    //    var collectionView = SearchResultCollectionViewUI()
+    private let searchCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: searchLayout())
         collectionView.backgroundColor = .clear
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
+        return collectionView
+    }()
+    
+    private let recommendationCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: recommendLayout())
+        collectionView.backgroundColor = .clear
+        collectionView.register(RecommendationCollectionViewCell.self, forCellWithReuseIdentifier: RecommendationCollectionViewCell.identifier)
         return collectionView
     }()
     
@@ -46,27 +52,37 @@ final class SearchResultViewController: BaseViewController {
     var startPosition = 0
     var remainingData = 0
     var lastData = false
+    
+    var recommendationList: [Item] = []
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: 1) { success in
             self.totalLabel.text = "\(success.total) 개의 검색 결과"
             self.list.append(contentsOf: success.items)
             self.remainingData = success.total
-            self.collectionView.reloadData()
+            self.searchCollectionView.reloadData()
         } failure: {
             self.showAlert {
                 self.navigationController?.popViewController(animated: true)
             }
         }
+        
+        NetworkManager.shared.callRequest(query: "키티", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
+            self.recommendationList = success.items
+            self.recommendationCollectionView.reloadData()
+        } failure: { }
+
     }
     
     //MARK: - Helpers
     override func configureHierarchy() {
         view.addSubview(totalLabel)
         view.addSubview(buttonStackView)
-        view.addSubview(collectionView)
+        view.addSubview(searchCollectionView)
+        view.addSubview(recommendationCollectionView)
     }
     
     override func configureLayout() {
@@ -80,10 +96,16 @@ final class SearchResultViewController: BaseViewController {
             make.top.equalTo(totalLabel.snp.bottom).offset(ConstraintValue.lineSpacing)
         }
         
-        collectionView.snp.makeConstraints { make in
+        searchCollectionView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalTo(buttonStackView.snp.bottom).offset(ConstraintValue.lineSpacing)
+        }
+        
+        recommendationCollectionView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalTo(searchCollectionView.snp.bottom)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(ConstraintValue.CollectionView.heightScope)
         }
     }
     
@@ -98,20 +120,24 @@ final class SearchResultViewController: BaseViewController {
     }
     
     private func configureCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        searchCollectionView.delegate = self
+        searchCollectionView.dataSource = self
+        
+        recommendationCollectionView.delegate = self
+        recommendationCollectionView.dataSource = self
     }
     
+    //MARK: - Selectors
     private func setData(value: NaverSearch) {
         self.totalLabel.text = "\(value.total) 개의 검색 결과"
         self.list.append(contentsOf: value.items)
         self.remainingData = value.total
-        self.collectionView.reloadData()
+        self.searchCollectionView.reloadData()
     }
     
     private func setOtherSortType(value: NaverSearch) {
         if self.startPosition == 1 {
-            self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+            self.searchCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
             self.remainingData = value.total
         }
     }
@@ -173,59 +199,78 @@ final class SearchResultViewController: BaseViewController {
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.count
+        if collectionView == searchCollectionView {
+            return list.count
+        } else if collectionView == recommendationCollectionView {
+            return recommendationList.count
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
-        
-        let item = list[indexPath.item]
-        let url = URL(string: item.image)
-        cell.imageView.kf.setImage(with: url)
-        cell.mallNameLabel.text = item.mallName
-        cell.titleLabel.text = SearchResultTitleLabel.filter(title: item.title)
-        print(item.title)
-        print(SearchResultTitleLabel.filter(title: item.title))
-        let attribute = SearchResultTitleLabel.highlight(title: item.title, searchText: self.searchText)
-        cell.titleLabel.attributedText = attribute
-        cell.lpriceLabel.text = item.lprice
-
-        print(indexPath.item)
-        return cell
+        if collectionView == searchCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
+            
+            let item = list[indexPath.item]
+            let url = URL(string: item.image)
+            cell.imageView.kf.setImage(with: url)
+            cell.mallNameLabel.text = item.mallName
+            cell.titleLabel.text = SearchResultTitleLabel.filter(title: item.title)
+//            let attribute = SearchResultTitleLabel.highlight(title: item.title, searchText: self.searchText)
+//            cell.titleLabel.attributedText = attribute
+            cell.lpriceLabel.text = item.lprice
+            
+            print(indexPath.item)
+            return cell
+        } else if collectionView == recommendationCollectionView {
+            let cell = recommendationCollectionView.dequeueReusableCell(withReuseIdentifier: RecommendationCollectionViewCell.identifier, for: indexPath) as! RecommendationCollectionViewCell
+            
+            let item = recommendationList[indexPath.item]
+            let url = URL(string: item.image)
+            cell.recommendImageView.kf.setImage(with: url)
+            cell.titleLabel.text = SearchResultTitleLabel.filter(title: item.title)
+            cell.titleLabel.text = item.title
+            
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(remainingData, lastData)
-        if remainingData < 1 {
-            lastData = true
-        }
-        //TODO: 하나로 개선해보기
-        if indexPath.item == (list.count - 6) && lastData == false {
-            startPosition += 30
-            if accuracySortButton.isTapped {
-                NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: startPosition) { success in
-                    self.setData(value: success)
-                    self.setOtherSortType(value: success)
-                } failure: {}
-            } else if dateSortButton.isTapped {
-                NetworkManager.shared.callRequest(query: searchText, sort: SortType.date.rawValue, startPosition: startPosition) { success in
-                    self.setData(value: success)
-                    self.setOtherSortType(value: success)
-                } failure: {}
-            } else if highPriceSortButton.isTapped {
-                NetworkManager.shared.callRequest(query: searchText, sort: SortType.high.rawValue, startPosition: startPosition) { success in
-                    self.setData(value: success)
-                    self.setOtherSortType(value: success)
-                } failure: {}
-            } else if lowPriceSortButton.isTapped {
-                NetworkManager.shared.callRequest(query: searchText, sort: SortType.low.rawValue, startPosition: startPosition) { success in
-                    self.setData(value: success)
-                    self.setOtherSortType(value: success)
-                } failure: {}
-            } else {
-                print("errer: \(#function)")
+        if collectionView == searchCollectionView {
+            if remainingData < 1 {
+                lastData = true
             }
+            //TODO: 하나로 개선해보기
+            if indexPath.item == (list.count - 6) && lastData == false {
+                startPosition += 30
+                if accuracySortButton.isTapped {
+                    NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: startPosition) { success in
+                        self.setData(value: success)
+                        self.setOtherSortType(value: success)
+                    } failure: {}
+                } else if dateSortButton.isTapped {
+                    NetworkManager.shared.callRequest(query: searchText, sort: SortType.date.rawValue, startPosition: startPosition) { success in
+                        self.setData(value: success)
+                        self.setOtherSortType(value: success)
+                    } failure: {}
+                } else if highPriceSortButton.isTapped {
+                    NetworkManager.shared.callRequest(query: searchText, sort: SortType.high.rawValue, startPosition: startPosition) { success in
+                        self.setData(value: success)
+                        self.setOtherSortType(value: success)
+                    } failure: {}
+                } else if lowPriceSortButton.isTapped {
+                    NetworkManager.shared.callRequest(query: searchText, sort: SortType.low.rawValue, startPosition: startPosition) { success in
+                        self.setData(value: success)
+                        self.setOtherSortType(value: success)
+                    } failure: {}
+                } else {
+                    print("errer: \(#function)")
+                }
+            }
+            remainingData -= 30
         }
-        remainingData -= 30
     }
 }

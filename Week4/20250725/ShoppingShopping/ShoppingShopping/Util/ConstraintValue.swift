@@ -5,7 +5,7 @@
 //  Created by Suji Jang on 7/26/25.
 //
 
-import Foundation
+import UIKit
 
 struct ConstraintValue {
     static let searchBarEdge = 0
@@ -24,6 +24,7 @@ struct ConstraintValue {
     }
     
     struct CollectionView {
+        static let zero: CGFloat = 0
         static let inset: CGFloat = 8
         static let lineSpacing: CGFloat = 8
         static let itemSpacing: CGFloat = 16
@@ -34,5 +35,8 @@ struct ConstraintValue {
         static let height: CGFloat = 275
         
         static let stackViewSpacing: CGFloat = 4
+        
+        static let heightScope = (UIScreen.main.bounds.height) / 7
+        static let width: CGFloat = 80
     }
 }
