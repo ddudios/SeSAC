@@ -11,7 +11,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .green
+        print(APIKey.kakaoKey)  // git에 이 내용은 보이지만, 안에 무슨 내용이 있는지 깃에서는 못봄
     }
 
 
