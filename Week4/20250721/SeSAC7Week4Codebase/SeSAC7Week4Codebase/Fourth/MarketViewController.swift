@@ -114,9 +114,18 @@ class MarketViewController: UIViewController {
 //        callBoxOffice()
     }
     
-    //MARK: 12:26 파일링~~
+    // 뷰컨트롤러가 나중에 수백개수천개의 파일이 되면 어디서 어떤 통신을 하고 있는지 모르기 때문에
+        // 통신이 극단적으로 한 프로젝트에 40개라고 하면 그것도 하나의 파일에서 관리했을 때 좀 더 눈에 잘 들어올 것이다
     func callRequest() {
-        //MARK: 별도의 공간에서 호출하는 것이 아니라 인스턴스 ~~~~ (2:32)
+        // 불필요한 공간이 생기지 않고 하나의 메서드는 하나의 프로퍼티로부터 나올 수 있는 방향으로 개선할 수 있다
+        // 인스턴스를 생성해서 별도의 공간에서 메서드를 호출 하는 것이 아니라 shared라는 타입 저장 프로퍼티를 통해서 인스턴스 프로퍼티를 호출할 수 있는 형태로 개선
+            // 그러면 뷰컨의 코드는 정말 필요한 것들만으로 계속 줄어들 것이고 다른 코드들은 다른 파일에서 처리할 수 있는 형태로 개선할 수 있다
+            // 그래서 내가 썼던 UserDefaults도 싱글턴기반으로 이루어져 있구나
+        /*
+        NetworkManager().callRequest { value in
+            self.list = value
+            self.tableView.reloadData()
+        }*/
         NetworkManager.shared.callRequest { value in
             self.list = value
             self.tableView.reloadData()

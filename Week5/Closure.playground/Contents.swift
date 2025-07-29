@@ -17,7 +17,9 @@ hi()
     // View에서 객체를 만들 때 사용했었음: 실행 결과를 객체에 담았었다 (클로저의 일종)
     // 이렇게 사용할 수 있는 이유: 일급 객체(First Class Object)
         // 일급 객체 특성을 스위프트 언어가 갖고 있기 때문에 클로저가 있을 수 있다
-        // 영국에서 일급시민, 이급시민은 투표할 수 있는 권리 등 권한이 일급시민이 많았다 -> 여기서 온 것이 일급객체 (다른 객체보다 많은 기능?을 가지고 있다) (10:13)
+        // 영국에서 일급시민, 이급시민은 투표할 수 있는 권리 등
+            // 가질 수 있는 권한 자체가 일급시민이 많았다 -> 여기서 온 것이 일급객체
+            // 그래서 다른 객체보다 많은 기능을 가지고 있어서 Swift 언어에는 일급 객체의 특성이 있고, 이 일급 객체의 특성을 함수가 가지고 있기 때문에 Closure에 대한 개념도 이 골자에서 이해하면 된다
 
 // 일급 객체 특성
 // 1. 변수나 상수에 함수를 저장할 수 있다
@@ -88,10 +90,12 @@ func evenNumber() {
     print("짝수입니다.")
 }
 
-func calculateNumber(number: Int, odd: () -> Void, even: () -> Void) {  // (10:59)
+// 지금까지는 매개변수에 Int, Array, Class 등이 들어가는 형태였는데 함수 그 자체를 넣어보려고 한다
+func calculateNumber(number: Int, odd: () -> Void, even: () -> Void) {
     return number.isMultiple(of: 2) ? even() : odd()
     // 나누어 떨어지면 even(실행)
     // 상황에 따라 실행하는 함수를 다르게 만듦
+    // 반환값이 없기 때문에 (Void) return을 쓰고 있더라도 실질적으로 내뱉는 것이 없는 상태라서 return 키워드 사용해도 된다
     
     if number.isMultiple(of: 2) {
         print("짝수입니다.")
@@ -149,7 +153,10 @@ func studyWithMe(study: () -> Void) {
 
 studyWithMe(study: studyHard2)
 
-// 인라인 클로저: 매개변수, 함수타입, 바디 모두 볼 수 있는 것을 (11:20)
+// 인라인 클로저
+    // 매개변수도 작성이 되어 있고, {함수가 들어가는 것도 알 수 있고}, 함수 안에 무슨 타입인지도 정의되어 있어서,
+    // 클로저의 헤더와 바디가 다 들어가고 매개변수까지 싹 다 나와있고 (함수의 실행과 끝 사이에 {함수 형태가 그대로} 들어와 있는) 것을
+    // 클로저를 표현할 수 있는 방식 중에서 인라인 클로저라고 이야기 한다
 studyWithMe(study: { () -> Void in
     print("iOS 개발자를 위해 열공중")
 })
@@ -187,35 +194,58 @@ todayNumber(result: randomNumber(number:))
 //    let random = Int.random(in: 1...number)  // number가 어디서 온거지? -> 매개변수명에서 온건지 알려줘야 함
 //    return "오늘의 행운의 숫자는 \(random)입니다."
 //})
+
 // 인라인 클로저 형태
 todayNumber(result: { (jack: Int) -> String in
     let random = Int.random(in: 1...jack)
     return "오늘의 행운의 숫자는 \(random)입니다."
 })
+
 // 어짜피 리턴에 String타입이 들어있어서 String return하는지 알고 있다 -> 반환값 생략 가능
 todayNumber(result: { (jack: Int) in
     let random = Int.random(in: 1...jack)
     return "오늘의 행운의 숫자는 \(random)입니다."
 })
+
 // 매개변수에 Int타입이 들어가는 걸 알고 있으니까 생략 가능 (반환값과 구분하는 ()도 필요 없겠다)
 todayNumber(result: { (jack) in
     let random = Int.random(in: 1...jack)
     return "오늘의 행운의 숫자는 \(random)입니다."
 })
+
 todayNumber(result: { jack in
     let random = Int.random(in: 1...jack)
     return "오늘의 행운의 숫자는 \(random)입니다."
 })
-// 매개변수가 하나이면 내가 그냥 지칭해줄까?
-// (11:37) ~~~ 2교시끝까지
-// 내부적으로
+
+// 매개변수가 하나이면 내가 그냥 지칭해줄까? jack이라는 걸 굳이 의미 없을 것 같은데 안 쓸 수 없나?
+    // 매개변수에 네이밍을 지정해주지 않으면서 어떻게 매개변수를 쓰지? -> $0을 사용해서 내부적으로 만들어주는 상수 등을 사용할 수 있다
+    // 그러면 in도 필요 없어서 생략 가능
+    // $0은 매개변수명을 생략할 때 사용
 todayNumber(result: {
     let random = Int.random(in: 1...$0)
     return "오늘의 행운의 숫자는 \(random)입니다."
 })
+// 따라서 스냅킷 코드를 사용할 때도 in을 생략하고 $0을 사용할 수 있다
+    // 하지만 바꾸는게 더 손이 많이 가니까 사용 X
+/*
+titleLabel.snp.makeConstraints {
+    $0.trailing.top.equalTo(contentView.safeAreaLayoutGuide).inset(16)
+}
+ */
+
+// trailing closure
+/*
+    // 언제 함수가 끝날 지 모르기 때문에 닫힌 소괄호를 앞쪽으로 땡긴다: 이거는 함수였어, 함수임을 알려주기 위해서
+todayNumber() result: {  // 그러면 result:가 오갈 데가 없으니까 생략 -> 함수 호출되는거 어쩌피 알지? ()생략
+    let random = Int.random(in: 1...$0)
+    return "오늘의 행운의 숫자는 \(random)입니다."
+}
+ */
+// 따라서 왜 함수 호출 연산자가 없어졌는지, 매개변수명 in이 왜 생략됐는지 어떻게 이 형태가 됐는지 이해
 todayNumber {
-let random = Int.random(in: 1...$0)
-return "오늘의 행운의 숫자는 \(random)입니다."
+    let random = Int.random(in: 1...$0)
+    return "오늘의 행운의 숫자는 \(random)입니다."
 }
 
-// 클로저를 익명함수로서 많이 사용
+// completionHandler입장에서, 클로저를 익명함수로서, 이름 없는 함수로 많이 사용하기 때문에 형태 변화에 대한 설명

@@ -77,9 +77,10 @@ class BookViewController: UIViewController {
 //    }
     
     func callRequestKakao(query: String) {
-        //MARK: 하나의 프로퍼티에서 나오는 ~(2:22)
         NetworkManager.shared.callRequestKakao(query: query) { value in
             print("성공했습니다!!!!!!!!!!", value)
+            // KakaoBookInfo라는 정보를 ViewController에서 알아야 하니까 NetworkManager의 callRequest의 success에서 매개변수를 만든다
+                // 매개변수에 데이터를 전달
             self.is_end = value.meta.is_end
             
             // 위의 셀 내용이 없어짐
@@ -92,7 +93,9 @@ class BookViewController: UIViewController {
                 self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             }
         } fail: {
-            print("실패했습니다!!!!!!!!!!")  // 바로실패?(2:19)
+            print("실패했습니다!!!!!!!!!!")
+            // 안되나 계속 요청해보고 도저히 안된다는 타이밍에 도달하게 되면 그 때 실패했다고 Print가 찍힘
+                // 왜 바로 실패가 안되지? -> Time out
         }
 
     }

@@ -13,6 +13,7 @@ import Alamofire
 class NetworkManager {
     
     // Singleton
+    // 굳이 불필요한 공간을 만들지 않고 initializer를 외부에서 생성할 수 없게 제약설정하고 나면 모든 인스턴스는 이 shared를 통해서 접근할 수 있게끔 만드는 거라
     static let shared = NetworkManager()
     private init() {}
     
