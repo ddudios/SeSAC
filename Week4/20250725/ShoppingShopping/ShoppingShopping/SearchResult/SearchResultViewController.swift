@@ -41,18 +41,25 @@ final class SearchResultViewController: BaseViewController {
         return collectionView
     }()
     
-    //MARK: 첫번째 데이터에 쓰레기값이 들어가고 있음 -> 빈배열로 시작하도록 개선
-//    var list: NaverSearch = NaverSearch(total: 0, items: [Item(title: "", image: "", lprice: "", mallName: "")])
     var list: [Item] = []
     var searchText: String = ""
-    var startPosition = 1
-    var remainingData = 100
+    var startPosition = 0
+    var remainingData = 0
     var lastData = false
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        callRequest(query: searchText, sort: SortType.accuracy.rawValue)
+        NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: 1) { success in
+            self.totalLabel.text = "\(success.total) 개의 검색 결과"
+            self.list.append(contentsOf: success.items)
+            self.remainingData = success.total
+            self.collectionView.reloadData()
+        } failure: {
+            self.showAlert {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     //MARK: - Helpers
@@ -95,35 +102,17 @@ final class SearchResultViewController: BaseViewController {
         collectionView.dataSource = self
     }
     
-    //MARK: - Selectors
-    func callRequest(query: String, sort: String) {
-        guard let url = URL(string: NaverShoppingService(query: query, sort: sort, start: startPosition).url) else {
-            print("error: URL - \(#function)")
-            return
-        }
-        let header: HTTPHeaders = [
-            APIKeyHeader.naverClientId.rawValue: Bundle.getAPIKey(for: .naverClientId),
-            APIKeyHeader.naverClientSecret.rawValue: Bundle.getAPIKey(for: .naverClientSecret)
-        ]
-        AF.request(url, method: .get, headers: header).responseDecodable(of: NaverSearch.self) { response in
-            switch response.result {
-            case .success(let value):
-                self.totalLabel.text = "\(value.total) 개의 검색 결과"
-                print(value)
-                self.list = value.items
-                
-                self.collectionView.reloadData()
-                
-                if self.startPosition == 1 {
-                    self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-                    self.remainingData = value.total
-                }
-            case .failure(let error):
-                self.showAlert {
-                    self.navigationController?.popViewController(animated: true)
-                }
-                print("error: \(error)")
-            }
+    private func setData(value: NaverSearch) {
+        self.totalLabel.text = "\(value.total) 개의 검색 결과"
+        self.list.append(contentsOf: value.items)
+        self.remainingData = value.total
+        self.collectionView.reloadData()
+    }
+    
+    private func setOtherSortType(value: NaverSearch) {
+        if self.startPosition == 1 {
+            self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+            self.remainingData = value.total
         }
     }
     
@@ -134,18 +123,24 @@ final class SearchResultViewController: BaseViewController {
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
         list.removeAll()
-        startPosition = 1
-        callRequest(query: searchText, sort: SortType.accuracy.rawValue)
+        NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: 1) { success in
+            self.setData(value: success)
+            self.setOtherSortType(value: success)
+        } failure: {}
     }
     
     @objc private func dateSortButtonTapped() {
+        print(#function)
         accuracySortButton.buttonTapped(isActive: false)
         dateSortButton.buttonTapped(isActive: true)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
         list.removeAll()
         startPosition = 1
-        callRequest(query: searchText, sort: SortType.date.rawValue)
+        NetworkManager.shared.callRequest(query: searchText, sort: SortType.date.rawValue, startPosition: 1) { success in
+            self.setData(value: success)
+            self.setOtherSortType(value: success)
+        } failure: {}
     }
     
     @objc private func highPriceButtonTapped() {
@@ -155,7 +150,10 @@ final class SearchResultViewController: BaseViewController {
         lowPriceSortButton.buttonTapped(isActive: false)
         list.removeAll()
         startPosition = 1
-        callRequest(query: searchText, sort: SortType.high.rawValue)
+        NetworkManager.shared.callRequest(query: searchText, sort: SortType.high.rawValue, startPosition: 1) { success in
+            self.setData(value: success)
+            self.setOtherSortType(value: success)
+        } failure: {}
     }
     
     @objc private func lowPriceButtonTapped() {
@@ -165,7 +163,10 @@ final class SearchResultViewController: BaseViewController {
         lowPriceSortButton.buttonTapped(isActive: true)
         list.removeAll()
         startPosition = 1
-        callRequest(query: searchText, sort: SortType.low.rawValue)
+        NetworkManager.shared.callRequest(query: searchText, sort: SortType.low.rawValue, startPosition: 1) { success in
+            self.setData(value: success)
+            self.setOtherSortType(value: success)
+        } failure: {}
     }
 }
 
@@ -202,13 +203,25 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         if indexPath.item == (list.count - 6) && lastData == false {
             startPosition += 30
             if accuracySortButton.isTapped {
-                callRequest(query: searchText, sort: SortType.accuracy.rawValue)
+                NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: startPosition) { success in
+                    self.setData(value: success)
+                    self.setOtherSortType(value: success)
+                } failure: {}
             } else if dateSortButton.isTapped {
-                callRequest(query: searchText, sort: SortType.date.rawValue)
+                NetworkManager.shared.callRequest(query: searchText, sort: SortType.date.rawValue, startPosition: startPosition) { success in
+                    self.setData(value: success)
+                    self.setOtherSortType(value: success)
+                } failure: {}
             } else if highPriceSortButton.isTapped {
-                callRequest(query: searchText, sort: SortType.high.rawValue)
+                NetworkManager.shared.callRequest(query: searchText, sort: SortType.high.rawValue, startPosition: startPosition) { success in
+                    self.setData(value: success)
+                    self.setOtherSortType(value: success)
+                } failure: {}
             } else if lowPriceSortButton.isTapped {
-                callRequest(query: searchText, sort: SortType.low.rawValue)
+                NetworkManager.shared.callRequest(query: searchText, sort: SortType.low.rawValue, startPosition: startPosition) { success in
+                    self.setData(value: success)
+                    self.setOtherSortType(value: success)
+                } failure: {}
             } else {
                 print("errer: \(#function)")
             }
