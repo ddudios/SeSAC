@@ -61,9 +61,7 @@ final class SearchResultViewController: BaseViewController {
         
         NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: 1) { success in
             self.totalLabel.text = "\(success.total) 개의 검색 결과"
-            self.list.append(contentsOf: success.items)
-            self.remainingData = success.total
-            self.searchCollectionView.reloadData()
+            self.setData(value: success)
         } failure: {
             self.showAlert {
                 self.navigationController?.popViewController(animated: true)
@@ -129,7 +127,6 @@ final class SearchResultViewController: BaseViewController {
     
     //MARK: - Selectors
     private func setData(value: NaverSearch) {
-        self.totalLabel.text = "\(value.total) 개의 검색 결과"
         self.list.append(contentsOf: value.items)
         self.remainingData = value.total
         self.searchCollectionView.reloadData()
@@ -230,7 +227,6 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             let url = URL(string: item.image)
             cell.recommendImageView.kf.setImage(with: url)
             cell.titleLabel.text = SearchResultTitleLabel.filter(title: item.title)
-            cell.titleLabel.text = item.title
             
             return cell
         } else {

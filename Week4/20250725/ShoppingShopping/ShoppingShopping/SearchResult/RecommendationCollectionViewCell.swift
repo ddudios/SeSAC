@@ -43,7 +43,7 @@ final class RecommendationCollectionViewCell: BaseCollectionViewCell {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(recommendImageView.snp.bottom)
+            make.top.equalTo(recommendImageView.snp.bottom).offset(ConstraintValue.CollectionView.itemQuantity)
             make.horizontalEdges.equalTo(contentView.snp.horizontalEdges)
         }
     }
