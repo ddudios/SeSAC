@@ -45,8 +45,8 @@ class ViewController: UIViewController {
     
     // KingFisher를 안쓰면 어떻게 사진을 가져오는지? 웹에 있는 주소를 로드해줄 수 있다
         // 웹에 있는 이미지를 0101로 바꿔서 UIImage로 넣는다
-    // 알바생을 여러명 두면 해결이 될 수 있다
-        // 바쁜 일들이나 중요한 일들은 다른 사람이 할 수 있도록
+    // 알바생(Thread)을 여러명 두면 해결이 될 수 있다
+        // 한 명이 일하게 두는 것이 아니라 바쁜 일들이나 중요한 일들은 다른 사람이 할 수 있도록 알바생을 여러 명 두면 코드를 더 빠르게 끝나는 형태로 만들어 볼 수 있다
     @objc func buttonClicked() {
         
         // 그동안 자주 사용했던 이미지 이니셜라이저
@@ -120,6 +120,7 @@ class ViewController: UIViewController {
             make.center.equalTo(view)
         }
     }
+    
     func serialSync() {  // 동기 + 직렬
         print("START", terminator: " ")
         
