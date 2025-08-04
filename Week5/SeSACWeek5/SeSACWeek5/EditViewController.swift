@@ -42,6 +42,8 @@ class EditViewController: UIViewController {
 //        textField2.text = space
         
 //        textField1.text = "숫자 \(jack ?? 0)을 입력했습니다."  // 이전 화면에서 전달받은 데이터 표시
+        
+        idTest()
     }
     
     private func setupUI() {
@@ -51,9 +53,12 @@ class EditViewController: UIViewController {
         setupTextField(textField2, placeholder: "Closure 데이터")
         setupTextField(textField3, placeholder: "Notification 데이터")
          
-        setupButton(button1, title: "Delegate", color: .systemBlue)
-        setupButton(button2, title: "Closure", color: .systemGreen)
-        setupButton(button3, title: "Notification", color: .systemOrange)
+//        setupButton(button1, title: "Delegate", color: .systemBlue)
+//        setupButton(button2, title: "Closure", color: .systemGreen)
+//        setupButton(button3, title: "Notification", color: .systemOrange)
+        button1.configuration = UIButton.Configuration.jackStyle(title: "Delegate")
+        button2.configuration = UIButton.Configuration.jackStyle(title: "Closure")
+        button3.configuration = UIButton.Configuration.jackStyle(title: "Notification")
          
         view.addSubview(textField1)
         view.addSubview(textField2)

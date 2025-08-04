@@ -10,7 +10,7 @@ import SnapKit
 
 class PhotoTableViewCell: BaseTableViewCell {
 
-    static let identifier = "PhotoTableViewCell"
+//    static let identifier = "PhotoTableViewCell"
     
     let thumbnailImageView = UIImageView()
     let titleLabel = UILabel()

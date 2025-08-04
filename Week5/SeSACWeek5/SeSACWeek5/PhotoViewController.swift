@@ -200,6 +200,7 @@ extension PhotoViewController: UITableViewDelegate, UITableViewDataSource {  // 
         // 테이블뷰가 여러개일 때 구별하라고 tableView매개변수를 줌
         // 메서드를 2개 쓰는 건 안되고 부하직원도 연결되어 있으니까 분기처리로 해결
         if tableView == authorTableView {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: AuthorTableViewCell.identifier(), for: indexPath) as! AuthorTableViewCell
             let cell = tableView.dequeueReusableCell(withIdentifier: AuthorTableViewCell.identifier, for: indexPath) as! AuthorTableViewCell
             let row = secondList[indexPath.row]
             cell.authorLabel.text = row.author
