@@ -44,6 +44,16 @@ class EditViewController: UIViewController {
 //        textField1.text = "숫자 \(jack ?? 0)을 입력했습니다."  // 이전 화면에서 전달받은 데이터 표시
         
         idTest()
+        
+        // 실제 폰트 이름 찾기
+        for item in UIFont.familyNames {
+            print(item)
+            for name in UIFont.fontNames(forFamilyName: item) {
+                print(">>>실제 사용해야할 이름>>>", name)
+            }
+        }
+        print(MyFont.allCases)  // rowValue까지 쓰면 몇개 들어있는지까지 바로 알 수 있다
+        // [SeSACWeek5.MyFont.thin, SeSACWeek5.MyFont.regular, SeSACWeek5.MyFont.bold]
     }
     
     private func setupUI() {
@@ -71,7 +81,9 @@ class EditViewController: UIViewController {
     private func setupTextField(_ textField: UITextField, placeholder: String) {
         textField.placeholder = placeholder
         textField.borderStyle = .roundedRect
-        textField.font = UIFont.systemFont(ofSize: 16)
+        // 왜 .찍어서 들어가야하지? 매개변수로받아서 적용
+//        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.font = UIFont(name: "S-CoreDream-9Black", size: 20)
     }
     
     private func setupButton(_ button: UIButton, title: String, color: UIColor) {
@@ -80,6 +92,7 @@ class EditViewController: UIViewController {
         button.backgroundColor = color
         button.layer.cornerRadius = 8
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        
     }
     
     private func setupConstraints() {

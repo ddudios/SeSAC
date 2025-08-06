@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }  // 씬이 존재하는지 확인 (여기서 실패할 일은 거의 없다)
         window = UIWindow(windowScene: scene)  // 유리를 만들어줌
-        let nav = UINavigationController(rootViewController: TransitionViewController())// 네비게이션 임베드
+        let nav = UINavigationController(rootViewController: VerticalScrollViewController())// 네비게이션 임베드
         window?.rootViewController = nav  // 가장 밑에 차지해야하는 첫 화면을
         window?.makeKeyAndVisible()  // 이 윈도우에 뭐가 들어있다면 사용자 눈에 시각적으로 보이게 해달라
             // 특정 버전에서는 쓰지 않아도 되지만 고려하지 않고 그냥 씀
