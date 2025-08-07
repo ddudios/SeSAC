@@ -32,6 +32,17 @@ final class MarketViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+        
+//        print(total(a: 3, b: 5))
+//        print(total(a: 3.5, b: 3.888))
+        total(a: 67, b: 2)  // 타입이 정해지지 않은 상태로 호출됨 -> 어떤 타입이 들어가도 되는 상태
+        total(a: 67.2, b: 2.2)
+        setCornerRadius(a: tableView)
+        DummyData(title: "스트링", sub: "괜찮아")
+        DummyData(title: 777, sub: "인트여도 괜찮아")
+        DummyData(title: true, sub: "Bool이여도 괜찮아")
+        DummyData(title: view, sub: "view도 괜찮아")
+//        Array
     }
     
     func callRequest() {
