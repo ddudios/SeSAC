@@ -16,15 +16,17 @@ enum BirthValidationError: Error {
 }
 
 class BirthDayViewController: UIViewController {
-    let yearTextField: UITextField = {
+    lazy var yearTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "년도를 입력해주세요"
         textField.borderStyle = .roundedRect
+        setColor(textField)
         return textField
     }()
-    let yearLabel: UILabel = {
+    lazy var yearLabel: UILabel = {
         let label = UILabel()
         label.text = "년"
+        setColor(label)
         return label
     }()
     let monthTextField: UITextField = {
@@ -49,11 +51,12 @@ class BirthDayViewController: UIViewController {
         label.text = "일"
         return label
     }()
-    let resultButton: UIButton = {
+    lazy var resultButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .systemBlue
         button.setTitle( "클릭", for: .normal)
         button.layer.cornerRadius = 8
+        setColor(button)
         return button
     }()
     let resultLabel: UILabel = {
