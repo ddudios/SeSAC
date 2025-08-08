@@ -7,12 +7,52 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0B2B7042E45812900328F93 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B2B7032E45812900328F93 /* WidgetKit.framework */; };
+		B0B2B7062E45812900328F93 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B2B7052E45812900328F93 /* SwiftUI.framework */; };
+		B0B2B7112E45812B00328F93 /* MyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B0B2B7012E45812900328F93 /* MyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B0B2B7222E45818100328F93 /* MyKeyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B0B2B71B2E45818100328F93 /* MyKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B0BFBAC42E42ED1B00A339FE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B0BFBAC32E42ED1B00A339FE /* Alamofire */; };
 		B0BFBAC72E42ED2F00A339FE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B0BFBAC62E42ED2F00A339FE /* SnapKit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B0B2B70F2E45812B00328F93 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B07365E32E4039DA00993121 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0B2B7002E45812900328F93;
+			remoteInfo = MyWidgetExtension;
+		};
+		B0B2B7202E45818100328F93 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B07365E32E4039DA00993121 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0B2B71A2E45818100328F93;
+			remoteInfo = MyKeyboard;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B0B2B7122E45812B00328F93 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B0B2B7112E45812B00328F93 /* MyWidgetExtension.appex in Embed Foundation Extensions */,
+				B0B2B7222E45818100328F93 /* MyKeyboard.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B07365EB2E4039DA00993121 /* SeSAC7Week6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC7Week6.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0B2B7012E45812900328F93 /* MyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0B2B7032E45812900328F93 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B0B2B7052E45812900328F93 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		B0B2B71B2E45818100328F93 /* MyKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MyKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -23,6 +63,20 @@
 			);
 			target = B07365EA2E4039DA00993121 /* SeSAC7Week6 */;
 		};
+		B0B2B7162E45812B00328F93 /* Exceptions for "MyWidget" folder in "MyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B0B2B7002E45812900328F93 /* MyWidgetExtension */;
+		};
+		B0B2B7262E45818100328F93 /* Exceptions for "MyKeyboard" folder in "MyKeyboard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B0B2B71A2E45818100328F93 /* MyKeyboard */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +86,22 @@
 				B07365FD2E4039DB00993121 /* Exceptions for "SeSAC7Week6" folder in "SeSAC7Week6" target */,
 			);
 			path = SeSAC7Week6;
+			sourceTree = "<group>";
+		};
+		B0B2B7072E45812900328F93 /* MyWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B0B2B7162E45812B00328F93 /* Exceptions for "MyWidget" folder in "MyWidgetExtension" target */,
+			);
+			path = MyWidget;
+			sourceTree = "<group>";
+		};
+		B0B2B71C2E45818100328F93 /* MyKeyboard */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B0B2B7262E45818100328F93 /* Exceptions for "MyKeyboard" folder in "MyKeyboard" target */,
+			);
+			path = MyKeyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -46,6 +116,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0B2B6FE2E45812900328F93 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0B2B7062E45812900328F93 /* SwiftUI.framework in Frameworks */,
+				B0B2B7042E45812900328F93 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0B2B7182E45818100328F93 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -53,6 +139,9 @@
 			isa = PBXGroup;
 			children = (
 				B07365ED2E4039DA00993121 /* SeSAC7Week6 */,
+				B0B2B7072E45812900328F93 /* MyWidget */,
+				B0B2B71C2E45818100328F93 /* MyKeyboard */,
+				B0B2B7022E45812900328F93 /* Frameworks */,
 				B07365EC2E4039DA00993121 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,8 +150,19 @@
 			isa = PBXGroup;
 			children = (
 				B07365EB2E4039DA00993121 /* SeSAC7Week6.app */,
+				B0B2B7012E45812900328F93 /* MyWidgetExtension.appex */,
+				B0B2B71B2E45818100328F93 /* MyKeyboard.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B0B2B7022E45812900328F93 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B0B2B7032E45812900328F93 /* WidgetKit.framework */,
+				B0B2B7052E45812900328F93 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -75,10 +175,13 @@
 				B07365E72E4039DA00993121 /* Sources */,
 				B07365E82E4039DA00993121 /* Frameworks */,
 				B07365E92E4039DA00993121 /* Resources */,
+				B0B2B7122E45812B00328F93 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B0B2B7102E45812B00328F93 /* PBXTargetDependency */,
+				B0B2B7212E45818100328F93 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B07365ED2E4039DA00993121 /* SeSAC7Week6 */,
@@ -92,6 +195,50 @@
 			productReference = B07365EB2E4039DA00993121 /* SeSAC7Week6.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B0B2B7002E45812900328F93 /* MyWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B0B2B7152E45812B00328F93 /* Build configuration list for PBXNativeTarget "MyWidgetExtension" */;
+			buildPhases = (
+				B0B2B6FD2E45812900328F93 /* Sources */,
+				B0B2B6FE2E45812900328F93 /* Frameworks */,
+				B0B2B6FF2E45812900328F93 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B0B2B7072E45812900328F93 /* MyWidget */,
+			);
+			name = MyWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = MyWidgetExtension;
+			productReference = B0B2B7012E45812900328F93 /* MyWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		B0B2B71A2E45818100328F93 /* MyKeyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B0B2B7232E45818100328F93 /* Build configuration list for PBXNativeTarget "MyKeyboard" */;
+			buildPhases = (
+				B0B2B7172E45818100328F93 /* Sources */,
+				B0B2B7182E45818100328F93 /* Frameworks */,
+				B0B2B7192E45818100328F93 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B0B2B71C2E45818100328F93 /* MyKeyboard */,
+			);
+			name = MyKeyboard;
+			packageProductDependencies = (
+			);
+			productName = MyKeyboard;
+			productReference = B0B2B71B2E45818100328F93 /* MyKeyboard.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -103,6 +250,12 @@
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					B07365EA2E4039DA00993121 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					B0B2B7002E45812900328F93 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					B0B2B71A2E45818100328F93 = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
@@ -126,12 +279,28 @@
 			projectRoot = "";
 			targets = (
 				B07365EA2E4039DA00993121 /* SeSAC7Week6 */,
+				B0B2B7002E45812900328F93 /* MyWidgetExtension */,
+				B0B2B71A2E45818100328F93 /* MyKeyboard */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B07365E92E4039DA00993121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0B2B6FF2E45812900328F93 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0B2B7192E45818100328F93 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -148,7 +317,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0B2B6FD2E45812900328F93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0B2B7172E45818100328F93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B0B2B7102E45812B00328F93 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0B2B7002E45812900328F93 /* MyWidgetExtension */;
+			targetProxy = B0B2B70F2E45812B00328F93 /* PBXContainerItemProxy */;
+		};
+		B0B2B7212E45818100328F93 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0B2B71A2E45818100328F93 /* MyKeyboard */;
+			targetProxy = B0B2B7202E45818100328F93 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B07365FF2E4039DB00993121 /* Debug */ = {
@@ -336,6 +532,110 @@
 			};
 			name = Release;
 		};
+		B0B2B7132E45812B00328F93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Y6TYDQ939;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ddudios.SeSAC7Week6.MyWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B0B2B7142E45812B00328F93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Y6TYDQ939;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ddudios.SeSAC7Week6.MyWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B0B2B7242E45818100328F93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Y6TYDQ939;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyKeyboard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyKeyboard;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ddudios.SeSAC7Week6.MyKeyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B0B2B7252E45818100328F93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Y6TYDQ939;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyKeyboard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyKeyboard;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ddudios.SeSAC7Week6.MyKeyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -353,6 +653,24 @@
 			buildConfigurations = (
 				B07365FF2E4039DB00993121 /* Debug */,
 				B07366002E4039DB00993121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B0B2B7152E45812B00328F93 /* Build configuration list for PBXNativeTarget "MyWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0B2B7132E45812B00328F93 /* Debug */,
+				B0B2B7142E45812B00328F93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B0B2B7232E45818100328F93 /* Build configuration list for PBXNativeTarget "MyKeyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0B2B7242E45818100328F93 /* Debug */,
+				B0B2B7252E45818100328F93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
