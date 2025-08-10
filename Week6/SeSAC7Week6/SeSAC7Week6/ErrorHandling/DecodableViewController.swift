@@ -35,7 +35,7 @@ struct Movie: Decodable {
         self.movieTitle = try container.decode(String.self, forKey: .movieTitle)
         self.likeCount = try container.decode(Int.self, forKey: .likeCount)
 //        self.director = try container.decode(String.self, forKey: .director)  // 무조건 들어있다고
-        // 등호를 기준으로 왼쪽: 우리가 사용하는 거라서 nil들어가지만 / 오른쪽은 서버에서 들어오는 건데 무조건 값이 있다고 되어 있다
+        // 등호를 기준으로 왼쪽: 우리가 사용하는 거라서 nil들어가지만 // 오른쪽은 서버에서 들어오는 건데 무조건 값이 있다고 되어 있다
         self.director = try container.decodeIfPresent(String.self, forKey: .director) ?? "서버 이슈 발생"
         // 서버에서 넘어오는 키가 변경된다는 가정, 테그가없더라도 앱이 터지지 않게, 앱이 실행은 되도록 이 부분을 많이 사용하면 좋다
         

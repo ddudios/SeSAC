@@ -16,8 +16,7 @@ class UserViewModel {
             // 데이터 변화는 있는데, 데이터바뀌면 리로드해줘야하는데 그걸 안하니까 화면에 안보임 -> 시점을 찾아서 하거나, 클로저로 값전달처럼 리로드
             print(oldValue)
             print(list)
-            //tableView.reloadData()
-            // 뷰컨트롤러에서 이 코드를 작성하는 게 맞겠다
+            //tableView.reloadData()  // 뷰컨트롤러에서 이 코드를 작성하는 게 맞겠다
             reload?()
         }
     } /*{

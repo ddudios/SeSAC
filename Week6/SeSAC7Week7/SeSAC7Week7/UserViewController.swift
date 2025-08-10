@@ -55,7 +55,7 @@ class UserViewController: UIViewController {
         return stackView
     }()
     
-    var list: [Person] = []
+//    var list: [Person] = []
     
     let viewModel = UserViewModel()
     

@@ -21,7 +21,6 @@ class NumberViewModel {
             print(oldValue)
             print(inputField)
             validate()  // 호출
-            //MARK: - 12:31 캡쳐
         }
     }
     // nil처리도 로직 아니냐 그럼 뷰컨에 있는게 맞냐

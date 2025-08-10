@@ -6,11 +6,7 @@
 //
 
 import UIKit
-
-enum AgeValidationError: Error {
-    case outOfRange
-    case isNotInt
-}
+import SnapKit  // 안써도 되지만 명세
 
 final class AgeViewController: UIViewController {
     let textField: UITextField = {
@@ -33,12 +29,20 @@ final class AgeViewController: UIViewController {
         return label
     }()
     
+    // ViewModel 소유
+    let viewModel = AgeViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
         configureLayout()
         
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
+        
+        // 뿌려주기 기능 클로저 초기화/명세
+        viewModel.closureText = {
+            self.label.text = self.viewModel.outputText
+        }
     }
     
     func configureHierarchy() {
@@ -71,40 +75,9 @@ final class AgeViewController: UIViewController {
         view.endEditing(true)
     }
     
+    // 이벤트 전달
     @objc private func resultButtonTapped() {
         view.endEditing(true)
-        
-        guard let text = textField.text else {
-            print("텍스트필드 글자: nil")
-            return
-        }
-        
-        do {
-            let result = try validateUserInput(text: text)
-            label.text = result
-        } catch let error {
-            switch error {
-            case AgeValidationError.isNotInt:
-                label.text = "숫자만 기입 가능합니다"
-            case AgeValidationError.outOfRange:
-                label.text = "1~100세만 기입 가능합니다"
-            default:
-                print(#function, error)
-            }
-        }
-    }
-    
-    private func validateUserInput(text: String) throws -> String {
-        guard let age = Int(text) else {
-            throw AgeValidationError.isNotInt
-        }
-        
-        print(age)
-        
-        if age < 1 || age > 100 {
-            throw AgeValidationError.outOfRange
-        }
-        
-        return "올바른 나이 입력: \(age)"
+        viewModel.inputTextField = textField.text
     }
 }

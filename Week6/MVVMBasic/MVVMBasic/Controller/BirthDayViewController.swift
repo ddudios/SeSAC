@@ -8,13 +8,6 @@
 import UIKit
 import SnapKit
 
-enum BirthValidationError: Error {
-    case outOfRangeYear
-    case outOfRangeMonth
-    case outOfRangeDay
-    case isNotInt
-}
-
 class BirthDayViewController: UIViewController {
     lazy var yearTextField: UITextField = {
         let textField = UITextField()
@@ -66,12 +59,20 @@ class BirthDayViewController: UIViewController {
         return label
     }()
     
+    // ViewModel 소유
+    let viewModel = BirthDayViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
         configureLayout()
         
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
+        
+        // 뿌려주기 기능 클로저 초기화(명세)
+        viewModel.closureText = {
+            self.resultLabel.text = self.viewModel.outputText
+        }
     }
     
     func configureHierarchy() {
@@ -140,57 +141,57 @@ class BirthDayViewController: UIViewController {
     
     @objc func resultButtonTapped() {
         view.endEditing(true)
-        guard let yearString = yearTextField.text else {
-            return
-        }
+        // 이벤트 전달
+        viewModel.inputYear = yearTextField.text
+        viewModel.inputMonth = monthTextField.text
+        viewModel.inputDay = dayTextField.text
         
-        guard let monthString = monthTextField.text else {
-            return
-        }
+//        guard let yearString = yearTextField.text else {
+//            return
+//        }
+//        
+//        guard let monthString = monthTextField.text else {
+//            return
+//        }
+//        
+//        guard let dayString = dayTextField.text else {
+//            return
+//        }
         
-        guard let dayString = dayTextField.text else {
-            return
-        }
-        
-        do {
-            try birthValidateUserInput(yearString: yearString, monthString: monthString, dayString: dayString)
-        } catch let error {
-            switch error {
-                
-            case .outOfRangeYear:
-                resultLabel.text = "입력 가능 범위: 1700 <= year <= 2025"
-            case .outOfRangeMonth:
-                resultLabel.text = "입력 가능 범위: 1 <= month <= 12"
-            case .outOfRangeDay:
-                resultLabel.text = "입력 가능 범위: 1 <= day <= 31"
-            case .isNotInt:
-                resultLabel.text = "입력 가능 타입: Int"
-            }
-        }
+//        do {
+//            try birthValidateUserInput(yearString: yearString, monthString: monthString, dayString: dayString)
+//        } catch let error {
+//            switch error {
+//                
+//            case .outOfRangeYear:
+//                resultLabel.text = "입력 가능 범위: 1700 <= year <= 2025"
+//            case .outOfRangeMonth:
+//                resultLabel.text = "입력 가능 범위: 1 <= month <= 12"
+//            case .outOfRangeDay:
+//                resultLabel.text = "입력 가능 범위: 1 <= day <= 31"
+//            case .isNotInt:
+//                resultLabel.text = "입력 가능 타입: Int"
+//            }
+//        }
     }
     
-    private func birthValidateUserInput(yearString: String, monthString: String, dayString: String) throws(BirthValidationError) {
-        if let year = Int(yearString),
-           let month = Int(monthString),
-           let day = Int(dayString) {
-            
-            if year < 1700 || year > 2025 {
-                throw BirthValidationError.outOfRangeYear
-            } else if month < 1 || month > 12 {
-                throw BirthValidationError.outOfRangeMonth
-            } else if day < 1 || day > 31 {
-                throw BirthValidationError.outOfRangeDay
-            } else {
-                resultLabel.text = "D + \(birthday(year: year, month: month, day: day))"
-            }
-        } else {
-            resultLabel.text = "숫자를 입력해주세요"
-        }
-    }
+//    private func birthValidateUserInput(yearString: String, monthString: String, dayString: String) throws(BirthValidationError) {
+//        if let year = Int(yearString),
+//           let month = Int(monthString),
+//           let day = Int(dayString) {
+//            
+//            if year < 1700 || year > 2025 {
+//                throw BirthValidationError.outOfRangeYear
+//            } else if month < 1 || month > 12 {
+//                throw BirthValidationError.outOfRangeMonth
+//            } else if day < 1 || day > 31 {
+//                throw BirthValidationError.outOfRangeDay
+//            } else {
+//                resultLabel.text = "D + \(birthday(year: year, month: month, day: day))"
+//            }
+//        } else {
+//            resultLabel.text = "숫자를 입력해주세요"
+//        }
+//    }
     
-    private func birthday(year: Int, month: Int, day: Int) -> Int {
-        let birthComponents = DateComponents(year: year, month: month, day: day)
-        let birthday = Calendar.current.date(from: birthComponents)!
-        return Calendar.current.dateComponents([.day], from: birthday, to: Date()).day ?? 0
-    }
 }

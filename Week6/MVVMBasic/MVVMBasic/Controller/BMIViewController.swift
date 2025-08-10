@@ -6,12 +6,7 @@
 //
 
 import UIKit
-
-enum BmiValidationError: Error {
-    case emptyString
-    case outOfRange
-    case isNotDouble
-}
+import SnapKit
 
 class BMIViewController: UIViewController {
     let heightTextField: UITextField = {
@@ -40,12 +35,23 @@ class BMIViewController: UIViewController {
         return label
     }()
     
+    private let viewModel = BMIViewModel()
+    var alertTitle = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
         configureLayout()
         
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
+        
+        viewModel.closureText = {
+            self.resultLabel.text = self.viewModel.outputText
+        }
+        
+        viewModel.closureAlert = {
+            self.alertTitle = self.viewModel.outputAlertTitle
+        }
     }
     
     func configureHierarchy() {
@@ -88,57 +94,12 @@ class BMIViewController: UIViewController {
     @objc func resultButtonTapped() {
         view.endEditing(true)
         
-        guard let heightString = heightTextField.text else {
-            return
-        }
+        viewModel.inputHeight = heightTextField.text
+        viewModel.inputWeight = weightTextField.text
         
-        guard let weightString = weightTextField.text else {
-            return
+        if resultLabel.text == "여기에 결과를 보여주세요" {
+            showAlert(title: alertTitle)
         }
-        
-        do {
-            let message = try validateUserInput(heightText: heightString, weightText: weightString)
-            resultLabel.text = message
-        } catch let error {
-            switch error {
-            case BmiValidationError.emptyString:
-                showAlert(title: "키 또는 몸무게를 입력해 주세요")
-            case BmiValidationError.isNotDouble:
-                showAlert(title: "숫자로 입력해 주세요")
-            case BmiValidationError.outOfRange:
-                showAlert(title: "키는 50~300, 몸무게는 10~300 사이로 입력해주세요")
-            default:
-                print("error: \(error)")
-            }
-        }
-    }
-    
-    private func validateUserInput(heightText: String, weightText: String) throws -> String {
-        if heightText == "" {
-            throw BmiValidationError.emptyString
-        }
-        
-        if weightText == "" {
-            throw BmiValidationError.emptyString
-        }
-        
-        guard let height = Double(heightText) else {
-            throw BmiValidationError.isNotDouble
-        }
-        
-        guard let weight = Double(weightText) else {
-            throw BmiValidationError.isNotDouble
-        }
-        
-        if height < 50 || height > 300 {
-            throw BmiValidationError.outOfRange
-        }
-        
-        if weight < 10 || weight > 300 {
-            throw BmiValidationError.outOfRange
-        }
-        
-        return "올바른 입력: 키(\(height)), 몸무게(\(weight))"
     }
 }
 
