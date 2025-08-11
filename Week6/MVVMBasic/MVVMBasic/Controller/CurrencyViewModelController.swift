@@ -55,8 +55,11 @@ class CurrencyViewController: UIViewController {
         setupConstraints()
         setupActions()
         
-        viewModel.closureText = {  // 초기화
-            self.resultLabel.text = self.viewModel.outputText
+//        viewModel.closureText = {  // 초기화
+//            self.resultLabel.text = self.viewModel.outputText
+//        }
+        viewModel.outputTextField.binding { text in
+            self.resultLabel.text = text
         }
     }
      
@@ -111,6 +114,6 @@ class CurrencyViewController: UIViewController {
      */
     // 이벤트 전달
     @objc private func convertButtonTapped() {
-        viewModel.inputTextField = amountTextField.text
+        viewModel.inputTextField.data = amountTextField.text!
     }
 }
