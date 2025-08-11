@@ -70,8 +70,8 @@ class BirthDayViewController: UIViewController {
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
         
         // 뿌려주기 기능 클로저 초기화(명세)
-        viewModel.closureText = {
-            self.resultLabel.text = self.viewModel.outputText
+        viewModel.outputText.binding { text in
+            self.resultLabel.text = text
         }
     }
     
@@ -142,9 +142,9 @@ class BirthDayViewController: UIViewController {
     @objc func resultButtonTapped() {
         view.endEditing(true)
         // 이벤트 전달
-        viewModel.inputYear = yearTextField.text
-        viewModel.inputMonth = monthTextField.text
-        viewModel.inputDay = dayTextField.text
+        viewModel.inputYear.data = yearTextField.text!
+        viewModel.inputMonth.data = monthTextField.text!
+        viewModel.inputDay.data = dayTextField.text!
         
 //        guard let yearString = yearTextField.text else {
 //            return

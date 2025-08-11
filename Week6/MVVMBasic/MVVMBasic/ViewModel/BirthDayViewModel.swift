@@ -17,57 +17,44 @@ enum BirthValidationError: Error {
 class BirthDayViewModel {
     
     // input
-    var inputYear: String? = "" {
-        didSet {
-            validate()
-        }
-    }
+    var inputYear = Observable("")
+    var inputMonth = Observable("")
+    var inputDay = Observable("")
     
-    var inputMonth: String? = "" {
-        didSet {
-            validate()
+    init() {
+        inputYear.binding { _ in
+            self.validate()
         }
-    }
-    
-    var inputDay: String? = "" {
-        didSet {
-            validate()
+        
+        
+        inputMonth.binding { _ in
+            self.validate()
+        }
+        
+        
+        inputDay.binding { _ in
+            self.validate()
         }
     }
     
     // output
-    var outputText = "" {
-        didSet {
-            // 뿌려주기 실행
-            closureText?()  // 있으면? 실행
-        }
-    }
-    
-    // 뿌려주기 기능 클로저 선언
-    var closureText: (() -> Void)?
+    var outputText = Observable("")
     
     // 데이터 가공
     private func validate() {
-        guard let yearString = inputYear,
-              let monthString = inputMonth,
-              let dayString = inputDay else {
-            outputText = "input: nil"
-            return
-        }
-        
         do {
-            try birthValidateUserInput(yearString: yearString, monthString: monthString, dayString: dayString)
+            try birthValidateUserInput(yearString: inputYear.data, monthString: inputMonth.data, dayString: inputDay.data)
         } catch let error {
             switch error {
                 
             case .outOfRangeYear:
-                outputText = "입력 가능 범위: 1700 <= year <= 2025"
+                outputText.data = "입력 가능 범위: 1700 <= year <= 2025"
             case .outOfRangeMonth:
-                outputText = "입력 가능 범위: 1 <= month <= 12"
+                outputText.data = "입력 가능 범위: 1 <= month <= 12"
             case .outOfRangeDay:
-                outputText = "입력 가능 범위: 1 <= day <= 31"
+                outputText.data = "입력 가능 범위: 1 <= day <= 31"
             case .isNotInt:
-                outputText = "입력 가능 타입: Int"
+                outputText.data = "입력 가능 타입: Int"
             }
         }
     }
@@ -84,10 +71,10 @@ class BirthDayViewModel {
             } else if day < 1 || day > 31 {
                 throw BirthValidationError.outOfRangeDay
             } else {
-                outputText = "D + \(birthday(year: year, month: month, day: day))"
+                outputText.data = "D + \(birthday(year: year, month: month, day: day))"
             }
         } else {
-            outputText = "숫자를 입력해주세요"
+            outputText.data = "숫자를 입력해주세요"
         }
     }
     
