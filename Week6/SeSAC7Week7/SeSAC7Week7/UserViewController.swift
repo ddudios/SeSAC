@@ -66,10 +66,8 @@ class UserViewController: UIViewController {
         setupTableView()
         setupActions()
         
-        // 앞으로 쓸 테이블뷰가 모두 쓸 수 있도록 함수 전달
-        // 그 시점은 아니지만 뷰디드로드때 이 기능을 넣고
-        viewModel.reload = {
-            print("reload 클로저 실행")
+        // list가 바뀔때 뭐할래?
+        viewModel.list.playAction { _ in
             self.tableView.reloadData()
         }
     }
@@ -96,7 +94,7 @@ class UserViewController: UIViewController {
         // 우리 눈에만 분리된거지 여전히 load메서드에 연결되어있고 뭐가 들어간지 알 수 있다 (실질적 의미는 없었음)
             // 오류가 생겨야 뷰컨입장에서 정말 모르고 분리된 것이다
             // 직접 호출하는 게 아니라 다른 숫자값을 줌 (값이 바뀌도록)
-        viewModel.loadTapped = 1
+        viewModel.loadButtonTapped.value = ()  // 0보다 작은 단위를 넘겨줌
     }
     
     @objc private func resetButtonTapped() {
@@ -105,7 +103,7 @@ class UserViewController: UIViewController {
 //        viewModel.reset()
 //        tableView.reloadData()
         
-        viewModel.resetTapped = ""
+        viewModel.resetButtonTapped.value = ()
     }
     
     @objc private func addButtonTapped() {
@@ -114,7 +112,7 @@ class UserViewController: UIViewController {
         // 한명추가되는건지 뭔지 다 신경안씀
 //        viewModel.add()
 //        tableView.reloadData()
-        viewModel.addTapped = true
+        viewModel.addButtonTapped.value = ()
     }
     // 어떤 일을 하는것같긴한데 어떤 걸 하는지 자세히는 모름
 }
@@ -157,7 +155,8 @@ extension UserViewController {
  
 extension UserViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.list.count  // 그냥 주면 그대로 보여줄게
+        // list까지는 Field이고 실질적인 값에 접근 .value
+        return viewModel.list.value.count  // 그냥 주면 그대로 보여줄게
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

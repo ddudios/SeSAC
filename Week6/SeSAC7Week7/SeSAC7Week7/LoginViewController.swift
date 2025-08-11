@@ -40,29 +40,50 @@ class LoginViewController: UIViewController {
         return button
     }()
        
+    // 12.
+    let viewModel = LoginViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureConstraints()
         configureActions()
+        
+        // 레이블에 내용 보여지게 만듦
+//        viewModel.outputValidationLabel.playAction {
+//            self.validationLabel.text = self.viewModel.outputValidationLabel.text
+//        }
+        // 31. 호출과 내부가 같은 프로퍼티를 사용중
+        viewModel.outputValidationLabel.playAction { value in
+            self.validationLabel.text = value
+        }
+        
+        viewModel.outputTextColor.playAction { color in
+            self.validationLabel.textColor = color ? .blue : .red
+        }
     }
     
     @objc private func textFieldDidChange() {
         print(#function)
-        guard let id = idTextField.text, let pw = passwordTextField.text else {
-            validationLabel.text = "nil입니다"
-            loginButton.isEnabled = false
-            return
-        }
+//        guard let id = idTextField.text, let pw = passwordTextField.text else {
+//            validationLabel.text = "nil입니다"
+//            loginButton.isEnabled = false
+//            return
+//        }
+//        
+//        if id.count >= 4 && pw.count >= 4 {
+//            validationLabel.text = "잘 했어요"
+//            loginButton.isEnabled = true
+//        } else {
+//            validationLabel.text = "아이디, 비밀번호 4자리 이상입니다."
+//            loginButton.isEnabled = false
+//        }
         
-        if id.count >= 4 && pw.count >= 4 {
-            validationLabel.text = "잘 했어요"
-            loginButton.isEnabled = true
-        } else {
-            validationLabel.text = "아이디, 비밀번호 4자리 이상입니다."
-            loginButton.isEnabled = false
-        }
-    } 
+        // 10. 목표: 아이디 텍스트필드 바뀔때마다 didChange -> ViewModel에 전달: 유효성 검사
+        // 13.
+        viewModel.inputIdTextField.value = idTextField.text!
+        // 왜 텍스트로 전달해야하는지? String을 Field로 랩핑했으니까 Field클래스로 전달되고 그 내부의 text에 넣어줘야 함 -> Field클래스의 text가 달라지니까 그 text의 didSet이 실행됨: (text값이 변경됨) textFieldDidChange() text didSet 12 123
+    }
 
     @objc private func loginButtonTapped() {
         print(#function)

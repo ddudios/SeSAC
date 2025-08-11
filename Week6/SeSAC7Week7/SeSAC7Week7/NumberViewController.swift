@@ -41,9 +41,55 @@ class NumberViewController: UIViewController {
             self.formattedAmountLabel.text = self.viewModel.outputText
         }
         
-        viewModel.closureColor = {
-            
-        }
+        // Observable class Test
+        let jack = Observable(text: "jack")  // text 값을 초기화해서 Observable 인스턴스를 만들었다
+            // 처음 들어온 jack은 프린트되지 않음, 값이 변경된 것은 아니니까
+//        jack.hello = {  // 함수 형태를 넣어보자
+//            print("첫번째 헬로")
+//        }
+        /**
+         인스턴스를 생성했을 때도 첫번째 클로저를 실행하려면?
+         - hello가 nil일 때는 실행되지 않음
+         - hello에서 didSet -> didSet이 호출되지 않을 수 있음 / init에서 동작
+         - 필요한 시점에 VC에서 실행시켜주면 됨 jack.hello?()
+         **/
+//        jack.hello?()  // 첫번째 헬로
+        // 이 구문을 빼먹을 수도 있으니까 이들을 쉽게 만들기 위해서 bind()
+        jack.binde {
+            print("bind: 첫번째 헬로")  // 이 기능을 실행과 동시에 이 기능을 hello에 넣어줌
+                // 위에 각자 한것( jack.hello = {} + jack.hello?() )을 한꺼번에 한 것과 동일
+        }  // bind: 첫번째 헬로
+        
+        jack.text = "finn"  // text 값이 바뀌었어요 jack finn
+            // 값에 대한 변경을 인지해서 출력이 됨
+//        jack.hello = {  // 함수 형태를 넣어보자
+//            print("두번째 헬로")
+//        }  // 첫번째 헬로
+        // bind: 첫번째 헬로
+        
+        jack.text = "den"  // text 값이 바뀌었어요 finn den
+//        jack.hello = {  // 함수 형태를 넣어보자
+//            print("세번째 헬로")
+//        }  // 두번째 헬로
+        // bind: 첫번째 헬로
+        
+        /**
+        세번째 헬로는 왜 실행되지 않지?
+         - jack인스턴스 만드니까 init구문 출력
+         - text == jack
+         - hello = 첫번째
+         
+         - text == finn -> didSet
+         - hello있다면 실행: 기존에 들어있던 첫번째 실행
+         - hello = 두번째
+         
+         - text를 den으로 변경: didSet 실행
+         - hello있다면 실행: 기존에 들어있던 두번째 실행
+         - hello = 세번째
+         
+         실행해주려면 어떻게 해야할까?
+         - 지금 hello == 세번째가 들어있지만, 내용이 변경되어야 didSet으로 실행되어 세번째가 출력될 수 있다
+         **/
     }
  
     @objc private func amountChanged() {

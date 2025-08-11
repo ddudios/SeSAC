@@ -15,6 +15,7 @@ class NumberViewModel {
     
     // VC에서 VM로 들어오는 정보
     // textField에 들어오는 정보
+    // Observable의 text
     var inputField: String? = "" {  // = ""
         didSet {
             print("inputField")
