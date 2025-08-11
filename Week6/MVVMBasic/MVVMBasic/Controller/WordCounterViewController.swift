@@ -37,8 +37,11 @@ class WordCounterViewController: UIViewController {
         setupConstraints()
         setupTextView()
         
-        viewModel.closureText = {
-            self.countLabel.text = self.viewModel.output
+//        viewModel.closureText = {
+//            self.countLabel.text = self.viewModel.output
+//        }
+        viewModel.outputText.binding { text in
+            self.countLabel.text = text
         }
     }
      
@@ -76,6 +79,6 @@ class WordCounterViewController: UIViewController {
  
 extension WordCounterViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.inputText = textView.text
+        viewModel.inputText.data = textView.text!
     }
 }
