@@ -124,28 +124,28 @@ class NumberRemindController: UIViewController {
     }
 }
 
-   extension NumberRemindController {
-       
-       private func configureUI() {
-           view.backgroundColor = .white
-           view.addSubview(amountTextField)
-           view.addSubview(formattedAmountLabel)
-       }
-
-       private func configureConstraints() {
-           amountTextField.snp.makeConstraints { make in
-               make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
-               make.left.right.equalToSuperview().inset(20)
-               make.height.equalTo(40)
-           }
-
-           formattedAmountLabel.snp.makeConstraints { make in
-               make.top.equalTo(amountTextField.snp.bottom).offset(20)
-               make.left.right.equalTo(amountTextField)
-           }
-       }
-
-       private func configureActions() {
-           amountTextField.addTarget(self, action: #selector(amountChanged), for: .editingChanged)
-       }
+extension NumberRemindController {
+    
+    private func configureUI() {
+        view.backgroundColor = .white
+        view.addSubview(amountTextField)
+        view.addSubview(formattedAmountLabel)
+    }
+    
+    private func configureConstraints() {
+        amountTextField.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            make.left.right.equalToSuperview().inset(20)
+            make.height.equalTo(40)
+        }
+        
+        formattedAmountLabel.snp.makeConstraints { make in
+            make.top.equalTo(amountTextField.snp.bottom).offset(20)
+            make.left.right.equalTo(amountTextField)
+        }
+    }
+    
+    private func configureActions() {
+        amountTextField.addTarget(self, action: #selector(amountChanged), for: .editingChanged)
+    }
 }

@@ -12,40 +12,31 @@ enum AgeValidationError: Error {
     case isNotInt
 }
 
-class AgeViewModel {
+final class AgeViewModel {
     
     // input
-    var inputTextField: String? = "" {
-        didSet {
-            validate()
+    var inputTextField = Observable("")
+    
+    init() {
+        inputTextField.binding { _ in
+            self.validate()
         }
     }
     
     // output
-    var outputText = "" {
-        didSet {
-            closureText?()  // output글자가 바뀌면 실행
-        }
-    }
-    
-    var closureText: (() -> Void)?  // 뿌려주기 기능 클로저 선언
+    var outputText = Observable("")
     
     // 데이터 가공
     private func validate() {
-        guard let text = inputTextField else {
-            outputText = "텍스트필드 글자: nil"  // 뷰에 표시할 내용
-            return
-        }
-        
         do {
-            let result = try validateUserInput(text: text)
-            outputText = result
+            let result = try validateUserInput(text: inputTextField.data)
+            outputText.data = result
         } catch let error {
             switch error {
             case AgeValidationError.isNotInt:
-                outputText = "숫자만 기입 가능합니다"
+                outputText.data = "숫자만 기입 가능합니다"
             case AgeValidationError.outOfRange:
-                outputText = "1~100세만 기입 가능합니다"
+                outputText.data = "1~100세만 기입 가능합니다"
             default:
                 print(#function, error)
             }
@@ -56,8 +47,6 @@ class AgeViewModel {
         guard let age = Int(text) else {
             throw AgeValidationError.isNotInt
         }
-        
-        print(age)
         
         if age < 1 || age > 100 {
             throw AgeValidationError.outOfRange

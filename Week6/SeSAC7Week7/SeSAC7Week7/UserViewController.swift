@@ -70,6 +70,10 @@ class UserViewController: UIViewController {
         viewModel.list.playAction { _ in
             self.tableView.reloadData()
         }
+        
+        viewModel.list.playAction(action: { _ in
+            self.tableView.reloadData()
+        })
     }
      
     // 데이터가 바뀌면 테이블뷰가 갱신을 해야한다

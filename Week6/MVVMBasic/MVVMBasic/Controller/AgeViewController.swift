@@ -40,8 +40,8 @@ final class AgeViewController: UIViewController {
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
         
         // 뿌려주기 기능 클로저 초기화/명세
-        viewModel.closureText = {
-            self.label.text = self.viewModel.outputText
+        viewModel.outputText.binding { text in
+            self.label.text = text
         }
     }
     
@@ -78,6 +78,6 @@ final class AgeViewController: UIViewController {
     // 이벤트 전달
     @objc private func resultButtonTapped() {
         view.endEditing(true)
-        viewModel.inputTextField = textField.text
+        viewModel.inputTextField.data = textField.text!
     }
 }

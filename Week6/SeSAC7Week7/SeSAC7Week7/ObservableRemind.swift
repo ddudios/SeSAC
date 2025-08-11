@@ -69,7 +69,7 @@ class Field<T> {
         var value: T {
             didSet {
                 print("text didSet", oldValue, value)
-                action?(value)
+                action?(value)  // 바뀐 값
             }
         }
     
@@ -78,7 +78,6 @@ class Field<T> {
         print("Field Init")
     }
     
-    //MARK: - 여기 코드뭐야
     func playAction(action: @escaping (T) -> Void) {
         print(#function, "START")
         action(value)
