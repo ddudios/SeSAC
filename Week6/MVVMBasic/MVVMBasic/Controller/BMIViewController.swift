@@ -45,12 +45,12 @@ class BMIViewController: UIViewController {
         
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
         
-        viewModel.closureText = {
-            self.resultLabel.text = self.viewModel.outputText
+        viewModel.outputText.binding { text in
+            self.resultLabel.text = text
         }
         
-        viewModel.closureAlert = {
-            self.alertTitle = self.viewModel.outputAlertTitle
+        viewModel.outputAlertTitle.binding { text in
+            self.alertTitle = text
         }
     }
     
@@ -94,8 +94,8 @@ class BMIViewController: UIViewController {
     @objc func resultButtonTapped() {
         view.endEditing(true)
         
-        viewModel.inputHeight = heightTextField.text
-        viewModel.inputWeight = weightTextField.text
+        viewModel.inputHeight.data = heightTextField.text!
+        viewModel.inputWeight.data = weightTextField.text!
         
         if resultLabel.text == "여기에 결과를 보여주세요" {
             showAlert(title: alertTitle)

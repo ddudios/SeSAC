@@ -14,51 +14,63 @@ enum BmiValidationError: Error {
 }
 
 class BMIViewModel {
-    var inputHeight: String? = "" {
-        didSet {
-            validate()
-        }
-    }
+//    var inputHeight: String? = "" {
+//        didSet {
+//            validate()
+//        }
+//    }
+//    
+//    var inputWeight: String? = "" {
+//        didSet {
+//            validate()
+//        }
+//    }
+//    
+//    var outputText = "" {
+//        didSet {
+//            closureText?()
+//        }
+//    }
+//    
+//    var outputAlertTitle = "" {
+//        didSet {
+//            closureAlert?()
+//        }
+//    }
+//    
+//    var closureText: (() -> Void)?
+//    var closureAlert: (() -> Void)?
+        
+    // 관찰할 데이터
+    var inputHeight = Observable("")
+    var inputWeight = Observable("")
+    var outputText = Observable("여기에 결과를 보여주세요")
+    var outputAlertTitle = Observable("")
     
-    var inputWeight: String? = "" {
-        didSet {
-            validate()
-        }
-    }
-    
-    var outputText = "" {
-        didSet {
-            closureText?()
-        }
-    }
-    
-    var outputAlertTitle = "" {
-        didSet {
-            closureAlert?()
-        }
-    }
-    
-    var closureText: (() -> Void)?
-    var closureAlert: (() -> Void)?
-    
-    private func validate() {
-        guard let heightString = inputHeight,
-              let weightString = inputWeight else {
-            outputAlertTitle = "input: nil"
-            return
+    // 초기화 시점에 input 기능 활성화
+    init() {
+        inputHeight.binding { _ in
+            self.validate()
         }
         
+        inputWeight.binding { _ in
+            self.validate()
+        }
+    }
+        
+    private func validate() {
+        // Observable의 data는 더이상 Optional타입이 아니기 때문에 nil 판단 필요없음
         do {
-            let message = try validateUserInput(heightText: heightString, weightText: weightString)
-            outputText = message
+            let message = try validateUserInput(heightText: inputHeight.data, weightText: inputWeight.data)
+            outputText.data = message
         } catch let error {
             switch error {
             case BmiValidationError.emptyString:
-                outputAlertTitle = "키 또는 몸무게를 입력해 주세요"
+                outputAlertTitle.data = "키 또는 몸무게를 입력해 주세요"
             case BmiValidationError.isNotDouble:
-                outputAlertTitle = "숫자로 입력해 주세요"
+                outputAlertTitle.data = "숫자로 입력해 주세요"
             case BmiValidationError.outOfRange:
-                outputAlertTitle = "키는 50~300, 몸무게는 10~300 사이로 입력해주세요"
+                outputAlertTitle.data = "키는 50~300, 몸무게는 10~300 사이로 입력해주세요"
             default:
                 print("error: \(error)")
             }
