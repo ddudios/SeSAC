@@ -7,8 +7,7 @@
 
 import Foundation
 
-// 합쳐보기
-// input, output, 데이터가공 - 관점으로 좀 더 분리해보기
+//TODO: input, output, 데이터가공 - 관점으로 좀 더 분리해보기
 enum Category {
     case korean
     case western
@@ -41,6 +40,7 @@ class MapViewModel {
         list.data = RestaurantList.restaurantArray
     }
     
+    //TODO: 합쳐보기 - 매개변수(korean, "한식"만 다르다), enum
     private func koreanRestaurantFilter() {
         for restaurant in RestaurantList.restaurantArray {
             if restaurant.category == "한식" {

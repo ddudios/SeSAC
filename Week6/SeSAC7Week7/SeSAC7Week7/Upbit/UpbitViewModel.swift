@@ -34,7 +34,7 @@ final class UpbitViewModel {
          - lazyBind로 개선하거나
          - bind를 쓰되 viewController viewDidLoad에서 트리거를 주지 않거나
          */
-        inputViewDidLoadTrigger.bind {
+        inputViewDidLoadTrigger.lazyBind {
             print("viewModel inputViewDidLoadTrigger / ViewDidLoad 시점")
             
 //            self.list.value = ["j", "k", "h", "s", "8"]
@@ -62,6 +62,44 @@ final class UpbitViewModel {
             self.outputCellSelected.value = self.inputCellSelectedTrigger.value?.korean_name ?? ""
         }
     }
+    
+    /**
+     # viewController와 viewModel의 bind마다 print를 찍어보면, 호출이 얼마나 많이 되는지, 어떤 문제가 생기는지 볼 수 있다
+     ## bind의 역할은 즉시 실행하면서 담겠다
+     Observable Init
+     Observable Init
+     Observable Init
+     Observable Init
+     Observable Init
+     Observabe Bind
+     viewModel inputViewDidLoadTrigger / ViewDidLoad 시점
+     callRequest(completionHandler:)
+     Observabe Bind
+     viewModel inputCellSelectedTrigger / 셀이 선택되었습니다
+     nil
+     Observable didSet
+     Observable didSet
+     viewModel inputViewDidLoadTrigger / ViewDidLoad 시점
+     callRequest(completionHandler:)
+     Observabe Bind
+     viewController outputMarketData / list 변경
+     Observabe Bind
+     viewController outputNavigationTitleData
+     Observabe Bind
+     viewController outputCellSelected / output
+     Observable didSet
+     viewController outputMarketData / list 변경
+     Observable didSet
+     viewController outputNavigationTitleData
+     Observable didSet
+     viewController outputMarketData / list 변경
+     Observable didSet
+     viewController outputNavigationTitleData
+     nw_protocol_socket_set_no_wake_from_sleep [C1.1.1:3] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+     nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+     nw_protocol_socket_set_no_wake_from_sleep [C1.1.1:3] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+     nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+     */
     
     func callRequest() {
         

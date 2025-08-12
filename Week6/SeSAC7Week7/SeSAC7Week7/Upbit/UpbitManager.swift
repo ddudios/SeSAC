@@ -16,7 +16,7 @@ final class UpbitManager {
     private init() { }
     
     func callRequest(completionHandler: @escaping ([Upbit], String) -> Void) {
-//        print(#function)
+        print(#function)
         let url = "https://api.upbit.com/v1/market/all"
         AF.request(url).responseDecodable(of: [Upbit].self) { response in
             switch response.result {

@@ -18,20 +18,29 @@ final class SearchViewController: BaseViewController {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    
     private let emptySearchBarTextLabel = EmptySearchBarTextLabel()
+    
+    private let viewModel = SearchViewModel()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configureUI(self)
+        bindData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        shoppingSearchBar.text = ""
+        viewModel.inputViewDidLoadTrigger.data = ()
     }
     
     //MARK: - Helpers
+    private func bindData() {
+        viewModel.outputText.bind { text in
+            self.shoppingSearchBar.text = text
+        }
+    }
+    
     override func configureHierarchy() {
         view.addSubview(shoppingSearchBar)
         view.addSubview(emptySearchBarTextImageView)
@@ -64,50 +73,16 @@ final class SearchViewController: BaseViewController {
 //MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text else {
-            print("error: \(#function)")
-            return
-        }
         
-        if text.count > 1 {
-            let viewController = SearchResultViewController()
-            viewController.searchText = text
-            navigationController?.pushViewController(viewController, animated: true)
-        } else {
-            print("error: \(#function) - 2글자 이상 입력해야 합니다")
-        }
+        viewModel.inputTextField.data = searchBar.text
+        
+        
+//        if text.count > 1 {
+//            let viewController = SearchResultViewController()
+//            viewController.searchText = text
+//            navigationController?.pushViewController(viewController, animated: true)
+//        } else {
+//            print("error: \(#function) - 2글자 이상 입력해야 합니다")
+//        }
     }
 }
-
-/*
- //MARK: - ViewDesignProtocol
- extension SearchViewController: ViewDesignProtocol {
- func configureHierarchy() {
- view.addSubview(shoppingSearchBar)
- view.addSubview(emptySearchBarTextImageView)
- view.addSubview(emptySearchBarTextLabel)
- }
- 
- func configureLayout() {
- shoppingSearchBar.snp.makeConstraints { make in
- make.top.equalTo(view.safeAreaLayoutGuide)
- make.horizontalEdges.equalToSuperview().inset(ConstraintValue.searchBarEdge)
- }
- 
- emptySearchBarTextImageView.snp.makeConstraints { make in
- make.centerY.equalToSuperview()
- make.horizontalEdges.equalToSuperview()
- }
- 
- emptySearchBarTextLabel.snp.makeConstraints { make in
- make.centerX.equalToSuperview()
- make.top.equalTo(emptySearchBarTextImageView.snp.bottom)
- }
- }
- 
- func configureView() {
- title = "영캠러의 쇼핑쇼핑"
- shoppingSearchBar.delegate = self
- }
- }
- */

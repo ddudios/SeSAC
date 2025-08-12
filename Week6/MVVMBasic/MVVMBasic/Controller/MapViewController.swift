@@ -63,6 +63,7 @@ final class MapViewController: UIViewController {
 //        mapView.addAnnotation(annotation)
 //    }
     
+    //TODO: MapManager로 또 분리해보기
     private func addRestaurantAnnotation() {
         for restaurant in viewModel.list.data {
             let annotation = MKPointAnnotation()

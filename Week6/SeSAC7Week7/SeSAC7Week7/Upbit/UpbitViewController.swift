@@ -33,7 +33,7 @@ class UpbitViewController: UIViewController {
         
         // print가 안되니까 필요없겠네?
         viewModel.outputMarketData.bind {
-            print("viewController outputMarketData / list 변경", self.viewModel.outputMarketData.value)
+            print("viewController outputMarketData / list 변경")//, self.viewModel.outputMarketData.value)
             self.tableView.reloadData()  // 통신이 끝나는 시점이 셀을 그리는 시점이 항상 다르기 때문에
         }
         
@@ -61,7 +61,7 @@ class UpbitViewController: UIViewController {
          */
         viewModel.outputCellSelected.bind {
             // 즉시 실행하니까 즉시 화면전환해버림
-            print("viewControlleroutputCellSelected / output", self.viewModel.outputCellSelected.value)  // 이제는 값이 들어있기 때문에 값을 확인 가능
+            print("viewController outputCellSelected / output", self.viewModel.outputCellSelected.value)  // 이제는 값이 들어있기 때문에 값을 확인 가능
             
             // 빈값일 때 조건으로 종료시켜서 이 아래 코드가 실행되지 않도록
             if self.viewModel.outputCellSelected.value.isEmpty {
