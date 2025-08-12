@@ -9,13 +9,6 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-enum SortType: String {
-    case accuracy = "&sort=sim"
-    case date = "&sort=date"
-    case high = "&sort=dsc"
-    case low = "&sort=asc"
-}
-
 final class SearchResultViewController: BaseViewController {
     
     private lazy var totalLabel = SearchResultTotalLabel(text: "0 개의 검색 결과")
@@ -48,7 +41,6 @@ final class SearchResultViewController: BaseViewController {
     }()
     
     var list: [Item] = []
-    var searchText: String = ""
     var startPosition = 0
     var remainingData = 0
     var lastData = false
@@ -93,6 +85,12 @@ final class SearchResultViewController: BaseViewController {
             self.recommendationList = items
             self.recommendationCollectionView.reloadData()
         }
+        
+        viewModel.outputSortData.bind { success in
+            self.setData(value: success)
+            self.setOtherSortType(value: success)
+            self.searchCollectionView.reloadData()
+        }
     }
     
     override func configureHierarchy() {
@@ -127,7 +125,6 @@ final class SearchResultViewController: BaseViewController {
     }
     
     override func configureView() {
-        title = searchText
         configureCollectionView()
         
         accuracySortButton.addTarget(self, action: #selector(accuracySortButtonTapped), for: .touchUpInside)
@@ -159,56 +156,38 @@ final class SearchResultViewController: BaseViewController {
     }
     
     //TODO: 하나로 합쳐보기
-    @objc private func accuracySortButtonTapped() {
-        accuracySortButton.buttonTapped(isActive: true)
+    
+    private func readySort() {
+        accuracySortButton.buttonTapped(isActive: false)
         dateSortButton.buttonTapped(isActive: false)
         highPriceSortButton.buttonTapped(isActive: false)
         lowPriceSortButton.buttonTapped(isActive: false)
         list.removeAll()
-        NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: 1) { success in
-            self.setData(value: success)
-            self.setOtherSortType(value: success)
-        } failure: {}
+        startPosition = 1
+    }
+    
+    @objc private func accuracySortButtonTapped() {
+        readySort()
+        accuracySortButton.buttonTapped(isActive: true)
+        viewModel.inputSortButtonTapped.data = SortType.accuracy.rawValue
     }
     
     @objc private func dateSortButtonTapped() {
-        print(#function)
-        accuracySortButton.buttonTapped(isActive: false)
+        readySort()
         dateSortButton.buttonTapped(isActive: true)
-        highPriceSortButton.buttonTapped(isActive: false)
-        lowPriceSortButton.buttonTapped(isActive: false)
-        list.removeAll()
-        startPosition = 1
-        NetworkManager.shared.callRequest(query: searchText, sort: SortType.date.rawValue, startPosition: 1) { success in
-            self.setData(value: success)
-            self.setOtherSortType(value: success)
-        } failure: {}
+        viewModel.inputSortButtonTapped.data = SortType.date.rawValue
     }
     
     @objc private func highPriceButtonTapped() {
-        accuracySortButton.buttonTapped(isActive: false)
-        dateSortButton.buttonTapped(isActive: false)
+        readySort()
         highPriceSortButton.buttonTapped(isActive: true)
-        lowPriceSortButton.buttonTapped(isActive: false)
-        list.removeAll()
-        startPosition = 1
-        NetworkManager.shared.callRequest(query: searchText, sort: SortType.high.rawValue, startPosition: 1) { success in
-            self.setData(value: success)
-            self.setOtherSortType(value: success)
-        } failure: {}
+        viewModel.inputSortButtonTapped.data = SortType.high.rawValue
     }
     
     @objc private func lowPriceButtonTapped() {
-        accuracySortButton.buttonTapped(isActive: false)
-        dateSortButton.buttonTapped(isActive: false)
-        highPriceSortButton.buttonTapped(isActive: false)
+        readySort()
         lowPriceSortButton.buttonTapped(isActive: true)
-        list.removeAll()
-        startPosition = 1
-        NetworkManager.shared.callRequest(query: searchText, sort: SortType.low.rawValue, startPosition: 1) { success in
-            self.setData(value: success)
-            self.setOtherSortType(value: success)
-        } failure: {}
+        viewModel.inputSortButtonTapped.data = SortType.low.rawValue
     }
 }
 
@@ -262,22 +241,22 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             if indexPath.item == (list.count - 6) && lastData == false {
                 startPosition += 30
                 if accuracySortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: startPosition) { success in
+                    NetworkManager.shared.callRequest(query: viewModel.outputTitle.data ?? "", sort: SortType.accuracy.rawValue, startPosition: startPosition) { success in
                         self.setData(value: success)
                         self.setOtherSortType(value: success)
                     } failure: {}
                 } else if dateSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: searchText, sort: SortType.date.rawValue, startPosition: startPosition) { success in
+                    NetworkManager.shared.callRequest(query: viewModel.outputTitle.data ?? "", sort: SortType.date.rawValue, startPosition: startPosition) { success in
                         self.setData(value: success)
                         self.setOtherSortType(value: success)
                     } failure: {}
                 } else if highPriceSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: searchText, sort: SortType.high.rawValue, startPosition: startPosition) { success in
+                    NetworkManager.shared.callRequest(query: viewModel.outputTitle.data ?? "", sort: SortType.high.rawValue, startPosition: startPosition) { success in
                         self.setData(value: success)
                         self.setOtherSortType(value: success)
                     } failure: {}
                 } else if lowPriceSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: searchText, sort: SortType.low.rawValue, startPosition: startPosition) { success in
+                    NetworkManager.shared.callRequest(query: viewModel.outputTitle.data ?? "", sort: SortType.low.rawValue, startPosition: startPosition) { success in
                         self.setData(value: success)
                         self.setOtherSortType(value: success)
                     } failure: {}

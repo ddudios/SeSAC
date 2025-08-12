@@ -21,7 +21,7 @@ final class SearchViewModel {
             self.resetText()
         }
         
-        inputSearchBarSearchButtonClickedTrigger.bind { _ in
+        inputSearchBarSearchButtonClickedTrigger.lazyBind { _ in
             self.validate()
         }
     }
