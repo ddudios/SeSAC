@@ -17,19 +17,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
+        let mapVC = MapViewController()
+        let nv = UINavigationController(rootViewController: mapVC)
+        nv.tabBarItem = UITabBarItem(title: "지도", image: UIImage(systemName: "map.fill"), tag: 0)
         let tabBarController = UITabBarController()
         let ageVC = AgeViewController()
-        ageVC.tabBarItem = UITabBarItem(title: "나이", image: UIImage(systemName: "person.fill"), tag: 0)
+        ageVC.tabBarItem = UITabBarItem(title: "나이", image: UIImage(systemName: "person.fill"), tag: 1)
         let bmiVC = BMIViewController()
-        bmiVC.tabBarItem = UITabBarItem(title: "BMI", image: UIImage(systemName: "waveform.path.ecg"), tag: 1)
+        bmiVC.tabBarItem = UITabBarItem(title: "BMI", image: UIImage(systemName: "waveform.path.ecg"), tag: 2)
         let birthDayVC = BirthDayViewController()
-        birthDayVC.tabBarItem = UITabBarItem(title: "생년월일", image: UIImage(systemName: "calendar"), tag: 2)
+        birthDayVC.tabBarItem = UITabBarItem(title: "생년월일", image: UIImage(systemName: "calendar"), tag: 3)
         let wordCoutVC = WordCounterViewController()
-        wordCoutVC.tabBarItem = UITabBarItem(title: "글자수", image: UIImage(systemName: "text.word.spacing"), tag: 3)
+        wordCoutVC.tabBarItem = UITabBarItem(title: "글자수", image: UIImage(systemName: "text.word.spacing"), tag: 4)
         let currencyVC = CurrencyViewController()
-        currencyVC.tabBarItem = UITabBarItem(title: "환전", image: UIImage(systemName: "wonsign.arrow.trianglehead.counterclockwise.rotate.90"), tag: 4)
+        currencyVC.tabBarItem = UITabBarItem(title: "환전", image: UIImage(systemName: "wonsign.arrow.trianglehead.counterclockwise.rotate.90"), tag: 5)
         
-        tabBarController.viewControllers = [ageVC, bmiVC, birthDayVC, wordCoutVC, currencyVC]
+        tabBarController.viewControllers = [nv, ageVC, bmiVC, birthDayVC, wordCoutVC, currencyVC]
         tabBarController.tabBar.tintColor = .systemBlue
         tabBarController.tabBar.unselectedItemTintColor = .systemGray
         
