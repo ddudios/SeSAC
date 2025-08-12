@@ -7,6 +7,13 @@
 
 import Foundation
 
+// 합쳐보기
+// input, output, 데이터가공 - 관점으로 좀 더 분리해보기
+enum Category {
+    case korean
+    case western
+}
+
 class MapViewModel {
     let loadData = Observable(())
     let koreanFilter = Observable(())
