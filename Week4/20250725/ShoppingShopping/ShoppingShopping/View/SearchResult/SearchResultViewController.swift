@@ -54,28 +54,47 @@ final class SearchResultViewController: BaseViewController {
     var lastData = false
     
     var recommendationList: [Item] = []
+    
+    let viewModel = SearchResultViewModel()
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NetworkManager.shared.callRequest(query: searchText, sort: SortType.accuracy.rawValue, startPosition: 1) { success in
-            self.totalLabel.text = "\(success.total) 개의 검색 결과"
-            self.setData(value: success)
-        } failure: {
-            self.showAlert {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
-        
-        NetworkManager.shared.callRequest(query: "키티", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
-            self.recommendationList = success.items
-            self.recommendationCollectionView.reloadData()
-        } failure: { }
-
+        viewModel.inputViewDidLoadTrigger.data = ()
+        bindData()
     }
     
     //MARK: - Helpers
+    private func bindData() {
+        viewModel.outputTitle.bind { _ in
+            let data = self.viewModel.outputTitle.data
+            self.navigationItem.title = data
+        }
+        
+        viewModel.outputTotal.bind { _ in
+            self.totalLabel.text = "\(self.viewModel.outputTotal.data) 개의 검색 결과"
+            print(self.viewModel.outputTotal.data)
+            // 0 -> 1458981
+            // 통신이 끝나는 시점과 화면이 그려지는 시점이 항상 다르기 때문에 값이 변하면 화면에 그려줘야 한다
+        }
+        
+        viewModel.outputSuccessData.bind { success in
+            self.setData(value: success)
+        }
+        
+        viewModel.outputNetworkingFailure.lazyBind { _ in
+            self.showAlert {
+                self.navigationController?.popViewController(animated: true)
+            }
+            // bind로 만들면 일단 실행해버리니까 네트워킹 에러가 없어도 이 구문을 타버림
+        }
+        
+        viewModel.outputRecommendationDataList.bind { items in
+            self.recommendationList = items
+            self.recommendationCollectionView.reloadData()
+        }
+    }
+    
     override func configureHierarchy() {
         view.addSubview(totalLabel)
         view.addSubview(buttonStackView)

@@ -39,6 +39,12 @@ final class SearchViewController: BaseViewController {
         viewModel.outputText.bind { text in
             self.shoppingSearchBar.text = text
         }
+        
+        viewModel.outputSearchBarSearchButtonClicked.lazyBind { text in
+            let vc = SearchResultViewController()
+            vc.viewModel.outputTitle.data = text
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     override func configureHierarchy() {
@@ -75,14 +81,6 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         viewModel.inputTextField.data = searchBar.text
-        
-        
-//        if text.count > 1 {
-//            let viewController = SearchResultViewController()
-//            viewController.searchText = text
-//            navigationController?.pushViewController(viewController, animated: true)
-//        } else {
-//            print("error: \(#function) - 2글자 이상 입력해야 합니다")
-//        }
+        viewModel.inputSearchBarSearchButtonClickedTrigger.data = ()
     }
 }

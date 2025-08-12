@@ -11,12 +11,18 @@ import Foundation
 final class SearchViewModel {
     var inputViewDidLoadTrigger: Observable<Void> = Observable(())
     var inputTextField: Observable<String?> = Observable(nil)
+    var inputSearchBarSearchButtonClickedTrigger = Observable(())
     
     var outputText = Observable("")
+    var outputSearchBarSearchButtonClicked = Observable("")
     
     init() {
         inputViewDidLoadTrigger.bind {
             self.resetText()
+        }
+        
+        inputSearchBarSearchButtonClickedTrigger.bind { _ in
+            self.validate()
         }
     }
     
@@ -30,12 +36,10 @@ final class SearchViewModel {
             return
         }
         
-//        if text.count > 1 {
-//            let viewController = SearchResultViewController()
-//            viewController.searchText = text
-//            navigationController?.pushViewController(viewController, animated: true)
-//        } else {
-//            print("error: \(#function) - 2글자 이상 입력해야 합니다")
-//        }
+        if text.count > 1 {
+            self.outputSearchBarSearchButtonClicked.data = text
+        } else {
+            print("error: \(#function) - 2글자 이상 입력해야 합니다")
+        }
     }
 }

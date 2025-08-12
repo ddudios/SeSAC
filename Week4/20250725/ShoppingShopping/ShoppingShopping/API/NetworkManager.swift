@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class NetworkManager {
+final class NetworkManager {
     // Singleton Pattern
     static let shared = NetworkManager()
     private init() { }
