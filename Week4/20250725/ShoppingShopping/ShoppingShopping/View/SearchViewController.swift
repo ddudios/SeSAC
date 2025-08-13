@@ -31,18 +31,18 @@ final class SearchViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.inputViewDidLoadTrigger.data = ()
+        viewModel.input.viewDidLoad.data = ()
     }
     
     //MARK: - Helpers
     private func bindData() {
-        viewModel.outputText.bind { text in
+        viewModel.output.text.bind { text in
             self.shoppingSearchBar.text = text
         }
         
-        viewModel.outputSearchBarSearchButtonClicked.lazyBind { text in
+        viewModel.output.searchBarSearchButtonClicked.lazyBind { text in
             let vc = SearchResultViewController()
-            vc.viewModel.outputTitle.data = text
+            vc.viewModel.output.title.data = text
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -80,7 +80,7 @@ final class SearchViewController: BaseViewController {
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        viewModel.inputTextField.data = searchBar.text
-        viewModel.inputSearchBarSearchButtonClickedTrigger.data = ()
+        viewModel.input.textField.data = searchBar.text
+        viewModel.input.searchBarSearchButtonClicked.data = ()
     }
 }

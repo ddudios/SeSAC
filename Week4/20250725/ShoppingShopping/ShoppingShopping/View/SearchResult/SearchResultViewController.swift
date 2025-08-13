@@ -52,41 +52,44 @@ final class SearchResultViewController: BaseViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.inputViewDidLoadTrigger.data = ()
+        viewModel.input.viewDidLoadTrigger.data = ()
         bindData()
     }
     
     //MARK: - Helpers
     private func bindData() {
-        viewModel.outputTitle.bind { _ in
-            let data = self.viewModel.outputTitle.data
+        viewModel.output.successData.bind { success in
+            self.list = success.items
+        }
+        
+        viewModel.output.title.bind { data in
             self.navigationItem.title = data
         }
         
-        viewModel.outputTotal.bind { _ in
-            self.totalLabel.text = "\(self.viewModel.outputTotal.data) 개의 검색 결과"
-            print(self.viewModel.outputTotal.data)
+        viewModel.output.total.bind { total in
+            self.totalLabel.text = "\(total) 개의 검색 결과"
+            print(self.viewModel.output.total.data)
             // 0 -> 1458981
             // 통신이 끝나는 시점과 화면이 그려지는 시점이 항상 다르기 때문에 값이 변하면 화면에 그려줘야 한다
         }
         
-        viewModel.outputSuccessData.bind { success in
+        viewModel.output.successData.bind { success in
             self.setData(value: success)
         }
         
-        viewModel.outputNetworkingFailure.lazyBind { _ in
+        viewModel.output.networkingFailure.lazyBind { _ in
             self.showAlert {
                 self.navigationController?.popViewController(animated: true)
             }
             // bind로 만들면 일단 실행해버리니까 네트워킹 에러가 없어도 이 구문을 타버림
         }
         
-        viewModel.outputRecommendationDataList.bind { items in
+        viewModel.output.recommendationDataList.bind { items in
             self.recommendationList = items
             self.recommendationCollectionView.reloadData()
         }
         
-        viewModel.outputSortData.bind { success in
+        viewModel.output.sortData.bind { success in
             self.setData(value: success)
             self.setOtherSortType(value: success)
             self.searchCollectionView.reloadData()
@@ -169,25 +172,25 @@ final class SearchResultViewController: BaseViewController {
     @objc private func accuracySortButtonTapped() {
         readySort()
         accuracySortButton.buttonTapped(isActive: true)
-        viewModel.inputSortButtonTapped.data = SortType.accuracy.rawValue
+        viewModel.input.sortButtonTapped.data = SortType.accuracy.rawValue
     }
     
     @objc private func dateSortButtonTapped() {
         readySort()
         dateSortButton.buttonTapped(isActive: true)
-        viewModel.inputSortButtonTapped.data = SortType.date.rawValue
+        viewModel.input.sortButtonTapped.data = SortType.date.rawValue
     }
     
     @objc private func highPriceButtonTapped() {
         readySort()
         highPriceSortButton.buttonTapped(isActive: true)
-        viewModel.inputSortButtonTapped.data = SortType.high.rawValue
+        viewModel.input.sortButtonTapped.data = SortType.high.rawValue
     }
     
     @objc private func lowPriceButtonTapped() {
         readySort()
         lowPriceSortButton.buttonTapped(isActive: true)
-        viewModel.inputSortButtonTapped.data = SortType.low.rawValue
+        viewModel.input.sortButtonTapped.data = SortType.low.rawValue
     }
 }
 
@@ -241,22 +244,22 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             if indexPath.item == (list.count - 6) && lastData == false {
                 startPosition += 30
                 if accuracySortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: viewModel.outputTitle.data ?? "", sort: SortType.accuracy.rawValue, startPosition: startPosition) { success in
+                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.accuracy.rawValue, startPosition: startPosition) { success in
                         self.setData(value: success)
                         self.setOtherSortType(value: success)
                     } failure: {}
                 } else if dateSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: viewModel.outputTitle.data ?? "", sort: SortType.date.rawValue, startPosition: startPosition) { success in
+                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.date.rawValue, startPosition: startPosition) { success in
                         self.setData(value: success)
                         self.setOtherSortType(value: success)
                     } failure: {}
                 } else if highPriceSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: viewModel.outputTitle.data ?? "", sort: SortType.high.rawValue, startPosition: startPosition) { success in
+                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.high.rawValue, startPosition: startPosition) { success in
                         self.setData(value: success)
                         self.setOtherSortType(value: success)
                     } failure: {}
                 } else if lowPriceSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: viewModel.outputTitle.data ?? "", sort: SortType.low.rawValue, startPosition: startPosition) { success in
+                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.low.rawValue, startPosition: startPosition) { success in
                         self.setData(value: success)
                         self.setOtherSortType(value: success)
                     } failure: {}

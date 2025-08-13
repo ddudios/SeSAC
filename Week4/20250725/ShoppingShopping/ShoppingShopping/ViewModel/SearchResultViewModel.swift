@@ -16,46 +16,55 @@ enum SortType: String {
 
 final class SearchResultViewModel {
     
-    var inputViewDidLoadTrigger = Observable(())
+    var input: Input
+    var output: Output
     
-    var inputSortButtonTapped = Observable("")
+    struct Input {
+        var viewDidLoadTrigger = Observable(())
+        var sortButtonTapped = Observable("")
+    }
     
-    var outputTitle: Observable<String?> = Observable(nil)
-    var outputTotal = Observable(0)
-    var outputSuccessData: Observable<NaverSearch> = Observable(NaverSearch(total: 0, items: []))
-    var outputNetworkingFailure = Observable(())
-    var outputRecommendationDataList: Observable<[Item]> = Observable([])
-    
-    var outputSortData: Observable<NaverSearch> = Observable(NaverSearch(total: 0, items: []))
+    struct Output {
+        var title: Observable<String?> = Observable(nil)
+        var total = Observable(0)
+        var successData: Observable<NaverSearch> = Observable(NaverSearch(total: 0, items: []))
+        var networkingFailure = Observable(())
+        var recommendationDataList: Observable<[Item]> = Observable([])
+        
+        var sortData: Observable<NaverSearch> = Observable(NaverSearch(total: 0, items: []))
+    }
     
     init() {
-        inputViewDidLoadTrigger.lazyBind { _ in
+        input = Input()
+        output = Output()
+        
+        input.viewDidLoadTrigger.lazyBind { _ in
             self.callRequest()
         }
         
-        outputTitle.bind { _ in }
+        output.title.bind { _ in }
         
-        inputSortButtonTapped.bind { sort in
+        input.sortButtonTapped.bind { sort in
             self.fetchForSort(sort: sort)
         }
     }
     
     private func callRequest() {
-        NetworkManager.shared.callRequest(query: outputTitle.data ?? "", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
-            self.outputTotal.data = success.total
-            self.outputSuccessData.data = success
+        NetworkManager.shared.callRequest(query: output.title.data ?? "", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
+            self.output.total.data = success.total
+            self.output.successData.data = success
         } failure: {
-            self.outputNetworkingFailure.data = ()
+            self.output.networkingFailure.data = ()
         }
         
         NetworkManager.shared.callRequest(query: "키티", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
-            self.outputRecommendationDataList.data = success.items
+            self.output.recommendationDataList.data = success.items
         } failure: { }
     }
     
     private func fetchForSort(sort: String) {
-        NetworkManager.shared.callRequest(query: outputTitle.data ?? "", sort: sort, startPosition: 1) { success in
-            self.outputSortData.data = success
+        NetworkManager.shared.callRequest(query: output.title.data ?? "", sort: sort, startPosition: 1) { success in
+            self.output.sortData.data = success
             print(success)
         } failure: {}
     }

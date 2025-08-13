@@ -9,35 +9,45 @@ import Foundation
 
 // input/output/데이터가공 관점
 final class SearchViewModel {
-    var inputViewDidLoadTrigger: Observable<Void> = Observable(())
-    var inputTextField: Observable<String?> = Observable(nil)
-    var inputSearchBarSearchButtonClickedTrigger = Observable(())
+    var input: Input
+    var output: Output
     
-    var outputText = Observable("")
-    var outputSearchBarSearchButtonClicked = Observable("")
+    struct Input {
+        var viewDidLoad: Observable<Void> = Observable(())
+        var textField: Observable<String?> = Observable(nil)
+        var searchBarSearchButtonClicked = Observable(())
+    }
+    
+    struct Output {
+        var text = Observable("")
+        var searchBarSearchButtonClicked = Observable("")
+    }
     
     init() {
-        inputViewDidLoadTrigger.bind {
+        input = Input()
+        output = Output()
+        
+        input.viewDidLoad.bind {
             self.resetText()
         }
         
-        inputSearchBarSearchButtonClickedTrigger.lazyBind { _ in
+        input.searchBarSearchButtonClicked.lazyBind { _ in
             self.validate()
         }
     }
     
     private func resetText() {
-        outputText.data = ""
+        output.text.data = ""
     }
     
     private func validate() {
-        guard let text = inputTextField.data else {
+        guard let text = input.textField.data else {
             print("error: \(#function) - inputTextField: nil")
             return
         }
         
         if text.count > 1 {
-            self.outputSearchBarSearchButtonClicked.data = text
+            self.output.searchBarSearchButtonClicked.data = text
         } else {
             print("error: \(#function) - 2글자 이상 입력해야 합니다")
         }
