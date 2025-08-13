@@ -40,6 +40,7 @@ final class SearchResultViewController: BaseViewController {
         return collectionView
     }()
     
+    // 모든 데이터를 뷰모델에서 관리해보자!
     var list: [Item] = []
     var startPosition = 0
     var remainingData = 0

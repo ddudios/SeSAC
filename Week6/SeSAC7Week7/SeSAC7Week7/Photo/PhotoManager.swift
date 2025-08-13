@@ -69,8 +69,6 @@ final class PhotoManager {
                    parameters: api.parameter,
                    // AF가 갖고있는 parameters매개변수는 쿼리스트링 자리가 될 수도 있고, post에 HTTP Body 영역이 될 수도 있음
                    encoding: URLEncoding(destination: .queryString)
-                   // dictionary를 어디에 붙일지
-                   //MARK: - 2:36
         ).responseDecodable(of: T.self) { response in
             // T.self에는 디코더블을 채택하고 있는 것만 들어갈 수 있어야 한다 (외부로부터 들어온 데이터를 우리의 스트럭트로 바꿔주기 위한 것이 디코더블)
             switch response.result {
@@ -80,10 +78,6 @@ final class PhotoManager {
                 print(error)
             }
         }
-        //MARK: - 2:23
-        // (T) 매개변수를 사용하는 것처럼 보여서 오류가 나지 않지만,
-        // T.self가 결정돼야
-        
     }
     /**
      .responseDecodable(of: T.self)의 T가 뭔지에 따라서 case .success(let value):
