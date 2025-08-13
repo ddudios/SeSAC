@@ -31,7 +31,7 @@ class UpbitDetailViewController: UIViewController {
                 // -> 실행하지 않고 didSet action에 넣어둘 지
         }
         // 실행시켜주려면 데이터를 받은 다음에 값변경까지 해줘야 액션 실행
-        viewModel.outputTitle.value = "받은 데이터를 표시하지 못함"
+//        viewModel.outputTitle.value = "받은 데이터를 표시하지 못함"
         // 바인드 구문이 실행되면서 이전에 전달받은 데이터는 없고 바꿔둔 데이터 "받은 데이터를 표시하지 못함"를 표시하고 처음 할당받은 데이터는 뷰에 보이지 않는 문제가 생길 수 있다
         // 바인드에 들어있는 내용이 값이 바뀌지 않더라도 didSet이 처음에 실행안되더라도 실행될 수 있는 환경으로 만들어줘야 하고, 바로 실행 + 할당하려면 옵저버블 바인드에서 실행해줘야 한다
     }

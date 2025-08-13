@@ -9,32 +9,44 @@ import Foundation
 //import Alamofire
 
 final class UpbitViewModel {
-    // 화면 뜨기 직전이다 라는 생명주기 타이밍을 얻어오고 싶음
-    var inputViewDidLoadTrigger: ReviewObservable<Void> = ReviewObservable(())  // Int전달조차 아까워서 빈튜플
-//    var inputCellSelectedTrigger: ReviewObservable<Void> = ReviewObservable(())  // 화면 전환을 위한 트리거
-    // 내용이 없을 수 있으니까 옵셔널
-    var inputCellSelectedTrigger: ReviewObservable<Upbit?> = ReviewObservable(nil)  // 화면 전환 + 데이터 전달
+    
+    // viewModel이 사용할 수 있는 프로퍼티를 2개로 제약
+    // - 뷰모델의 형태를 모두 유사하게 만들어가는 중
+    var input: Input
+    var output: Output
+    
+    struct Input {
+        // 화면 뜨기 직전이다 라는 생명주기 타이밍을 얻어오고 싶음
+        var viewDidLoadTrigger: ReviewObservable<Void> = ReviewObservable(())  // Int전달조차 아까워서 빈튜플
+    //    var inputCellSelectedTrigger: ReviewObservable<Void> = ReviewObservable(())  // 화면 전환을 위한 트리거
+        // 내용이 없을 수 있으니까 옵셔널
+        var cellSelected: ReviewObservable<Upbit?> = ReviewObservable(nil)  // 화면 전환 + 데이터 전달
+        
+    }
+    
+    struct Output {
+        //    var list: [String] = []  // 더미데이터
+            // 변화감지 추가
+        //    var list: ReviewObservable<[String]> = ReviewObservable([])
+            // viewController에서 사용할 list 이름 변경
+        //    var outputMarketData: ReviewObservable<[String]> = ReviewObservable([])
+            // 모든 버그를 잡은 다음 통신 코드
+            var marketData: ReviewObservable<[Upbit]> = ReviewObservable([])  // 테이블뷰 데이터
+            var navigationTitleData = ReviewObservable("")
+        //    var outputCellSelected: ReviewObservable<Void> = ReviewObservable(())
+            var cellSelected: ReviewObservable<String> = ReviewObservable("")
+    }
 
-    
-    
-//    var list: [String] = []  // 더미데이터
-    // 변화감지 추가
-//    var list: ReviewObservable<[String]> = ReviewObservable([])
-    // viewController에서 사용할 list 이름 변경
-//    var outputMarketData: ReviewObservable<[String]> = ReviewObservable([])
-    // 모든 버그를 잡은 다음 통신 코드
-    var outputMarketData: ReviewObservable<[Upbit]> = ReviewObservable([])  // 테이블뷰 데이터
-    var outputNavigationTitleData = ReviewObservable("")
-//    var outputCellSelected: ReviewObservable<Void> = ReviewObservable(())
-    var outputCellSelected: ReviewObservable<String> = ReviewObservable("")
-    
     init() {
+        input = Input()
+        output = Output()
+        
         /**
          중복호출을 방지하기 위해서는
          - lazyBind로 개선하거나
          - bind를 쓰되 viewController viewDidLoad에서 트리거를 주지 않거나
          */
-        inputViewDidLoadTrigger.lazyBind {
+        input.viewDidLoadTrigger.lazyBind {
             print("viewModel inputViewDidLoadTrigger / ViewDidLoad 시점")
             
 //            self.list.value = ["j", "k", "h", "s", "8"]
@@ -52,14 +64,14 @@ final class UpbitViewModel {
 //            print(self.outputMarketData.value)
 //        }
         
-        inputCellSelectedTrigger.bind {
+        input.cellSelected.bind {
             print("viewModel inputCellSelectedTrigger / 셀이 선택되었습니다")
             
             // 셀 선택됐으니까 output값 변경으로 다시 신호 보내줌
 //            self.outputCellSelected.value = ()
             
-            print(self.inputCellSelectedTrigger.value)
-            self.outputCellSelected.value = self.inputCellSelectedTrigger.value?.korean_name ?? ""
+            print(self.input.cellSelected.value)
+            self.output.cellSelected.value = self.input.cellSelected.value?.korean_name ?? ""
         }
     }
     
@@ -105,8 +117,8 @@ final class UpbitViewModel {
         
         // 네트워킹이 뭘하는지는 모르지만 [Upbit], String를 가져옴
         UpbitManager.shared.callRequest { market, title in
-            self.outputMarketData.value = market
-            self.outputNavigationTitleData.value = title
+            self.output.marketData.value = market
+            self.output.navigationTitleData.value = title
         }
         
         /*

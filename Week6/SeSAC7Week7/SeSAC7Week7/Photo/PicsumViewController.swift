@@ -8,6 +8,11 @@ import UIKit
 import SnapKit
 import Alamofire
 import Kingfisher
+
+struct User {
+    let age = 10  // 저장프로퍼티, 인스턴스프로퍼티(인스턴스를 만들어야 접근할 수 있기 때문에 인스턴스프로퍼티라고도 부른다)
+    static let name = "Jack"  // 저장프로퍼티(데이터를 갖고있냐/없냐), (메타)타입프로퍼티
+}
   
 class PicsumViewController: UIViewController {
      
@@ -25,19 +30,87 @@ class PicsumViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let jack = User()  // jack은 인스턴스
+        jack.age  // 인스턴스는 인스턴스프로퍼티에만 접근 가능
+        print(type(of: jack))  // User: 인스턴스의 타입
+        
+        User.name  // == User.self.name
+        let sesac = User.self
+        sesac.name
+        print(type(of: sesac))  // User.Type: 메타 타입 (User라는 타입이 무슨타입? User.Type)
+        
+        PhotoManager.shared.callRequest(api: .list, type: [PhotoList].self) { response in
+            print("callRequest list", response)
+        }
+        
+        PhotoManager.shared.callRequest(api: .one(id: 10), type: Photo.self) { response in
+            // 컴파일 시점에 어떤 타입이 들어가는지 유추할 수 있다
+            print("callRequest", response)
+            /**
+             callRequest Photo(id: "10", author: "Paul Jarvis", width: 2500, height: 1667, url: "https://unsplash.com/photos/6J--NXulQCs", download_url: "https://picsum.photos/id/10/2500/1667")
+             */
+        }
+        
         setupUI()
         setupConstraints()
+        bindData()
+    }
+
+    
+    private func bindData() {
+//        viewModel.output.photo.lazyBind {
+//            // 우선 통으로 옮겨서 빠르게 코드를 만드는 형태 -> 데이터 정제 후 나눠줘도 됨
+//            print("nil일때 데이터가 안뜰 수 있으니까 프린트: viewModel.output.photo.bind")
+//            print(self.viewModel.output.photo.value)
+//            
+//            guard let photo = self.viewModel.output.photo.value else {
+//                print("photo가 nil인 상황")
+//                return
+//            }
+//            
+//            self.updatePhotoInfo(photo)
+//        }
+        
+        viewModel.output.overview.bind {
+            self.infoLabel.text = self.viewModel.output.overview.value
+        }
+        
+        
+        viewModel.output.image.lazyBind {
+            if let url = self.viewModel.output.image.value {
+                self.photoImageView.kf.setImage(with: url)
+                // 킹피셔는 어쩔수없는 라이브러리코드이지만, 링크로 이미지변환은 결국 네트워킹, 파고 들어가면 결국 AF처럼 뭔가 다운로드 받을텐데 뷰컨에서 하는게 맞나?
+            }
+        }
+        
+        viewModel.output.list.bind {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func metatype1() {
+        var nickname = "고래밥"
+        // nickname은 인스턴스(실질적인 데이터 "고래밥"), 타입은 String
+        print(nickname)  // 고래밥
+        print(type(of: nickname))  // String
+        
+        var age = User()
+        // age는 인스턴스(실질적인 데이터 User()), User는 타입
+        print(age)  // User(age: 10)
+        print(type(of: age))  // User
+        
+        print(type(of: User.self))  // User.Type
+        print(type(of: String.self))  // String.Type(메타타입: 타입의 타입): String 그 자체에 대한 타이
+        /**
+         String의 인스턴스는 고래밥, User의 인스턴스는 User(age:10), String.Type의 인스턴스 String.self
+         */
     }
     
     @objc private func searchButtonTapped() {
-        guard let text = textField.text, let photoId = Int(text), photoId >= 0 && photoId <= 100 else {
-            print("0~100 사이의 숫자를 입력해주세요.")
-            return
-        }
-        
-        PhotoManager.shared.getOnePhoto(id: photoId) { photo in
-            self.updatePhotoInfo(photo)
-        }
+        // 항상 시점을 고려해서 작성
+        viewModel.input.searchButtonTapped.value = ()
+        viewModel.input.text.value = textField.text
     }
     
     private func updatePhotoInfo(_ photo: Photo) {
@@ -49,10 +122,11 @@ class PicsumViewController: UIViewController {
     }
     
     @objc private func listButtonTapped() {
-        PhotoManager.shared.getPhotoList { photo in
-            self.photoList = photo
-            self.tableView.reloadData()
-        }
+        viewModel.input.fetchButtonTapped.value = ()
+//        PhotoManager.shared.getPhotoList { photo in
+//            self.photoList = photo
+//            self.tableView.reloadData()
+//        }
     }
     
     @objc private func dismissKeyboard() {
@@ -62,7 +136,8 @@ class PicsumViewController: UIViewController {
  
 extension PicsumViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photoList.count
+//        return photoList.count
+        return viewModel.output.list.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,7 +145,7 @@ extension PicsumViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let photo = photoList[indexPath.row]
+        let photo = viewModel.output.list.value[indexPath.row]
         cell.configure(with: photo)
         return cell
     }
@@ -100,7 +175,7 @@ extension PicsumViewController {
         photoImageView.clipsToBounds = true
         view.addSubview(photoImageView)
          
-        infoLabel.text = "작가: - | 해상도: -"
+//        infoLabel.text = "작가: - | 해상도: -"  // 이 데이터도 데이터 가공아니야? 라고 생각할 수도 있다
         infoLabel.font = .systemFont(ofSize: 14, weight: .medium)
         infoLabel.numberOfLines = 0
         infoLabel.textAlignment = .center

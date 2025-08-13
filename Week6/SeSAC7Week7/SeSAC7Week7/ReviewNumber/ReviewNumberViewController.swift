@@ -79,9 +79,9 @@ class ReviewNumberViewController: UIViewController {
     }
     
     func bindData() {
-        viewModel.outputAmount.bind {
+        viewModel.output.amount.bind {
             // 감이 잘 안오면 다 print해보기
-            print("outputAmount 달라짐", self.viewModel.outputAmount.value)
+            print("outputAmount 달라짐", self.viewModel.output.amount.value)
             /**
              amountChanged()
              inputAmount 달라짐
@@ -91,14 +91,14 @@ class ReviewNumberViewController: UIViewController {
             
             // output이 달라지면 하고 싶은 내용은 bind 내부에 작성
                 // 내용은 label의 글자를 바꿔주고 싶음 (VC에서 가능) -> 보통 output의 bind는 VC에서 작성
-            self.formattedAmountLabel.text = self.viewModel.outputAmount.value
+            self.formattedAmountLabel.text = self.viewModel.output.amount.value
         }
     }
     
     
     @objc private func amountChanged() {
         print(#function)
-        viewModel.inputAmount.value = amountTextField.text
+        viewModel.input.amount.value = amountTextField.text
         /**
          메서드 호출마다 프린트 찍힘:
          amountChanged()
