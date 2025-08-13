@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 
 struct NaverSearch: Decodable {
     var total: Int

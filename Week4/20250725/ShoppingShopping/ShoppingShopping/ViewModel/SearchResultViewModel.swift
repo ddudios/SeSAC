@@ -8,10 +8,14 @@
 import Foundation
 
 enum SortType: String {
-    case accuracy = "&sort=sim"
-    case date = "&sort=date"
-    case high = "&sort=dsc"
-    case low = "&sort=asc"
+//    case accuracy = "&sort=sim"
+//    case date = "&sort=date"
+//    case high = "&sort=dsc"
+//    case low = "&sort=asc"
+    case accuracy = "sim"
+    case date = "date"
+    case high = "dsc"
+    case low = "asc"
 }
 
 final class SearchResultViewModel {
@@ -20,8 +24,11 @@ final class SearchResultViewModel {
     var output: Output
     
     struct Input {
-        var viewDidLoadTrigger = Observable(())
+//        var viewDidLoadTrigger = Observable(())
         var sortButtonTapped = Observable("")
+        var reload = Observable(())
+        var sortType = Observable(SortType.accuracy.rawValue)
+        var startPage = Observable(1)
     }
     
     struct Output {
@@ -38,11 +45,29 @@ final class SearchResultViewModel {
         input = Input()
         output = Output()
         
-        input.viewDidLoadTrigger.lazyBind { _ in
+//        input.viewDidLoadTrigger.bind { _ in
+//            print(#function)
+//            self.callRequest()
+//        }
+        input.reload.lazyBind { _ in
+            print(#function, "reload")
             self.callRequest()
         }
         
-        output.title.bind { _ in }
+        input.sortType.lazyBind { _ in
+            print(#function, "sort")
+            self.callRequest()
+        }
+        
+        input.startPage.lazyBind { _ in
+            print(#function, "start")
+            self.callRequest()
+        }
+        
+        output.title.lazyBind { _ in
+            print(#function, "title")
+            self.callRequest()
+        }
         
         input.sortButtonTapped.bind { sort in
             self.fetchForSort(sort: sort)
@@ -50,22 +75,49 @@ final class SearchResultViewModel {
     }
     
     private func callRequest() {
-        NetworkManager.shared.callRequest(query: output.title.data ?? "", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
+//        NetworkManager.shared.callRequest(query: output.title.data ?? "", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
+//            self.output.total.data = success.total
+//            self.output.successData.data = success
+//        } failure: {
+//            self.output.networkingFailure.data = ()
+//        }
+        print(#function)
+        guard let searchTitle = output.title.data else {
+            print("error: \(#function) - search: title is nil")
+            return
+        }
+        print(searchTitle)
+        NetworkManager.shared.callRequest(api: .search(query: searchTitle, start: input.startPage.data, display: 30, sort: input.sortType.data), decodedType: NaverSearch.self) { success in
             self.output.total.data = success.total
             self.output.successData.data = success
         } failure: {
             self.output.networkingFailure.data = ()
         }
         
-        NetworkManager.shared.callRequest(query: "키티", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
+//        NetworkManager.shared.callRequest(query: "키티", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
+//            self.output.recommendationDataList.data = success.items
+//        } failure: { }
+        NetworkManager.shared.callRequest(api: .recomend, decodedType: NaverSearch.self) { success in
             self.output.recommendationDataList.data = success.items
         } failure: { }
     }
     
     private func fetchForSort(sort: String) {
-        NetworkManager.shared.callRequest(query: output.title.data ?? "", sort: sort, startPosition: 1) { success in
+//        NetworkManager.shared.getNaverSearch(query: output.title.data ?? "", sort: sort, startPosition: 1) { success in
+//            self.output.sortData.data = success
+//            print(success)
+//        } failure: {}
+        
+        guard let searchTitle = output.title.data else {
+            print("error: \(#function) - search: title is nil")
+            return
+        }
+        
+        NetworkManager.shared.callRequest(api: .search(query: searchTitle, start: input.startPage.data, display: 30, sort: sort), decodedType: NaverSearch.self) { success in
             self.output.sortData.data = success
-            print(success)
-        } failure: {}
+            self.output.successData.data = success
+        } failure: {
+            self.output.networkingFailure.data = ()
+        }
     }
 }

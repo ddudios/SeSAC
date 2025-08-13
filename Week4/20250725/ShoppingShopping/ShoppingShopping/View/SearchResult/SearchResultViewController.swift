@@ -53,7 +53,7 @@ final class SearchResultViewController: BaseViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.input.viewDidLoadTrigger.data = ()
+//        viewModel.input.viewDidLoadTrigger.data = ()
         bindData()
     }
     
@@ -65,6 +65,7 @@ final class SearchResultViewController: BaseViewController {
         
         viewModel.output.title.bind { data in
             self.navigationItem.title = data
+            self.viewModel.input.reload.data = ()
         }
         
         viewModel.output.total.bind { total in
@@ -246,25 +247,25 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             if indexPath.item == (list.count - 6) && lastData == false {
                 startPosition += 30
                 if accuracySortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.accuracy.rawValue, startPosition: startPosition) { success in
-                        self.setData(value: success)
-                        self.setOtherSortType(value: success)
-                    } failure: {}
+                    viewModel.input.sortButtonTapped.data = SortType.accuracy.rawValue
+                    self.setData(value: viewModel.output.successData.data)
+                    self.setOtherSortType(value: viewModel.output.sortData.data)
                 } else if dateSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.date.rawValue, startPosition: startPosition) { success in
-                        self.setData(value: success)
-                        self.setOtherSortType(value: success)
-                    } failure: {}
+//                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.date.rawValue, startPosition: startPosition) { success in
+//                        self.setData(value: success)
+//                        self.setOtherSortType(value: success)
+//                    } failure: {}
+                    viewModel.input.sortButtonTapped.data = SortType.date.rawValue
+                    self.setData(value: viewModel.output.successData.data)
+                    self.setOtherSortType(value: viewModel.output.sortData.data)
                 } else if highPriceSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.high.rawValue, startPosition: startPosition) { success in
-                        self.setData(value: success)
-                        self.setOtherSortType(value: success)
-                    } failure: {}
+                    viewModel.input.sortButtonTapped.data = SortType.high.rawValue
+                    self.setData(value: viewModel.output.successData.data)
+                    self.setOtherSortType(value: viewModel.output.sortData.data)
                 } else if lowPriceSortButton.isTapped {
-                    NetworkManager.shared.callRequest(query: viewModel.output.title.data ?? "", sort: SortType.low.rawValue, startPosition: startPosition) { success in
-                        self.setData(value: success)
-                        self.setOtherSortType(value: success)
-                    } failure: {}
+                    viewModel.input.sortButtonTapped.data = SortType.low.rawValue
+                    self.setData(value: viewModel.output.successData.data)
+                    self.setOtherSortType(value: viewModel.output.sortData.data)
                 } else {
                     print("errer: \(#function)")
                 }

@@ -70,6 +70,8 @@ final class PhotoManager {
                    // AF가 갖고있는 parameters매개변수는 쿼리스트링 자리가 될 수도 있고, post에 HTTP Body 영역이 될 수도 있음
                    encoding: URLEncoding(destination: .queryString)
         ).responseDecodable(of: T.self) { response in
+            
+                print(#function, api.endpoint, api.method)
             // T.self에는 디코더블을 채택하고 있는 것만 들어갈 수 있어야 한다 (외부로부터 들어온 데이터를 우리의 스트럭트로 바꿔주기 위한 것이 디코더블)
             switch response.result {
             case .success(let value):
