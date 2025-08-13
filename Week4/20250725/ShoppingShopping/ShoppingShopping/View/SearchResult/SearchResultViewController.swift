@@ -79,6 +79,7 @@ final class SearchResultViewController: BaseViewController {
         
         viewModel.output.networkingFailure.lazyBind { _ in
             self.showAlert {
+                // 신호만 보내고 아웃풋으로 관리해보기
                 self.navigationController?.popViewController(animated: true)
             }
             // bind로 만들면 일단 실행해버리니까 네트워킹 에러가 없어도 이 구문을 타버림
