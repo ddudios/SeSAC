@@ -189,7 +189,7 @@ extension PicsumViewController {
         view.addSubview(listButton)
          
         tableView.delegate = self
-        tableView.dataSource = self
+        tableView.dataSource = self  // 무조건 self가 누수를 발생시키는 건 아니다
         tableView.rowHeight = 120
         tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: "PhotoCell")
         tableView.layer.cornerRadius = 8

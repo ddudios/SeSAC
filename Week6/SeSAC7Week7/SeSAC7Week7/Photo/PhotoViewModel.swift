@@ -61,7 +61,8 @@ final class PhotoViewModel {
         }
 
 //        PhotoManager.shared.getOnePhoto(id: photoId) { photo in
-        PhotoManager.shared.getOnePhoto(api: .one(id: photoId)) { photo in
+        PhotoManager.shared.getOnePhoto(api: .one(id: photoId)) { [weak self] photo in
+            guard let self = self else { return }
 //            self.output.photo.value = photo
             let data = "작가: \(photo.author), 해상도: \(photo.width) x \(photo.height)"  // 문자열을 합치는 것도 비즈니스 로직이라고 생각해서, 합친 다음에 뷰컨에 넘겨줌
             self.output.overview.value = data

@@ -16,13 +16,15 @@ class UpbitDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(self, "viewDidLoad")
         
         view.backgroundColor = .white
 //        navigationItem.title = "test" //koreanData ?? "" //"상세 화면"
         // 옵저버블을 사용하면 뷰디드로드시점이 아닌, 값이 변경될 때마다 변경해줄 수 있음
-        viewModel.outputTitle.bind {
-            let data = self.viewModel.outputTitle.value
-            self.navigationItem.title = data
+        viewModel.outputTitle.bind { [weak self] in
+            guard let self = self else { return }
+            let data = viewModel.outputTitle.value
+            navigationItem.title = data
             print("outputTitle Bind, \(data)")
             // viewController로 로직을 옮기니 print가 되지 않음
                 // didSet에 들어가만 있고 실행은 되지 않은 상태, 바로 실행시키려면 ReviewObservable에서 바로 실행하는 코드를 추가해줘야 한다 (셋팅만 된거지, 값이 바뀌어야 action이 실행됨)
@@ -34,5 +36,24 @@ class UpbitDetailViewController: UIViewController {
 //        viewModel.outputTitle.value = "받은 데이터를 표시하지 못함"
         // 바인드 구문이 실행되면서 이전에 전달받은 데이터는 없고 바꿔둔 데이터 "받은 데이터를 표시하지 못함"를 표시하고 처음 할당받은 데이터는 뷰에 보이지 않는 문제가 생길 수 있다
         // 바인드에 들어있는 내용이 값이 바뀌지 않더라도 didSet이 처음에 실행안되더라도 실행될 수 있는 환경으로 만들어줘야 하고, 바로 실행 + 할당하려면 옵저버블 바인드에서 실행해줘야 한다
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print(self, "disappear")
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        print(self, "init")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("UpbitDetailViewController Deinit")
+        // 테스트할 때 항상 확인
     }
 }

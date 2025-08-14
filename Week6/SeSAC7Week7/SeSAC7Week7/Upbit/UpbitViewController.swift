@@ -28,6 +28,11 @@ class UpbitViewController: UIViewController {
         bindData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        let vc = UpbitDetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func bindData() {
         viewModel.input.viewDidLoadTrigger.value = ()  // 빈튜플로 시점의 신호만 전달
         

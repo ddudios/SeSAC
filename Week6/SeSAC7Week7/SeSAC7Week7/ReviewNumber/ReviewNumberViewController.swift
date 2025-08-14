@@ -79,7 +79,8 @@ class ReviewNumberViewController: UIViewController {
     }
     
     func bindData() {
-        viewModel.output.amount.bind {
+        viewModel.output.amount.bind { [weak self] in  // 생각없이 일단 쓰는 2줄
+            guard let self = self else { return }
             // 감이 잘 안오면 다 print해보기
             print("outputAmount 달라짐", self.viewModel.output.amount.value)
             /**
@@ -92,6 +93,13 @@ class ReviewNumberViewController: UIViewController {
             // output이 달라지면 하고 싶은 내용은 bind 내부에 작성
                 // 내용은 label의 글자를 바꿔주고 싶음 (VC에서 가능) -> 보통 output의 bind는 VC에서 작성
             self.formattedAmountLabel.text = self.viewModel.output.amount.value
+            
+            /**
+             # ARC { [weak self] in guard let self = self else { return } }
+             - 모든 클로저문에 추가되는 내용
+             */
+            
+            
         }
     }
     
