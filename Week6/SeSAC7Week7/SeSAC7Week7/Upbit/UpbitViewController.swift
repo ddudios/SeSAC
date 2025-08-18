@@ -39,7 +39,7 @@ class UpbitViewController: UIViewController {
         // print가 안되니까 필요없겠네?
         viewModel.output.marketData.bind {
             print("viewController outputMarketData / list 변경")//, self.viewModel.outputMarketData.value)
-            self.tableView.reloadData()  // 통신이 끝나는 시점이 셀을 그리는 시점이 항상 다르기 때문에
+            self.tableView.reloadData()  // 통신이 끝나e는 시점이 셀을 그리는 시점이 항상 다르기 때문에
         }
         
         viewModel.output.navigationTitleData.bind {
