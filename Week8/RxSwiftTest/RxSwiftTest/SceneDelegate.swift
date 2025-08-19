@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  SeSACRxThreads
+//  RxSwiftTest
 //
-//  Created by jack on 2023/10/30.
+//  Created by Suji Jang on 8/19/25.
 //
 
 import UIKit
@@ -10,17 +10,15 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
- 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        let rootViewController = UINavigationController(rootViewController: SearchViewController())
-         
-        window?.rootViewController = rootViewController
+        let initialViewController = NumbersViewController()
+        window?.rootViewController = initialViewController
         window?.makeKeyAndVisible()
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
