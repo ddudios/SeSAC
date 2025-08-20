@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  RxSwiftTest
+//  RxSampleProject
 //
 //  Created by Suji Jang on 8/19/25.
 //
@@ -13,12 +13,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let scene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: scene)
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: windowScene)
+        self.window = window
         
-        let initialViewController = NumbersViewController()
-        window?.rootViewController = initialViewController
-        window?.makeKeyAndVisible()
+        window.rootViewController = TabBarController()
+        window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

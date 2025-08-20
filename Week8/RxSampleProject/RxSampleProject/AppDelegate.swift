@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  RxSwiftTest
+//  RxSampleProject
 //
 //  Created by Suji Jang on 8/19/25.
 //
