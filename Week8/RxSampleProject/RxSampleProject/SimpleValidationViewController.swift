@@ -22,6 +22,18 @@ final class SimpleValidationViewController: BaseViewController {
     private let passwordTextField = CustomTextField()
     private let passwordValidLabel = CustomLabel(text: "", color: .red)
     
+    /*
+    merge...공부해보기ㅣ..
+    - 코드 짤수있어야...........................
+    - 코드 많이 짜보기.... 오퍼레이터.... 어떤건지! 이걸로 뭘하면 좋을지 장단점,.,,.,,..,.,
+    
+    - 이도구어떻게쓸수있는지 활용법..
+    
+    -혹시....퇴학당하는거...더열심히..하면...
+    */
+    
+    
+    
     private let doSomethingButton = {
         let button = UIButton()
         button.setTitle("Do something", for: .normal)

@@ -26,8 +26,21 @@ class SearchViewController: UIViewController {
     let searchBar = UISearchBar()
     
 //    let items = Observable.just(["First Item", "Second Item", "Third Item"])  // just내부값을 꺼내기 어려워서 변형
-    let data = ["First Item", "Second Item", "Third Item"]
-    lazy var items = Observable.just(data)
+//    var data = ["First Item", "Second Item", "Third Item"]
+//    lazy var items = Observable.just(data)  // 초기화가 될 때 가지고 있을 뿐, data가 들어오고 items는 끝남
+//    lazy var items = BehaviorSubject(value: ["First Item", "Second Item", "Third Item"])  // Observable의 역할을 하기 때문에 subscribe, bind 써도됨
+//    Observable.just(["First Item", "Second Item", "Third Item"])  // 전달만 할 수 있는데, 받아서 처리까지 하고싶음
+    /**
+     옵저버블 -> 옵저버
+     items -> tableView
+     셀클릭 -> print
+     items가 data를 가지고 있으니까 data가 바뀌면 items도 바뀔거라는 꿈을 꾸면 안된다
+     셀 클릭시 items.append하는 기능까지 하고 싶음: items는 Observable이자 Observer인 Subject
+     */
+    var den = "den"
+    lazy var jack = den  // den을 바꿨다고 jack이 알아서 바뀌진 않음
+    
+    let items = BehaviorSubject(value: ["First", "A", "AB", "BC", "BCD", "First", "AF"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +50,8 @@ class SearchViewController: UIViewController {
         setSearchController()
         bind()
         operatorTest()
+        
+        den = "asdf"
     }
     
     func bind() {
@@ -88,6 +103,17 @@ class SearchViewController: UIViewController {
         .bind(with: self) { owner, tableView in
             print(tableView.0)
             print(tableView.1)
+//            owner.data.append("고래밥 \(Int.random(in: 1...100))")
+//            owner.tableView.reloadData()  // 데이터 추가됐는데 왜 셀에 표시되지 않지?
+            /**
+             items가 배열이었다면 그냥 추가하면 됐는데 items.append("adfs")
+             1. 배열이 아니기 때문에 append를 할 수 없다
+             2. 옵저버블의 특성 때문에 애초에 말이 안되는 행동을 하고 있다 (옵저버블의 역할은 일을 벌려서 이벤트를 주는 것밖에 못함, 받아서 뭔갈 하는 거는 할 수 없음, 클릭만 할 수 있지) 옵저버블은 전달만 할 수 있지 뭔가를 받아서 처리해줄 수 없음
+             (이벤트를 전달도 하고 받기도 했으면 좋겠다)
+             모든 것은 이벤트를 통해서 전달한다
+             */
+//            print(owner.data)
+//            owner.items.onNext(["asfd"])  // items에 이벤트를 전해달라: 셀클릭시 이 데이터로 변경됨
         }
         .disposed(by: disposeBag)
         /**
@@ -95,6 +121,40 @@ class SearchViewController: UIViewController {
          - zip: 두 옵저버블이 모두 변화할 때 이벤트가 방출됨
          - combineLatest: 두 옵저버블 중 하나만 바껴도 이벤트가 방출됨
          */
+        
+        
+        /*
+        // delegate만들지 않아도 됨
+        searchBar.rx.searchButtonClicked
+            .subscribe(with: self) { owner, _ in
+                print("클릭")
+                /**
+                 1. 서치바 글자 가져오기 items observable -> searchBar Observer / searchBar Click Observable -> items Observer
+                 2. items에 글자를 추가
+                 */
+                guard let text = owner.searchBar.text else { return }
+//                items.append(text)
+                var result = try! owner.items.value()  // 기존 데이터 조회: BehaviorSubject(value: ["First"]): [String]
+                result.append(text)
+                
+//                owner.items.onNext([text])  // 보내는 거고 Observable은 받을 수 없기 때문에 Subject로 변경: 통으로 전달해서 append가 아니라 기존 데이터에 덮어씌워짐
+                owner.items.onNext(result)
+            }
+            .disposed(by: disposeBag)
+*/
+        searchBar.rx.text.orEmpty  // 실시간 텍스트필드 글자 가져옴
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)  // 타이밍 조절: 검색어 입력 후 몇초 뒤 검색 (콜 횟수 줄임)
+            .distinctUntilChanged()  // 썼다 지웠다 하면 같은 키워드가 여러번 검색됨 - 어려운 기능들도 어떤 Operator가 있는지 알면 그냥 구현해버릴 수 있음
+            .subscribe(with: self) { owner, value in
+                print("searchbar text", value)
+                
+                let all = try! owner.items.value()
+                let filter = all.filter { $0.contains(value) }
+                // ㅇ call 어 call 업 call 어베 call 불필요한 call 많이 들어감, 최종 어벤 전에 불필요한 데이터가 들어갈 수 있어서 debounce 기능 사용
+                print(filter)
+            }
+            .disposed(by: disposeBag)
+
     }
     
     func operatorTest() {
