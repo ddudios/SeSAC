@@ -7,6 +7,9 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 struct Person: Identifiable {
     let id = UUID()
@@ -74,7 +77,12 @@ class HomeworkViewController: UIViewController {
     let tableView = UITableView()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     let searchBar = UISearchBar()
-     
+    
+    let disposeBag = DisposeBag()
+    lazy var personList = BehaviorSubject(value: sampleUsers)
+    
+    var list = BehaviorSubject<[String]>(value: [])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -82,7 +90,44 @@ class HomeworkViewController: UIViewController {
     }
      
     private func bind() {
-          
+        searchBar.rx.searchButtonClicked
+            .subscribe(with: self) { owner, text in
+                var all = try! owner.personList.value()
+                all.insert(Person(name: owner.searchBar.text ?? "", email: "", profileImage: ""), at: 0)
+                owner.personList.onNext(all)
+            }
+            .disposed(by: disposeBag)
+
+        personList
+//            .bind(to: tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier, cellType: PersonTableView.self)) { (row, element, cell) in
+//            }
+            .bind(to: tableView.rx.items) { (tableView, row, element) in
+                let cell = tableView.dequeueReusableCell(withIdentifier: PersonTableViewCell.identifier) as! PersonTableViewCell
+                cell.usernameLabel.text = "\(element.name)"
+                
+                let url = URL(string: element.profileImage)
+                cell.profileImageView.kf.setImage(with: url)
+                return cell
+            }
+            .disposed(by: disposeBag)
+        
+        list
+            .bind(to: collectionView.rx.items(cellIdentifier: UserCollectionViewCell.identifier, cellType: UserCollectionViewCell.self)) { (item, element, cell) in
+                cell.changeLable(name: element)
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.zip(
+            tableView.rx.itemSelected,
+            tableView.rx.modelSelected(Person.self)
+        )
+        .bind(with: self) { owner, tableView in
+            var value = try! owner.list.value()
+            value.append(tableView.1.name)
+            owner.list.onNext(value)
+            print(value)
+        }
+        .disposed(by: disposeBag)
     }
     
     private func configure() {

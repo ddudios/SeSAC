@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class UserCollectionViewCell: UICollectionViewCell {
+final class UserCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "UserCollectionViewCell"
     
@@ -32,5 +32,8 @@ class UserCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func changeLable(name: String) {
+        label.text = name
+    }
 }
 
