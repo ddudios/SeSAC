@@ -46,22 +46,22 @@ final class NumbersViewController: BaseViewController {
     }()
     
     let disposeBag = DisposeBag()
+    let viewModel = NumbersViewModel()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 클로저 열린거 뭐지? combineLatest 내부를 열어보면 클로저에서 가공해서 하나의 값으로 return
-        Observable.combineLatest(
-            number1.rx.text.orEmpty,
-            number2.rx.text.orEmpty,
-            number3.rx.text.orEmpty,
-            resultSelector: { textValue1, textValue2, textValue3 -> Int in
-            return (Int(textValue1) ?? 0) + (Int(textValue2) ?? 0) + (Int(textValue3) ?? 0)
-        })
-        .map { $0.description }
-        .bind(to: result.rx.text)
-        .disposed(by: disposeBag)
+        bind()
+    }
+    
+    func bind() {
+//        let a = number1.rx.text.orEmpty
+        let input = NumbersViewModel.Input(inputNumber1: number1.rx.text.orEmpty, inputNumber2: number2.rx.text.orEmpty, inputNumber3: number3.rx.text.orEmpty)
+        let output = viewModel.transform(input: input)
+        output
+            .text
+            .bind(to: result.rx.text)
+            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {
@@ -87,10 +87,6 @@ final class NumbersViewController: BaseViewController {
         
         addLable.snp.makeConstraints { make in
             make.width.equalTo(44)
-        }
-        
-        number3.snp.makeConstraints { make in
-            make.leading.equalTo(addLable.snp.trailing)
         }
         
         seperator.snp.makeConstraints { make in

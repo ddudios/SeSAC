@@ -102,6 +102,13 @@ class HomeworkViewController: UIViewController {
             .bind(to: tableView.rx.items) { (tableView, row, element) in
                 let cell = tableView.dequeueReusableCell(withIdentifier: PersonTableViewCell.identifier) as! PersonTableViewCell
                 cell.usernameLabel.text = "\(element.name)"
+                cell.detailButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        let vc = DetailViewController()
+                        vc.title = element.name
+                        owner.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    .disposed(by: cell.disposeBag)
                 
                 let url = URL(string: element.profileImage)
                 cell.profileImageView.kf.setImage(with: url)

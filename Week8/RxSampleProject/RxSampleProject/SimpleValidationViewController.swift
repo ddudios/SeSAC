@@ -10,9 +10,6 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-private let minimalUsernameLength = 5
-private let minimalPasswordLength = 5
-
 final class SimpleValidationViewController: BaseViewController {
     private let usernameLabel = CustomLabel(text: "Username", color: .black)
     private let usernameTextField = CustomTextField()
@@ -21,17 +18,6 @@ final class SimpleValidationViewController: BaseViewController {
     private let passwordLabel = CustomLabel(text: "Password", color: .black)
     private let passwordTextField = CustomTextField()
     private let passwordValidLabel = CustomLabel(text: "", color: .red)
-    
-    /*
-    merge...공부해보기ㅣ..
-    - 코드 짤수있어야...........................
-    - 코드 많이 짜보기.... 오퍼레이터.... 어떤건지! 이걸로 뭘하면 좋을지 장단점,.,,.,,..,.,
-    
-    - 이도구어떻게쓸수있는지 활용법..
-    
-    -혹시....퇴학당하는거...더열심히..하면...
-    */
-    
     
     
     private let doSomethingButton = {
@@ -50,42 +36,41 @@ final class SimpleValidationViewController: BaseViewController {
     }()
     
     let disposeBag = DisposeBag()
+    let viewModel = SimpleValidationViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        rx()
+        bind()
     }
     
-    private func rx() {
-        usernameValidLabel.text = "Username has to be at least \(minimalUsernameLength) characters"
-        passwordValidLabel.text = "Password has to be at least \(minimalPasswordLength) characters"
+    private func bind() {
         
-        //MARK: - .share
-        // share를 하지 않지 않으면 usernameValid가 계속 생성됨 (여러 군데에서 구독할 때, 리소스 아끼려고 사용)
-        let usernameValid = usernameTextField.rx.text.orEmpty
-            .map { $0.count >= minimalUsernameLength }
-            .share(replay: 1)
+//        let a = usernameTextField.rx.text.orEmpty
+//        let a = passwordTextField.rx.text.orEmpty
+        let input = SimpleValidationViewModel.Input(username: usernameTextField.rx.text.orEmpty, password: passwordTextField.rx.text.orEmpty)
+        let output = viewModel.transform(input: input)
         
-        let passwordValid = passwordTextField.rx.text.orEmpty
-            .map { $0.count >= minimalPasswordLength }
-            .share(replay: 1)
+        output.usernameValidText
+            .bind(to: usernameValidLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        let everythingValid = Observable.combineLatest(usernameValid, passwordValid) { $0 && $1 }
-            .share(replay: 1)
+        output.passwordValidText
+            .bind(to: passwordValidLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        usernameValid
+        output.usernameValid
             .bind(to: passwordTextField.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        usernameValid
+        output.usernameValid
             .bind(to: usernameValidLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
-        passwordValid
+        output.passwordValid
             .bind(to: passwordValidLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
-        everythingValid
+        output.everythingValid
             .bind(to: doSomethingButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
@@ -94,7 +79,6 @@ final class SimpleValidationViewController: BaseViewController {
                 owner.showAlert()
             }
             .disposed(by: disposeBag)
-
     }
     
     override func configureHierarchy() {
