@@ -34,7 +34,14 @@ final class TabBarController: UITabBarController {
             image: UIImage(systemName: "magnifyingglass"),
             tag: 2
         )
+        
+        let person = UINavigationController(rootViewController: HomeworkViewController())
+        person.tabBarItem = UITabBarItem(
+            title: "person",
+            image: UIImage(systemName: "person.circle"),
+            tag: 3
+        )
 
-        setViewControllers([num, table, validation], animated: false)
+        setViewControllers([num, table, validation, person], animated: false)
     }
 }
