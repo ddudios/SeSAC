@@ -40,7 +40,10 @@ class SearchViewController: UIViewController {
     var den = "den"
     lazy var jack = den  // den을 바꿨다고 jack이 알아서 바뀌진 않음
     
-    let items = BehaviorSubject(value: ["First", "A", "AB", "BC", "BCD", "First", "AF"])
+//    let items = BehaviorSubject(value: ["First", "A", "AB", "BC", "BCD", "First", "AF"])
+    var data = ["김새싹", "고래", "고래밥", "a", "hhhha", "a고래밥", "호", "ㅕㅑㅕㅑ", "ㄴㅇㄹㅁ", "하하", "호호", "히히"]
+    lazy var items = BehaviorSubject(value: data)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,13 +59,67 @@ class SearchViewController: UIViewController {
     
     func bind() {
         print(#function)
+        /*
+//        searchBar.rx.searchButtonClicked
+//            .map { "닉네임: "}
+//            .withLatestFrom(searchBar.rx.text.orEmpty) { nickname, text in
+//                return nickname + text
+//            }
+        
+        // 서치바에 입력 후 엔터 치면 배열에 데이터 추가
+        searchBar.rx.searchButtonClicked  // 여기까지가 Observable
+//            .withLatestFrom(searchBar.rx.text.orEmpty) { _, text in  // withLatestFrom전 데이터, withLatestFrom(searchBar.rx.text.orEmpty)
+//                return text
+//            }
+            .withLatestFrom(searchBar.rx.text.orEmpty)  // 같은 내용이니까 생략 가능
+            .bind(with: self) { owner, value in
+                print(value)
+                owner.data.insert(value, at: 0)
+                owner.items.onNext(owner.data)
+//                owner.items.on(.next(owner.data))
+            }
+            .disposed(by: disposeBag)
+        */
+        
+        // 실시간 검색
+        searchBar.rx.text.orEmpty
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)  // 1초동안 기다려도 아무 동작이 없으면 실행: ㄱ 고 (ㄱ은 검색되지 않게)
+            .distinctUntilChanged()  // 데이터가 바뀌지 않았으면 방출되지 마라
+            .bind(with: self) { owner, value in
+                print(value)
+                
+                // 내용 비어있으면 전체 보여주고 있으면 필터링
+                let filter = value.isEmpty ? owner.data : owner.data.filter { $0.contains(value) }
+                
+                owner.items.onNext(filter)
+                
+            }.disposed(by: disposeBag)
         
         // 그냥 복사해서 사용하면 됨 (이것저것 생략됨)
         items  // observable
-        .bind(to: tableView.rx.items) { (tableView, row, element) in
+        .bind(to: tableView.rx.items) { (tableView, row, element) in  // CellForRowAt
             let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier) as! SearchTableViewCell
             cell.appNameLabel.text = "\(element) @ row \(row)"
+            cell.downloadButton.rx.tap
+                .bind(with: self) { owner, _ in
+                    print("클릭되었습니다")
+                    let vc = DetailViewController()
+                    owner.navigationController?.pushViewController(vc, animated: true)  // 구독 중첩: 여러번 스크롤할수록 화면전환이 더 많이 일어남
+                }
+//                .disposed(by: self.disposeBag)  // 클로저 안에 들어있기 때문에 self써라, owner밖에 있음
+                .disposed(by: cell.disposeBag)  // 셀이 해제되면 구독 해제 (cell에서 관리하도록 만듦)
+            
             return cell
+        }
+        .disposed(by: disposeBag)
+        
+        Observable.zip(  // 둘을 하나로 합치는 일을 벌림
+            tableView.rx.itemSelected,
+            tableView.rx.modelSelected(String.self)
+        )  // 순서대로 매개변수가 들어옴
+        .bind(with: self) { owner, tableView in
+            print(tableView.0)
+            print(tableView.1)
         }
         .disposed(by: disposeBag)
         
@@ -95,6 +152,7 @@ class SearchViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         */
+        /*
         // 처음엔 괜찮은데 두번째부터 2번 눌림
         Observable.combineLatest(  // 둘을 하나로 합치는 일을 벌림
             tableView.rx.itemSelected,
@@ -154,7 +212,7 @@ class SearchViewController: UIViewController {
                 print(filter)
             }
             .disposed(by: disposeBag)
-
+*/
     }
     
     func operatorTest() {

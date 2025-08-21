@@ -93,14 +93,12 @@ class HomeworkViewController: UIViewController {
         searchBar.rx.searchButtonClicked
             .subscribe(with: self) { owner, text in
                 var all = try! owner.personList.value()
-                all.insert(Person(name: owner.searchBar.text ?? "", email: "", profileImage: ""), at: 0)
-                owner.personList.onNext(all)
+                all.insert(Person(name: owner.searchBar.text ?? "", email: "", profileImage: "https://randomuser.me/api/portraits/thumb/women/25.jpg"), at: 0)
+                owner.personList.on(.next(all))  // observer
             }
             .disposed(by: disposeBag)
 
-        personList
-//            .bind(to: tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier, cellType: PersonTableView.self)) { (row, element, cell) in
-//            }
+        personList  // Observable
             .bind(to: tableView.rx.items) { (tableView, row, element) in
                 let cell = tableView.dequeueReusableCell(withIdentifier: PersonTableViewCell.identifier) as! PersonTableViewCell
                 cell.usernameLabel.text = "\(element.name)"
@@ -162,6 +160,4 @@ class HomeworkViewController: UIViewController {
         layout.scrollDirection = .horizontal
         return layout
     }
-
 }
- 

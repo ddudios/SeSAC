@@ -51,8 +51,7 @@ final class NumbersViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MARK: - 클로저 열린거 뭐지?
-        // combineLatest 내부를 열어보면 클로저에서 가공해서 하나의 값으로 return
+        // 클로저 열린거 뭐지? combineLatest 내부를 열어보면 클로저에서 가공해서 하나의 값으로 return
         Observable.combineLatest(
             number1.rx.text.orEmpty,
             number2.rx.text.orEmpty,
