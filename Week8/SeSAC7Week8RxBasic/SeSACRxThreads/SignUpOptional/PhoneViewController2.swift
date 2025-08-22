@@ -14,8 +14,8 @@ class PhoneViewController2: UIViewController {
    
     let disposeBag = DisposeBag()
     
-    let phoneTextField = SignTextField(placeholderText: "연락처를 입력해주세요")
-    let nextButton = PointButton(title: "다음")
+    let phoneTextField = SignTextField(placeholderText: "")
+    let nextButton = PointButton(title: "")
     
     let text = BehaviorSubject(value: "고래밥")
     let viewModel = PhoneViewModel()
@@ -36,6 +36,14 @@ class PhoneViewController2: UIViewController {
         // subject 텍스트필드에 글자 출력
         output.text
             .bind(to: phoneTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.placeholder
+            .bind(to: phoneTextField.rx.placeholder)
+            .disposed(by: disposeBag)
+        
+        output.next
+            .bind(to: nextButton.rx.title())
             .disposed(by: disposeBag)
     }
 

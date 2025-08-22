@@ -17,7 +17,11 @@ class PhoneViewModel {
     }
     
     struct Output {
-        let text: BehaviorSubject<String>
+//        let text: BehaviorSubject<String>  // 초기값 가질 수 있음
+        let text: PublishSubject<String>
+        let placeholder: BehaviorSubject<String>
+        let next: BehaviorSubject<String>
+            // next이벤트만 받을 수 있는, 에러 안날것 같으면 Relay
     }
     
     // 뷰모델 별개의 disposeBag
@@ -26,7 +30,10 @@ class PhoneViewModel {
     init() {}
     
     func transform(input: Input) -> Output {
-        let text = BehaviorSubject(value: "")
+//        let text = BehaviorSubject(value: "")  // BehaviorSubject 가지고 있는 마지막 값 방출 (현재 불필요한 값 방출중)
+        let text = PublishSubject<String>()  // 버튼 클릭 이후부터 이벤트 받을 수 있음
+        let next = BehaviorSubject(value: "다음")  // 달라지지 않을 내용을 굳이 이렇게 해야하나? 안해도됨..ㅎ (이벤트 전달은 없지만 초기값주기 위해 사용)
+        
             // 버튼 클릭 시 -> subject
         input.buttonTap
                 .bind(with: self) { owner, _ in
@@ -34,6 +41,6 @@ class PhoneViewModel {
                 }
                 .disposed(by: disposeBag)
         
-        return Output(text: text)
+        return Output(text: text, placeholder: BehaviorSubject(value: "연락처를 입력해주세요"), next: next)
     }
 }
