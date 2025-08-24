@@ -16,7 +16,6 @@ final class SettingViewModel {
     
     struct Output {  // View에 표시할 데이터 Observable
         let items: BehaviorRelay<[Setting]>
-//        let selectedItem: Observable<Setting>
     }
     
     func transform(input: Input) -> Output {
@@ -29,26 +28,6 @@ final class SettingViewModel {
         
         let items = BehaviorRelay(value: settings)
         
-//        let selectedItem = input.modelSelected
-//            .drive(with: self) { owner, item in
-//                switch item.title {
-//                case "내 이름 설정하기":
-//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    let viewController = storyboard.instantiateViewController(identifier: "NicknameSettingViewController") as! NicknameSettingViewController
-//                    owner.navigationController?.pushViewController(viewController, animated: true)
-//                case "다마고치 변경하기":
-//                    let viewController = SelectTamagotchiViewController()
-//                    owner.navigationController?.pushViewController(viewController, animated: true)
-//                case "데이터 초기화":
-//                    super.showAlert(title: "데이터 초기화", message: "정말 다시 처음부터 시작하실 건가용?", cancelText: "아냐!", okText: "웅") {
-//                        print("데이터 초기화")
-//                    }
-//                default:
-//                    break
-//                }
-//            }
-//            .disposed(by: disposeBag)
-        
-        return Output(items: items/*, selectedItem: selectedItem*/)
+        return Output(items: items)
     }
 }

@@ -22,7 +22,7 @@ final class SelectTamagotchiCollectionViewCell: BaseCollectionViewCell {
         let label = UILabel()
         label.layer.borderColor = UIColor.Tamagotchi.signiture.cgColor
         label.layer.borderWidth = 1
-        label.text = " 따끔따끔 다마고치 "
+        label.text = "따끔따끔 다마고치"
         label.textColor = .Tamagotchi.signiture
         label.font = .boldSystemFont(ofSize: 14)
         label.textAlignment = .center

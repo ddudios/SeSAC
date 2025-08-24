@@ -3,7 +3,7 @@
 //  Tamagotchi
 //
 //  Created by Suji Jang on 8/25/25.
-//
+
 
 import UIKit
 

@@ -76,7 +76,7 @@ final class PopupViewController: BaseViewController {
         return button
     }()
     
-    private let startButton = {
+    var startButton = {
         let button = UIButton()
         let attribute = NSAttributedString(string: "시작하기", attributes: [NSAttributedString.Key.foregroundColor : UIColor.Tamagotchi.signiture, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
         button.setAttributedTitle(attribute, for: .normal)
@@ -86,7 +86,6 @@ final class PopupViewController: BaseViewController {
     }()
     
     let disposeBag = DisposeBag()
-    let viewModel = PopupViewModel()
     var select = BehaviorRelay(value: Select(name: "", image: ""))
     
     override func viewDidLoad() {
@@ -100,8 +99,6 @@ final class PopupViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = PopupViewModel.Input()
-        let output = viewModel.transform(input: input)
         
         select
             .asDriver()
@@ -123,7 +120,17 @@ final class PopupViewController: BaseViewController {
         startButton.rx.tap
             .asDriver()
             .drive(with: self) { owner, _ in
-                UserDefaultsManager.shared.skin = Skin.flash.rawValue
+                
+                switch owner.select.value.name {
+                case Skin.tingly.rawValue:
+                    UserDefaultsManager.shared.skin = Skin.tingly.rawValue
+                case Skin.smiley.rawValue:
+                    UserDefaultsManager.shared.skin = Skin.smiley.rawValue
+                case Skin.flash.rawValue:
+                    UserDefaultsManager.shared.skin = Skin.flash.rawValue
+                default:
+                    UserDefaultsManager.shared.skin = Skin.empty.rawValue
+                }
                 
                 guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
                 

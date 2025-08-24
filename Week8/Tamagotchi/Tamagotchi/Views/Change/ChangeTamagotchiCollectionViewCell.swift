@@ -22,7 +22,7 @@ final class ChangeTamagotchiCollectionViewCell: BaseCollectionViewCell {
         let label = UILabel()
         label.layer.borderColor = UIColor.Tamagotchi.signiture.cgColor
         label.layer.borderWidth = 1
-        label.text = " 따끔따끔 다마고치 "
+        label.text = "따끔따끔 다마고치"
         label.textColor = .Tamagotchi.signiture
         label.font = .boldSystemFont(ofSize: 14)
         label.textAlignment = .center
@@ -58,8 +58,8 @@ final class ChangeTamagotchiCollectionViewCell: BaseCollectionViewCell {
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(8)
-            make.centerX.equalToSuperview()
             make.horizontalEdges.equalTo(contentView.snp.horizontalEdges)
+            make.centerX.equalToSuperview()
             make.height.equalTo(25)
         }
     }

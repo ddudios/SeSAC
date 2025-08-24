@@ -89,7 +89,7 @@ final class TamagotchiHomeViewController: BaseViewController {
     }
     
     func designDamagochFeelingLabel() {
-        damagochiFeelingLabel.text = "방실방실 다마고치"
+        damagochiFeelingLabel.text = UserDefaultsManager.shared.skin
         damagochiFeelingLabel.font = CustomFont.buttonTitle
         damagochiFeelingLabel.textColor = .Tamagotchi.signiture
         damagochiFeelingLabel.layer.borderColor = UIColor.Tamagotchi.signiture.cgColor
@@ -138,15 +138,39 @@ final class TamagotchiHomeViewController: BaseViewController {
         statusLabel.text = "LV\(damagochi.level) ∙ 밥알 \(damagochi.rice)개 ∙ 물방울 \(damagochi.water)개"
         
         // image
-        switch damagochi.level {
-        case 0:
-            damagochiImageView.image = UIImage(named: "2-1")
-        case 1...9:
-            damagochiImageView.image = UIImage(named: "2-\(String(damagochi.level))")
-        case 10...:
-            damagochiImageView.image = UIImage(named: "2-9")
-        default:
-            print("error: \(#function) - image")
+        if UserDefaultsManager.shared.skin == "따끔따끔 다마고치" {
+            switch damagochi.level {
+            case 0:
+                damagochiImageView.image = UIImage(named: "1-1")
+            case 1...9:
+                damagochiImageView.image = UIImage(named: "1-\(String(damagochi.level))")
+            case 10...:
+                damagochiImageView.image = UIImage(named: "1-9")
+            default:
+                print("error: \(#function) - image")
+            }
+        } else if UserDefaultsManager.shared.skin == "방실방실 다마고치" {
+            switch damagochi.level {
+            case 0:
+                damagochiImageView.image = UIImage(named: "2-1")
+            case 1...9:
+                damagochiImageView.image = UIImage(named: "2-\(String(damagochi.level))")
+            case 10...:
+                damagochiImageView.image = UIImage(named: "2-9")
+            default:
+                print("error: \(#function) - image")
+            }
+        } else if UserDefaultsManager.shared.skin == "번쩍번쩍 다마고치" {
+            switch damagochi.level {
+            case 0:
+                damagochiImageView.image = UIImage(named: "3-1")
+            case 1...9:
+                damagochiImageView.image = UIImage(named: "3-\(String(damagochi.level))")
+            case 10...:
+                damagochiImageView.image = UIImage(named: "3-9")
+            default:
+                print("error: \(#function) - image")
+            }
         }
         
         // save

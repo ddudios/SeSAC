@@ -51,6 +51,7 @@ final class SettingViewController: BaseViewController {
                     owner.navigationController?.pushViewController(viewController, animated: true)
                 } else if indexPath == [0, 1] {
                     let viewController = ChangeTamagotchiViewController()
+                    viewController.navigationItem.title = "다마고치 변경하기"
                     owner.navigationController?.pushViewController(viewController, animated: true)
                 } else {
                     super.showAlert(title: "데이터 초기화", message: "정말 다시 처음부터 시작하실 건가용?", cancelText: "아냐!", okText: "웅") {

@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class ChangeTamagotchiViewController: BaseViewController {
+    
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createFlowLayout())
     
     private let disposeBag = DisposeBag()
@@ -26,7 +27,7 @@ final class ChangeTamagotchiViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.skinList
-            .bind(to: collectionView.rx.items(cellIdentifier: ChangeTamagotchiCollectionViewCell.identifier, cellType: ChangeTamagotchiCollectionViewCell.self)) { item, element, cell in
+            .bind(to: collectionView.rx.items(cellIdentifier: SelectTamagotchiCollectionViewCell.identifier, cellType: SelectTamagotchiCollectionViewCell.self)) { item, element, cell in
                 cell.imageView.image = UIImage(named: element.image)
                 cell.nameLabel.text = element.name
             }
@@ -34,21 +35,13 @@ final class ChangeTamagotchiViewController: BaseViewController {
         
         collectionView.rx.itemSelected
             .bind(with: self) { owner, collectionView in
-                if collectionView == [0, 0] {
+                if collectionView == [0, 0] || collectionView == [0, 1] || collectionView == [0, 2] {
                     let viewController = PopupViewController()
-                    viewController.modalPresentationStyle = .overCurrentContext
-                    viewController.definesPresentationContext = true
-                    owner.present(viewController, animated: false)
-                } else if collectionView == [0, 1] {
-                    let viewController = PopupViewController()
-                    viewController.modalPresentationStyle = .overCurrentContext
-                    owner.present(viewController, animated: false)
-                } else if collectionView == [0, 2] {
-                    let viewController = PopupViewController()
+                    let attribute = NSAttributedString(string: "변경하기", attributes: [NSAttributedString.Key.foregroundColor : UIColor.Tamagotchi.signiture, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+                    viewController.startButton.setAttributedTitle(attribute, for: .normal)
                     viewController.modalPresentationStyle = .overFullScreen
+                    viewController.select = output.select
                     owner.present(viewController, animated: false)
-//                    UserDefaultsManager.shared.skin = Skin.flash.rawValue
-//                    owner.goToHome()
                 } else {
                     print("셀클릭")
                 }
@@ -67,7 +60,7 @@ final class ChangeTamagotchiViewController: BaseViewController {
     }
     
     private func setCollectionView() {
-        collectionView.register(ChangeTamagotchiCollectionViewCell.self, forCellWithReuseIdentifier: ChangeTamagotchiCollectionViewCell.identifier)
+        collectionView.register(SelectTamagotchiCollectionViewCell.self, forCellWithReuseIdentifier: SelectTamagotchiCollectionViewCell.identifier)
         collectionView.backgroundColor = .clear
     }
     
@@ -83,8 +76,6 @@ final class ChangeTamagotchiViewController: BaseViewController {
     
     override func configureView() {
         super.configureView()
-        navigationItem.title = "다마고치 변경하기"
-        
         setCollectionView()
     }
 }

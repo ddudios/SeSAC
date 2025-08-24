@@ -77,7 +77,6 @@ final class SelectTamagotchiViewController: BaseViewController {
     override func configureView() {
         super.configureView()
         navigationItem.title = "다마고치 선택하기"
-        
         setCollectionView()
     }
 }
