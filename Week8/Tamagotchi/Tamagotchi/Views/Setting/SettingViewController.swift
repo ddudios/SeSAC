@@ -55,7 +55,10 @@ final class SettingViewController: BaseViewController {
                 } else {
                     super.showAlert(title: "데이터 초기화", message: "정말 다시 처음부터 시작하실 건가용?", cancelText: "아냐!", okText: "웅") {
                         UserDefaultsManager.shared.skin = UserDefaultsKey.emptyString.rawValue
-                        UserDefaultsManager.shared.nickname = UserDefaultsKey.emptyString.rawValue
+                        UserDefaultsManager.shared.nickname = UserDefaultsKey.emptyNickname.rawValue
+                        UserDefaultsManager.shared.level = 1
+                        UserDefaultsManager.shared.rice = 0
+                        UserDefaultsManager.shared.water = 0
                         
                         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
                         

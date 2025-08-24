@@ -11,10 +11,10 @@ import RxCocoa
 
 final class PopupViewModel {
     struct Input {
+//        let selected: BehaviorRelay<Select>
     }
     
     struct Output {
-        
     }
     
     init() { }

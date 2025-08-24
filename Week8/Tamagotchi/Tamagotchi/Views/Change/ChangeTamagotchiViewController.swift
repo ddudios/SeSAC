@@ -22,7 +22,7 @@ final class ChangeTamagotchiViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = SelectTamagotchiViewModel.Input()
+        let input = SelectTamagotchiViewModel.Input(modelSelected: collectionView.rx.modelSelected(Select.self))
         let output = viewModel.transform(input: input)
         
         output.skinList
@@ -36,11 +36,12 @@ final class ChangeTamagotchiViewController: BaseViewController {
             .bind(with: self) { owner, collectionView in
                 if collectionView == [0, 0] {
                     let viewController = PopupViewController()
-                    viewController.modalPresentationStyle = .overFullScreen
+                    viewController.modalPresentationStyle = .overCurrentContext
+                    viewController.definesPresentationContext = true
                     owner.present(viewController, animated: false)
                 } else if collectionView == [0, 1] {
                     let viewController = PopupViewController()
-                    viewController.modalPresentationStyle = .overFullScreen
+                    viewController.modalPresentationStyle = .overCurrentContext
                     owner.present(viewController, animated: false)
                 } else if collectionView == [0, 2] {
                     let viewController = PopupViewController()

@@ -48,13 +48,6 @@ final class PopupViewController: BaseViewController {
     
     private let descriptionLabel = {
         let label = UILabel()
-//        label.text = """
-//            저는 방실방실 다마고치입니당 키는 100km
-//            몸무게는 150톤이에용
-//            성격은 화끈하고 날라다닙니당~!
-//            열심히 잘 먹고 잘 클 자신은
-//            있답니당 방실방실!
-//            """
         label.text = """
             저는 선인장 다마고치 입니다. 키는 2cm 몸무게는 150g이에요.
             성격은 소심하지만 마음은 따뜻해요.
@@ -94,6 +87,7 @@ final class PopupViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     let viewModel = PopupViewModel()
+    var select = BehaviorRelay(value: Select(name: "", image: ""))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +102,16 @@ final class PopupViewController: BaseViewController {
     private func bind() {
         let input = PopupViewModel.Input()
         let output = viewModel.transform(input: input)
+        
+        select
+            .asDriver()
+            .drive(with: self) { owner, value in
+                owner.imageView.image = UIImage(named: value.image)
+                owner.nameLabel.text = value.name
+                owner.descriptionLabel.text = value.description
+            }
+            .disposed(by: disposeBag)
+
         
         cancelButton.rx.tap
             .asDriver()

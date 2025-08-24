@@ -58,6 +58,7 @@ final class SelectTamagotchiCollectionViewCell: BaseCollectionViewCell {
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(8)
+            make.horizontalEdges.equalTo(contentView.snp.horizontalEdges)
             make.centerX.equalToSuperview()
             make.height.equalTo(25)
         }

@@ -10,7 +10,11 @@ import Foundation
 enum UserDefaultsKey: String {
     case skin
     case nickname
-    case emptyString = "대장"
+    case level
+    case rice
+    case water
+    case emptyString = "empty"
+    case emptyNickname = "대장"
 }
 
 final class UserDefaultsManager {
@@ -28,10 +32,37 @@ final class UserDefaultsManager {
     
     var nickname: String {
         get {
-            return UserDefaults.standard.string(forKey: UserDefaultsKey.nickname.rawValue) ?? UserDefaultsKey.emptyString.rawValue
+            return UserDefaults.standard.string(forKey: UserDefaultsKey.nickname.rawValue) ?? UserDefaultsKey.emptyNickname.rawValue
         }
         set {
             UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.nickname.rawValue)
+        }
+    }
+    
+    var level: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: UserDefaultsKey.level.rawValue)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.level.rawValue)
+        }
+    }
+    
+    var rice: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: UserDefaultsKey.rice.rawValue)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.rice.rawValue)
+        }
+    }
+    
+    var water: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: UserDefaultsKey.water.rawValue)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.water.rawValue)
         }
     }
 }

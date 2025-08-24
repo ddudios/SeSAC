@@ -23,7 +23,7 @@ final class SelectTamagotchiViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = SelectTamagotchiViewModel.Input()
+        let input = SelectTamagotchiViewModel.Input(modelSelected: collectionView.rx.modelSelected(Select.self))
         let output = viewModel.transform(input: input)
         
         output.skinList
@@ -35,17 +35,10 @@ final class SelectTamagotchiViewController: BaseViewController {
         
         collectionView.rx.itemSelected
             .bind(with: self) { owner, collectionView in
-                if collectionView == [0, 0] {
+                if collectionView == [0, 0] || collectionView == [0, 1] || collectionView == [0, 2] {
                     let viewController = PopupViewController()
                     viewController.modalPresentationStyle = .overFullScreen
-                    owner.present(viewController, animated: false)
-                } else if collectionView == [0, 1] {
-                    let viewController = PopupViewController()
-                    viewController.modalPresentationStyle = .overFullScreen
-                    owner.present(viewController, animated: false)
-                } else if collectionView == [0, 2] {
-                    let viewController = PopupViewController()
-                    viewController.modalPresentationStyle = .overFullScreen
+                    viewController.select = output.select
                     owner.present(viewController, animated: false)
 //                    UserDefaultsManager.shared.skin = Skin.flash.rawValue
 //                    owner.goToHome()

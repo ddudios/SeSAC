@@ -59,6 +59,7 @@ final class ChangeTamagotchiCollectionViewCell: BaseCollectionViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
+            make.horizontalEdges.equalTo(contentView.snp.horizontalEdges)
             make.height.equalTo(25)
         }
     }
