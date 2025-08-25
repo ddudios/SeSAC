@@ -51,10 +51,28 @@
 			);
 			target = 0412801F2AEF9BAB00972552 /* SeSACRxThreads */;
 		};
+		B0A645B12E5BE7CF003662DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Network/Homework/HomeworkViewController.swift,
+				Network/Recap/PersonTableViewCell.swift,
+				Network/Recap/UserCollectionViewCell.swift,
+			);
+			target = 041280352AEF9BAC00972552 /* SeSACRxThreadsTests */;
+		};
+		B0A645B22E5BE7CF003662DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Network/Homework/HomeworkViewController.swift,
+				Network/Recap/PersonTableViewCell.swift,
+				Network/Recap/UserCollectionViewCell.swift,
+			);
+			target = 0412803F2AEF9BAC00972552 /* SeSACRxThreadsUITests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		047EFDBC2E529C8200D5718E /* SeSACRxThreads */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (047EFDD02E529C8200D5718E /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = SeSACRxThreads; sourceTree = "<group>"; };
+		047EFDBC2E529C8200D5718E /* SeSACRxThreads */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (047EFDD02E529C8200D5718E /* PBXFileSystemSynchronizedBuildFileExceptionSet */, B0A645B12E5BE7CF003662DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, B0A645B22E5BE7CF003662DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = SeSACRxThreads; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
