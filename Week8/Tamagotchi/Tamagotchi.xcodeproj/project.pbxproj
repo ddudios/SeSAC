@@ -10,10 +10,13 @@
 		B048C7B22E59B38C00DD5E93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B048C7B12E59B38C00DD5E93 /* SnapKit */; };
 		B048C7B52E59B3A500DD5E93 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B048C7B42E59B3A500DD5E93 /* RxCocoa */; };
 		B048C7B72E59B3A500DD5E93 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B048C7B62E59B3A500DD5E93 /* RxSwift */; };
+		B0A646172E5C89DE003662DE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B0A646162E5C89DE003662DE /* Alamofire */; };
+		B0A6461B2E5CA458003662DE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0A6461A2E5CA458003662DE /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B048C6CF2E5981D600DD5E93 /* Tamagotchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tamagotchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0A6461A2E5CA458003662DE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -43,6 +46,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B048C7B72E59B3A500DD5E93 /* RxSwift in Frameworks */,
+				B0A646172E5C89DE003662DE /* Alamofire in Frameworks */,
 				B048C7B52E59B3A500DD5E93 /* RxCocoa in Frameworks */,
 				B048C7B22E59B38C00DD5E93 /* SnapKit in Frameworks */,
 			);
@@ -54,6 +58,7 @@
 		B048C6C62E5981D600DD5E93 = {
 			isa = PBXGroup;
 			children = (
+				B0A6461A2E5CA458003662DE /* .gitignore */,
 				B048C6D12E5981D600DD5E93 /* Tamagotchi */,
 				B048C6D02E5981D600DD5E93 /* Products */,
 			);
@@ -90,6 +95,7 @@
 				B048C7B12E59B38C00DD5E93 /* SnapKit */,
 				B048C7B42E59B3A500DD5E93 /* RxCocoa */,
 				B048C7B62E59B3A500DD5E93 /* RxSwift */,
+				B0A646162E5C89DE003662DE /* Alamofire */,
 			);
 			productName = Tamagotchi;
 			productReference = B048C6CF2E5981D600DD5E93 /* Tamagotchi.app */;
@@ -122,6 +128,7 @@
 			packageReferences = (
 				B048C7B02E59B38C00DD5E93 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B048C7B32E59B3A500DD5E93 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				B0A646152E5C89DE003662DE /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B048C6D02E5981D600DD5E93 /* Products */;
@@ -138,6 +145,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0A6461B2E5CA458003662DE /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +387,14 @@
 				minimumVersion = 6.9.0;
 			};
 		};
+		B0A646152E5C89DE003662DE /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -396,6 +412,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B048C7B32E59B3A500DD5E93 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		B0A646162E5C89DE003662DE /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0A646152E5C89DE003662DE /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

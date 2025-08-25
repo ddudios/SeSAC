@@ -134,9 +134,12 @@ final class PopupViewController: BaseViewController {
                 
                 guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
                 
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let viewController = storyboard.instantiateViewController(identifier: "TamagotchiHomeViewController")
-                sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: viewController)
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let viewController = storyboard.instantiateViewController(identifier: "TamagotchiHomeViewController")
+//                sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: viewController)
+                
+                let viewController = TabBarController()
+                sceneDelegate.window?.rootViewController = viewController
             }
             .disposed(by: disposeBag)
 

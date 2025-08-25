@@ -10,13 +10,16 @@ import UIKit
 enum TabBarItem: Int, CaseIterable {
     case firstViewController
     case secondViewController
+    case thirdViewController
     
     var title: String {
         switch self {
         case .firstViewController:
             return "Home"
         case .secondViewController:
-            return "Setting"
+            return "Lotto"
+        case .thirdViewController:
+            return "BoxOffice"
         }
     }
     
@@ -25,7 +28,9 @@ enum TabBarItem: Int, CaseIterable {
         case .firstViewController:
             return "house"
         case .secondViewController:
-            return "gearshape.fill"
+            return "number"
+        case .thirdViewController:
+            return "film"
         }
     }
     
@@ -36,7 +41,10 @@ enum TabBarItem: Int, CaseIterable {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             viewController = storyboard.instantiateViewController(withIdentifier: "TamagotchiHomeViewController")
         case .secondViewController:
-            viewController = SettingViewController()
+            viewController = LottoViewController()
+        case .thirdViewController:
+            viewController = BoxOfficeViewController()
+            
         }
         return UINavigationController(rootViewController: viewController)
     }

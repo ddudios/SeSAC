@@ -40,8 +40,6 @@ final class SelectTamagotchiViewController: BaseViewController {
                     viewController.modalPresentationStyle = .overFullScreen
                     viewController.select = output.select
                     owner.present(viewController, animated: false)
-//                    UserDefaultsManager.shared.skin = Skin.flash.rawValue
-//                    owner.goToHome()
                 } else {
                     print("셀클릭")
                 }

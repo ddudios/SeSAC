@@ -16,15 +16,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
+        let tabBarController = TabBarController()
+        
         let select = UINavigationController(rootViewController: SelectTamagotchiViewController())
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let home = UINavigationController(rootViewController: storyboard.instantiateViewController(withIdentifier: "TamagotchiHomeViewController"))
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let home = UINavigationController(rootViewController: storyboard.instantiateViewController(withIdentifier: "TamagotchiHomeViewController"))
         
         if UserDefaultsManager.shared.skin == UserDefaultsKey.emptyString.rawValue {
             window?.rootViewController = select
         } else {
-            window?.rootViewController = home
+//            window?.rootViewController = home
+            window?.rootViewController = tabBarController
         }
         window?.makeKeyAndVisible()
     }
