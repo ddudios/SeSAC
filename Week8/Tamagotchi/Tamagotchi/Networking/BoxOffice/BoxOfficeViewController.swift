@@ -15,6 +15,10 @@ final class BoxOfficeViewController: BaseViewController {
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
     
+    private let disposeBag = DisposeBag()
+    
+    private let list: BehaviorRelay<[MovieInfo]> = BehaviorRelay(value: [])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
@@ -22,6 +26,31 @@ final class BoxOfficeViewController: BaseViewController {
     
     private func bind() {
         
+        list
+            .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+                cell.textLabel?.text = "\(row + 1). \(element.movieNm)"
+            }
+            .disposed(by: disposeBag)
+        
+        searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchBar.rx.text.orEmpty)
+            .distinctUntilChanged()
+            .flatMap { text in
+                CustomObservable.getMovie(date: text)
+            }
+            .subscribe(with: self) { owner, boxOfficeResult in
+                let data = boxOfficeResult.boxOfficeResult.dailyBoxOfficeList
+                var listValue = owner.list.value
+                listValue.append(contentsOf: data)
+                owner.list.accept(listValue)
+            } onError: { owner, error in
+                print("onError boxOfficeResult")
+            } onCompleted: { owner in
+                print("onCompleted boxOfficeResult")
+            } onDisposed: { owner in
+                print("onDisposed boxOfficeResult")
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {
@@ -31,6 +60,7 @@ final class BoxOfficeViewController: BaseViewController {
     
     private func setTableView() {
         tableView.backgroundColor = .clear
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
     override func configureLayout() {

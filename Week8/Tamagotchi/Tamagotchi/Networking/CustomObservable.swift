@@ -34,7 +34,21 @@ final class CustomObservable {
         }
     }
     
-    static func getMovie() {
-        
+    static func getMovie(date: String) -> Observable<BoxOfficeResult> {
+        return Observable.create { observer in
+            
+            let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=\(APIKey.boxOffice.rawValue)&targetDt=\(date)"
+            
+            AF.request(url).responseDecodable(of: BoxOfficeResult.self) { response in
+                switch response.result {
+                case .success(let value):
+                    observer.onNext(value)
+                    observer.onCompleted()
+                case .failure(_):
+                    observer.onError(NetworkError.error)
+                }
+            }
+            return Disposables.create()
+        }
     }
 }
