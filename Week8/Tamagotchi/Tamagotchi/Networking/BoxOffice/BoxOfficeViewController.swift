@@ -15,9 +15,10 @@ final class BoxOfficeViewController: BaseViewController {
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
     
+    private let viewModel = BoxOfficeViewModel()
     private let disposeBag = DisposeBag()
     
-    private let list: BehaviorRelay<[MovieInfo]> = BehaviorRelay(value: [])
+//    private let list: BehaviorRelay<[MovieInfo]> = BehaviorRelay(value: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,30 +26,26 @@ final class BoxOfficeViewController: BaseViewController {
     }
     
     private func bind() {
+        //        let a = searchBar.rx.searchButtonClicked
+        //        let b = searchBar.rx.text.orEmpty
+        let input = BoxOfficeViewModel.Input(returnSearch: searchBar.rx.searchButtonClicked, searchText: searchBar.rx.text.orEmpty)
+        let output = viewModel.transform(input: input)
         
-        list
+        output.list
             .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(row + 1). \(element.movieNm)"
             }
             .disposed(by: disposeBag)
         
-        searchBar.rx.searchButtonClicked
-            .withLatestFrom(searchBar.rx.text.orEmpty)
-            .distinctUntilChanged()
-            .flatMap { text in
-                CustomObservable.getMovie(date: text)
+        output.alertMessage
+            .bind(with: self) { owner, message in
+                owner.messageAlert(title: "네트워크 단절 에러", message: message)
             }
-            .subscribe(with: self) { owner, boxOfficeResult in
-                let data = boxOfficeResult.boxOfficeResult.dailyBoxOfficeList
-                var listValue = owner.list.value
-                listValue.append(contentsOf: data)
-                owner.list.accept(listValue)
-            } onError: { owner, error in
-                print("onError boxOfficeResult")
-            } onCompleted: { owner in
-                print("onCompleted boxOfficeResult")
-            } onDisposed: { owner in
-                print("onDisposed boxOfficeResult")
+            .disposed(by: disposeBag)
+        
+        output.toastMessage
+            .bind(with: self) { owner, message in
+                owner.showToast(message: message)
             }
             .disposed(by: disposeBag)
     }

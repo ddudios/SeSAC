@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 extension BaseViewController {
     func showAlert(title: String, message: String, cancelText: String, okText: String, okHandler: @escaping () -> Void) {
@@ -29,6 +30,7 @@ extension BaseViewController {
         present(alert, animated: true)
     }
     
+    // escaping 쓸 때 안쓸 때 정리하기
     func popAlert(title: String?, message: String, okHandler: @escaping () -> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -39,5 +41,9 @@ extension BaseViewController {
         alert.addAction(ok)
         
         self.present(alert, animated: true)
+    }
+    
+    func showToast(message: String) {
+        self.view.makeToast(message)
     }
 }

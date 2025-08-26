@@ -14,7 +14,7 @@ import RxCocoa  // 여기서 UIKit을 import하고 있다
 import UIKit.UIImageView  // 이렇게 하더라도 UIKit 전부 가져옴
     // 보통 중복되더라도 상단에 써줘야 어떤 코드인지 알기 쉽기 때문에 명세
 
-final class BirthdatViewModel {
+final class BirthdatViewModel: BaseViewModel {  // 이미 struct에 대해서 구체적인 타입을 명세해줬기 때문에 채택해도 문제없음
     struct Input {
 //        let datePicker: ControlProperty<Date>  // 버튼 클릭 자체를 넘기고 있어서 좀 큰 것을 넘김 (이전에는 ()를 넘김)
 //        let datePicker: BehaviorSubject<Date>  // RxCocoa를 사용하지 않는 형태

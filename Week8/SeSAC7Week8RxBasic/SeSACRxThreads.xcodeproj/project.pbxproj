@@ -54,7 +54,9 @@
 		B0A645B12E5BE7CF003662DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Network/Homework/BaseViewModel.swift,
 				Network/Homework/HomeworkViewController.swift,
+				Network/Homework/HomeworkViewModel.swift,
 				Network/Recap/PersonTableViewCell.swift,
 				Network/Recap/UserCollectionViewCell.swift,
 			);
@@ -63,7 +65,9 @@
 		B0A645B22E5BE7CF003662DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Network/Homework/BaseViewModel.swift,
 				Network/Homework/HomeworkViewController.swift,
+				Network/Homework/HomeworkViewModel.swift,
 				Network/Recap/PersonTableViewCell.swift,
 				Network/Recap/UserCollectionViewCell.swift,
 			);

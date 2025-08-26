@@ -38,6 +38,7 @@ final class LottoViewController: BaseViewController {
     }()
     
     private let disposeBag = DisposeBag()
+    private let viewModel = LottoViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,24 +46,24 @@ final class LottoViewController: BaseViewController {
     }
     
     private func bind() {
-        resultButton.rx.tap
-            .withLatestFrom(textField.rx.text.orEmpty)
-            .map { CustomObservable.getLotto(query: $0)
-                .debug("Observable<Observable<Int>>") }
-            .debug("buttonTap")
-            .subscribe(with: self) { owner, observable in
-                print("LottoObservable onNext", observable)
-                observable
-                    .bind(with: self) { owner, lotto in
-                        owner.resultLabel.text = "\(lotto.drwtNo1) / \(lotto.drwtNo2) / \(lotto.drwtNo3) / \(lotto.drwtNo4) / \(lotto.drwtNo5) / \(lotto.drwtNo6) (bonus:\(lotto.bnusNo))"
-                    }
-                    .disposed(by: owner.disposeBag)
-            } onError: { owner, error in
-                print("LottoObservable onError", error)
-            } onCompleted: { owner in
-                print("LottoObservable onCompleted")
-            } onDisposed: { owner in
-                print("LottoObservable onDisposed")
+//        let a = resultButton.rx.tap
+//        let b = textField.rx.text.orEmpty
+        let input = LottoViewModel.Input(resultButtonTap: resultButton.rx.tap, text: textField.rx.text.orEmpty)
+        let output = viewModel.transform(input: input)
+        
+        output.resultText
+            .bind(to: resultLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.showAlert
+            .bind(with: self) { owner, error in
+                owner.messageAlert(title: "Error", message: "\(error)")
+            }
+            .disposed(by: disposeBag)
+        
+        output.showToast
+            .bind(with: self) { owner, error in
+                owner.showToast(message: "\(error)")
             }
             .disposed(by: disposeBag)
     }

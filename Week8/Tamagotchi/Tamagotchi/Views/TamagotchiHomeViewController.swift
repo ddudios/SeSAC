@@ -251,4 +251,3 @@ extension TamagotchiHomeViewController {
         present(alert, animated: true)
     }
 }
-

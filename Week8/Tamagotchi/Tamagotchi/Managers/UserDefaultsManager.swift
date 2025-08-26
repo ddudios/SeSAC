@@ -17,6 +17,9 @@ enum UserDefaultsKey: String {
     case emptyNickname = "대장"
 }
 
+
+
+// 프로퍼티랩퍼 등
 final class UserDefaultsManager {
     static let shared = UserDefaultsManager()
     private init() { }

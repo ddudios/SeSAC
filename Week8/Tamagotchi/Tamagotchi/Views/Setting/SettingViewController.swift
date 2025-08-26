@@ -42,6 +42,7 @@ final class SettingViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        // input타입이 enum
         tableView.rx.itemSelected
             .asDriver(onErrorJustReturn: IndexPath(row: 0, section: 0))
             .drive(with: self) { owner, indexPath in

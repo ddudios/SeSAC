@@ -18,6 +18,9 @@ class HomeworkViewController: UIViewController {
     let searchBar = UISearchBar()
     
     let disposeBag = DisposeBag()
+    
+    // 20.
+    /*
 //    let list = Observable.just([1,2,3,4,5])  // 이벤트 전달만
 //    let list = PublishRelay<[Int]>()
 //    let list: BehaviorRelay<[Int]> = BehaviorRelay(value: [])
@@ -26,7 +29,11 @@ class HomeworkViewController: UIViewController {
 //    let items = Observable.just(["a","b","c"])
     // Observable + Observer 이벤트 받을 수 있도록 변경
     let items = BehaviorRelay(value: ["a", "b", "c"])  // 실패 케이스를 거의 만날 일이 없으니까 자주 사용
-     
+     */
+    
+    // 5.
+    let viewModel = HomeworkViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -34,7 +41,14 @@ class HomeworkViewController: UIViewController {
     }
     
     private func bind() {
-        list  // Observable
+        
+        // 6.
+        let input = HomeworkViewModel.Input(searchTap: searchBar.rx.searchButtonClicked, searchText: searchBar.rx.text.orEmpty/*, cellSelected: tableView.rx.modelSelected(Int.self)*/, cellSelected: tableView.rx.modelSelected(Lotto.self))  // 11. 17.
+        let output = viewModel.transform(input: input)
+        
+        
+        // 7. output. -> 확인: transform을 통해서 output data 잘 넘어옴
+        output.list  // Observable
             .bind(to: tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier, cellType: PersonTableViewCell.self)) { (row, element, cell) in  // Observer: 이벤트 처리
 //                cell.usernameLabel.text = "셀 \(element)"
                 let text = "\(element.drwNoDate)일, \(element.firstAccumamnt.formatted())원"
@@ -42,13 +56,39 @@ class HomeworkViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        items
+        output.items
             .bind(to: collectionView.rx.items(cellIdentifier: UserCollectionViewCell.identifier, cellType: UserCollectionViewCell.self)) { (row, element, cell) in
                 cell.label.text = element
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(Int.self)  // Observable
+        
+        output.showAlert
+            .bind(with: self) { owner, value in
+                if value {
+                    print("네트워크 실패 발생 >>> 얼럿을 띄워주세욤")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+        // 20. 옮겨서 그런걸까? 여전히 오류가 남
+        /*
+            // list: BehaviorRelay<[Lotto]>
+            // 각 셀에 들어있는 정보의 타입을 일치시켜줘야 한다
+//        tableView.rx.modelSelected(Int.self)
+        tableView.rx.modelSelected(Lotto.self)
+            .map { "셀 \($0)" }
+            .bind(with: self) { owner, number in
+                print(number)
+            }
+            .disposed(by: disposeBag)
+         */
+        
+        
+        // 14. output을 뱉어주고 있으니 input으로 들어갈 수 있겠다
+        /*
+        /*let a = */tableView.rx.modelSelected(Int.self)  // Observable
             .map { "셀 \($0)" }
             .bind(with: self) { owner, number in
                 var original = owner.items.value  // Relay쓰면 이벤트 줄어들고 오류를 위한 do-catch가 없으니까 try구문도 안써도됨 (Subject -> try)
@@ -59,7 +99,11 @@ class HomeworkViewController: UIViewController {
                 owner.items.accept(original)  // onNext -> accept (어떻게 items로 들어가는거지? onNext는 이벤트 방출,..)
             }
             .disposed(by: disposeBag)
+         */
         
+        
+        // 8. input: 서치버튼 클릭, 글자 들어옴
+        /*
         searchBar.rx.searchButtonClicked  // 이 SearchButtonClicked 옵저버블은 계속 살아있고
             .withLatestFrom(searchBar.rx.text.orEmpty)
             .distinctUntilChanged()
@@ -140,7 +184,7 @@ class HomeworkViewController: UIViewController {
          Lotto(drwNoDate: "2022-01-29", firstAccumamnt: 27430031640)
          onNext Lotto(drwNoDate: "2022-01-29", firstAccumamnt: 27430031640)
          */
-
+         */
     }
      /*
     private func bind통신을위한개념() {

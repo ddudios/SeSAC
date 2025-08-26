@@ -11,7 +11,7 @@ import RxCocoa
 
 // 뷰컨에서 뭐가 인풋/아웃풋인지 명확하지 않아서 수정
 
-class PhoneViewModel {
+class PhoneViewModel: BaseViewModel {
     struct Input {
         let buttonTap: ControlEvent<Void>  // nextButton.rx.tap
     }
