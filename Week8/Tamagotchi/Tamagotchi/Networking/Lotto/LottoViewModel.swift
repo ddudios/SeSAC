@@ -44,17 +44,17 @@ final class LottoViewModel: BaseViewModelProtocol {
                 // 에러 상황에 따른 리턴 가능
                     // 새로운 옵저버블을 뱉어줄 수 있음
                     // .never(): 아무 이벤트도 발생하지 않음
-                    .catch { error in
-                        guard let networkError = error as? NetworkError else { return Observable.never() }
-                        
-                        switch networkError {
-                        case .connectedToInternetError:
-                            showAlert.accept(error)
-                        default:
-                            showToast.accept(error)
-                        }
-                        return Observable.never()
-                    }
+//                    .catch { error in
+//                        guard let networkError = error as? NetworkError else { return Observable.never() }
+//                        
+//                        switch networkError {
+//                        case .connectedToInternetError:
+//                            showAlert.accept(error)
+//                        default:
+//                            showToast.accept(error)
+//                        }
+//                        return Observable.never()
+//                    }
                     .debug("Observable<Observable<Int>>")
             }
             .debug("buttonTap")
