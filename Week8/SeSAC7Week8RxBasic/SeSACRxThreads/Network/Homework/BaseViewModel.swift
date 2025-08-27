@@ -33,7 +33,18 @@ class B {
 //    }
 //}
 
+// 강제적인, 추상화
 protocol BaseViewModel {   // 어떻게 구조화, 추상화했는지 코드의 의도가 명확하다고 리드미에 작성하면 큰 힘을 발휘할 수 있음
+    
+//    var disposeBag: DisposeBag { get }
+    // protocol은 형식만 주다보니까, 저장/연산 프로퍼티 명세는 하지 않고, 연산 프로퍼티로 사용할 가능성이 있기 때문에 무조건 var, let으로 사용할 수 없음
+        // -> ViewModel에서 무조건 var로 사용해야함
+        //import RxSwift를 갖는 게 맞나?
+    // 저장으로 쓸지 연산으로 쓸지 모른다
+    // 최소 요건은 get 이상만 쓰면 돼서 set을 써도 된다
+    // 프로토콜에서 충분히 커뮤니케이션되게 만든게 맞나? 고민
+        // 프로토콜 문법상 let은 사용하지 못하는데 사용하는 단에서는 let으로 하면..
+    
 //    struct Input { }
 //    struct Output { }
     associatedtype Jack  // Input

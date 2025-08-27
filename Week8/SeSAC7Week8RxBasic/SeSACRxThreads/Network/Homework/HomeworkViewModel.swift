@@ -185,6 +185,24 @@ final class HomeworkViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         
+        /**
+         사용할 수 없는 연산자들이 생기게 된다
+         ControlEvent는 이런 제약이 있을 수 있다 (온전히 사용할 수 없을 수 있다)
+         - 대표적으로 flatMap: 타입변환이 아니면 사용하기 어려움
+         - throttle
+         - 의도한대로 사용하기 어려울 수 있음
+        input
+            .searchTap
+            .flatMap {
+                CustomObservable.getLotto(query: "1000")
+            }
+            .subscribe(with: self)
+        */
+        
+        /**
+         스트림은 연결되어 있기 때문에, 타입이 일치하지 않아서 사용할 수 없는 Operator들이 꽤 많다
+         */
+        
         // 3.
         return Output(list: list, items: items, showAlert: showAlert)
         // 최종 뷰컨에서 보여주고 싶은 내용만 리턴으로 보여줌

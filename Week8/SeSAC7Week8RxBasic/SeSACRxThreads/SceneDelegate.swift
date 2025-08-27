@@ -16,7 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        let rootViewController = UINavigationController(rootViewController: HomeworkViewController())
+        
+        // Main -> Detail 화면전환시, 어떻게 뷰모델간 값전달을 아름답게 해주지? private(다른 화면에서 접근불가능하도록)
+        // 의존성 분리 (DI)
+        let viewModel = HomeworkViewModel()
+        let vc = HomeworkViewController(viewModel: viewModel)
+        let rootViewController = UINavigationController(rootViewController: vc)
          
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()

@@ -11,13 +11,14 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
-class HomeworkViewController: UIViewController {
+final class HomeworkViewController: UIViewController {
     
-    let tableView = UITableView()
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-    let searchBar = UISearchBar()
+    // 일단 다 붙이고 정말 필요할 때 덜어내기 final, private
+    private let tableView = UITableView()
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    private let searchBar = UISearchBar()
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     // 20.
     /*
@@ -32,7 +33,18 @@ class HomeworkViewController: UIViewController {
      */
     
     // 5.
-    let viewModel = HomeworkViewModel()
+//    let viewModel = HomeworkViewModel()
+    // 뷰컨이 뷰모델을 다 가지고 있는 형태: 뷰컨이 뷰모델을 안가지고 있게끔 개선
+    private let viewModel: HomeworkViewModel
+    
+    init(viewModel: HomeworkViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
