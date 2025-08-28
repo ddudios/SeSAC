@@ -1,5 +1,5 @@
 {
-  "originHash" : "440cf661143ff2696334cb247062bc195d5fa3632b264788c4116118478253dc",
+  "originHash" : "8674369e51da5894eeb892e74e45f14fbaa9268ca922d3c8d617e296ea141ea1",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "2015fda791daa72c8058619545a593bf8c1dd59f",
         "version" : "8.5.0"
+      }
+    },
+    {
+      "identity" : "rxdatasources",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RxSwiftCommunity/RxDataSources.git",
+      "state" : {
+        "revision" : "90c29b48b628479097fe775ed1966d75ac374518",
+        "version" : "5.0.2"
       }
     },
     {
