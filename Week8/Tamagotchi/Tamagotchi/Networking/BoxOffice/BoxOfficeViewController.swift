@@ -38,7 +38,14 @@ final class BoxOfficeViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.alertMessage
-            .bind(with: self) { owner, message in
+            .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+        /**
+         위의 코드를 삽입하면 에러
+         - bind -> drive 쓰거나
+         - AF를 사용중이니까 Main으로 동작하는 코드가 굳이 필요하지 않다는걸 알거나
+         */
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, message in
                 owner.messageAlert(title: "네트워크 단절 에러", message: message)
             }
             .disposed(by: disposeBag)

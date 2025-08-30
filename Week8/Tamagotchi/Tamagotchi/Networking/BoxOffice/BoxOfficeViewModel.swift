@@ -25,6 +25,12 @@ final class BoxOfficeViewModel: BaseViewModelProtocol {
     
     func transform(input: Input) -> Output {
         let list: BehaviorRelay<[MovieInfo]> = BehaviorRelay(value: [])
+        /**
+         왜 Relay를 썼지?
+         - 실패할리 없으니까
+         왜 실패할 수 없지?
+         - Behavior로 기본값을 줬으니까
+         */
         let alertMessage = PublishRelay<String>()
         let toastMessage = PublishRelay<String>()
         
