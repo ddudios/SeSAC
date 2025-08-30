@@ -25,20 +25,20 @@ final class SearchResultViewModel {
     
     struct Input {
 //        var viewDidLoadTrigger = Observable(())
-        var sortButtonTapped = Observable("")
-        var reload = Observable(())
-        var sortType = Observable(SortType.accuracy.rawValue)
-        var startPage = Observable(1)
+        var sortButtonTapped = SwiftCustomObservable("")
+        var reload = SwiftCustomObservable(())
+        var sortType = SwiftCustomObservable(SortType.accuracy.rawValue)
+        var startPage = SwiftCustomObservable(1)
     }
     
     struct Output {
-        var title: Observable<String?> = Observable(nil)
-        var total = Observable(0)
-        var successData: Observable<NaverSearch> = Observable(NaverSearch(total: 0, items: []))
-        var networkingFailure = Observable(())
-        var recommendationDataList: Observable<[Item]> = Observable([])
+        var title: SwiftCustomObservable<String?> = SwiftCustomObservable(nil)
+        var total = SwiftCustomObservable(0)
+        var successData: SwiftCustomObservable<NaverSearch> = SwiftCustomObservable(NaverSearch(total: 0, items: []))
+        var networkingFailure = SwiftCustomObservable(())
+        var recommendationDataList: SwiftCustomObservable<[Item]> = SwiftCustomObservable([])
         
-        var sortData: Observable<NaverSearch> = Observable(NaverSearch(total: 0, items: []))
+        var sortData: SwiftCustomObservable<NaverSearch> = SwiftCustomObservable(NaverSearch(total: 0, items: []))
     }
     
     init() {
@@ -97,7 +97,7 @@ final class SearchResultViewModel {
 //        NetworkManager.shared.callRequest(query: "키티", sort: SortType.accuracy.rawValue, startPosition: 1) { success in
 //            self.output.recommendationDataList.data = success.items
 //        } failure: { }
-        NetworkManager.shared.callRequest(api: .recomend, decodedType: NaverSearch.self) { success in
+        NetworkManager.shared.callRequest(api: .recommend(display: "10"), decodedType: NaverSearch.self) { success in
             self.output.recommendationDataList.data = success.items
         } failure: { }
     }

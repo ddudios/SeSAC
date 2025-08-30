@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Alamofire
+import RxSwift
+import RxCocoa
 
 final class SearchViewController: BaseViewController {
     
@@ -21,12 +23,14 @@ final class SearchViewController: BaseViewController {
     
     private let emptySearchBarTextLabel = EmptySearchBarTextLabel()
     
+    private let disposeBag = DisposeBag()
     private let viewModel = SearchViewModel()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bindData()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +49,20 @@ final class SearchViewController: BaseViewController {
             vc.viewModel.output.title.data = text
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    private func bind() {
+        let input = SearchViewModel.RxInput(searchBarTap: shoppingSearchBar.rx.searchButtonClicked, searchText: shoppingSearchBar.rx.text.orEmpty)
+        let output = viewModel.transform(rxInput: input)
+        
+        output.list
+            .bind(with: self) { owner, item in
+                print("print@@@@", item)
+            }
+//            .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+//                cell.textLabel?.text = "\(row + 1). \(element.movieNm)"
+//            }
+            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {

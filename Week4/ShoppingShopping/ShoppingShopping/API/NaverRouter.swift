@@ -11,18 +11,18 @@ import Alamofire
 enum NaverRouter {
     
     case search(query: String, start: Int, display: Int, sort: String)
-    case recomend
+    case recommend(display: String)
     
     var baseUrl: String {
-        return "https://openapi.naver.com/v1/search/shop.json?"
+        return "https://openapi.naver.com/v1/search/shop.json"
     }
     
     var endpoint: URL {
         switch self {
         case .search:
             return URL(string: baseUrl)!
-        case .recomend:
-            return URL(string: baseUrl + "query=키티&display=30&sort=sim&=1")!
+        case let .recommend(display):
+            return URL(string: baseUrl + "?query=키티&display=\(display)&sort=sim&start=1")!
         }
     }
     
@@ -47,7 +47,7 @@ enum NaverRouter {
                 "display": display,
                 "sort": sort
             ]
-        case .recomend:
+        case .recommend:
             return ["": ""]
         }
     }

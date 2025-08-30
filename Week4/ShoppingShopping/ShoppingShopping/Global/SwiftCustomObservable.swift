@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Observable<T> {
+final class SwiftCustomObservable<T> {
     private var ready: ((T) -> Void)?
     
     var data: T {

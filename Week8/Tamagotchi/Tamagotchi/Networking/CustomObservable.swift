@@ -72,6 +72,7 @@ final class CustomObservable {
             
             guard Connectivity.isConnectedToInternet else {
                 observer.onNext(.failure(.connectedToInternetError))
+                observer.onCompleted()
                 return Disposables.create()
             }
             
