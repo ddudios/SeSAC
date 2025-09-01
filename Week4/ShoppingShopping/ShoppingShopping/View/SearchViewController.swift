@@ -59,9 +59,6 @@ final class SearchViewController: BaseViewController {
             .bind(with: self) { owner, item in
                 print("print@@@@", item)
             }
-//            .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
-//                cell.textLabel?.text = "\(row + 1). \(element.movieNm)"
-//            }
             .disposed(by: disposeBag)
     }
     
