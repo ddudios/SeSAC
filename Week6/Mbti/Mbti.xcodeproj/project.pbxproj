@@ -10,6 +10,7 @@
 		B0E508732E6584A9004E83D0 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B0E508722E6584A9004E83D0 /* RxCocoa */; };
 		B0E508752E6584A9004E83D0 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B0E508742E6584A9004E83D0 /* RxSwift */; };
 		B0E508782E6584B3004E83D0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B0E508772E6584B3004E83D0 /* SnapKit */; };
+		B0E509622E660B99004E83D0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B0E509612E660B99004E83D0 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0E509622E660B99004E83D0 /* Kingfisher in Frameworks */,
 				B0E508782E6584B3004E83D0 /* SnapKit in Frameworks */,
 				B0E508752E6584A9004E83D0 /* RxSwift in Frameworks */,
 				B0E508732E6584A9004E83D0 /* RxCocoa in Frameworks */,
@@ -90,6 +92,7 @@
 				B0E508722E6584A9004E83D0 /* RxCocoa */,
 				B0E508742E6584A9004E83D0 /* RxSwift */,
 				B0E508772E6584B3004E83D0 /* SnapKit */,
+				B0E509612E660B99004E83D0 /* Kingfisher */,
 			);
 			productName = Mbti;
 			productReference = B0E508592E65847A004E83D0 /* Mbti.app */;
@@ -122,6 +125,7 @@
 			packageReferences = (
 				B0E508712E6584A9004E83D0 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				B0E508762E6584B3004E83D0 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B0E509602E660B99004E83D0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B0E5085A2E65847A004E83D0 /* Products */;
@@ -377,6 +381,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		B0E509602E660B99004E83D0 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -394,6 +406,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B0E508762E6584B3004E83D0 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		B0E509612E660B99004E83D0 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0E509602E660B99004E83D0 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

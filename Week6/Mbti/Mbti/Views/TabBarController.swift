@@ -38,7 +38,7 @@ enum TabBarItem: Int, CaseIterable {
         let viewController: UIViewController
         switch self {
         case .firstViewController:
-            viewController = LoginViewController()
+            viewController = ListViewController()
         case .secondViewController:
             viewController = LoginViewController()
         case .thirdViewController:

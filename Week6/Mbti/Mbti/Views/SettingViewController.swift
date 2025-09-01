@@ -12,7 +12,7 @@ import RxCocoa
 
 final class SettingViewController: BaseViewController {
     
-    private let profileImageView = {
+    let profileImageView = {
         let imageView = UIImageView()
         imageView.layer.borderColor = UIColor.systemBlue.cgColor
         imageView.layer.borderWidth = 3
@@ -20,7 +20,7 @@ final class SettingViewController: BaseViewController {
         imageView.clipsToBounds = true
         return imageView
     }()
-    private let nicknameTextField = CustomTextField(placeholder: "닉네임을 입력해주세요")
+    private let nicknameTextField = CustomTextField(placeholder: "\(UserDefaults.standard.string(forKey: "nick") ?? "닉네임을 입력해주세요")")
     private let sectionTitleLabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 16)
@@ -33,7 +33,6 @@ final class SettingViewController: BaseViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textAlignment = .left
-        label.text = "닉네임에 숫자는 포함할 수 없어요"
         return label
     }()
     private let eButton = RoundButton(title: "E")
@@ -69,13 +68,27 @@ final class SettingViewController: BaseViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bind()
+        nicknameTextField.text = UserDefaults.standard.string(forKey: "nick")
+        setMbtiButton(eButton, status: UserDefaults.standard.bool(forKey: "e"))
+        setMbtiButton(iButton, status: UserDefaults.standard.bool(forKey: "i"))
+        setMbtiButton(sButton, status: UserDefaults.standard.bool(forKey: "s"))
+        setMbtiButton(nButton, status: UserDefaults.standard.bool(forKey: "n"))
+        setMbtiButton(tButton, status: UserDefaults.standard.bool(forKey: "t"))
+        setMbtiButton(fButton, status: UserDefaults.standard.bool(forKey: "f"))
+        setMbtiButton(jButton, status: UserDefaults.standard.bool(forKey: "j"))
+        setMbtiButton(pButton, status: UserDefaults.standard.bool(forKey: "p"))
+    }
+    
     //MARK: - Helpers
     override func viewDidLayoutSubviews() {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
     }
     
     private func bind() {
-        let input = SettingViewModel.Input(nickname: nicknameTextField.rx.text.orEmpty, eButtonTap: eButton.rx.tap, iButtonTap: iButton.rx.tap, sButtonTap: sButton.rx.tap, nButtonTap: nButton.rx.tap, tButtonTap: tButton.rx.tap, fButtonTap: fButton.rx.tap, jButtonTap: jButton.rx.tap, pButtonTap: pButton.rx.tap)
+        let input = SettingViewModel.Input(nickname: nicknameTextField.rx.text.orEmpty, eButtonTap: eButton.rx.tap, iButtonTap: iButton.rx.tap, sButtonTap: sButton.rx.tap, nButtonTap: nButton.rx.tap, tButtonTap: tButton.rx.tap, fButtonTap: fButton.rx.tap, jButtonTap: jButton.rx.tap, pButtonTap: pButton.rx.tap, completeButtonTap: completeButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         output.nicknameValidateText
@@ -149,6 +162,10 @@ final class SettingViewController: BaseViewController {
                     owner.completeButton.backgroundColor = .systemGray
                 }
             }
+            .disposed(by: disposeBag)
+        
+        output.completeButtonStatus
+            .bind(to: completeButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
     

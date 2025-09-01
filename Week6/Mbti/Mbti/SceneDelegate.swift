@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
         let initialViewController = TabBarController()
-        let navigationRootViewController = UINavigationController(rootViewController: LoginViewController())
+//        let navigationRootViewController = UINavigationController(rootViewController: LoginViewController())
         
         // 닉네임 유무에 따른 초기 화면 설정
 //        if UserDefaultsHelper.nickname == UserDefaultsKey.emptyString.rawValue {

@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 의존성 분리 (DI)
 //        let viewModel = HomeworkViewModel()
 //        let vc = HomeworkViewController(viewModel: viewModel)
-        let vc = AnimationViewController()
+        let vc = ProfileViewController()
         let rootViewController = UINavigationController(rootViewController: vc)
          
         window?.rootViewController = rootViewController
