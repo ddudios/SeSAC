@@ -79,21 +79,21 @@ final class OnboardingViewController: UIPageViewController {
         getRandom()
         
         // @unknown: 멤버가 추가될 가능성이 있는 열거형, unfrozen Enum (라이브러리, 프레임워크에서 주로 등장하는 부분)
-        let a = NSTextAlignment.center  // text 다 중앙으로 보내겠다
-        switch a {
-        case .left:
-            <#code#>
-        case .center:
-            <#code#>
-        case .right:
-            <#code#>
-        case .justified:
-            <#code#>
-        case .natural:
-            <#code#>
-        @unknown default:
-            <#fatalError()#>
-        }
+//        let a = NSTextAlignment.center  // text 다 중앙으로 보내겠다
+//        switch a {
+//        case .left:
+//            <#code#>
+//        case .center:
+//            <#code#>
+//        case .right:
+//            <#code#>
+//        case .justified:
+//            <#code#>
+//        case .natural:
+//            <#code#>
+//        @unknown default:
+//            <#fatalError()#>
+//        }
         
         // Optional이 다 열거형 기반
             // none(non-Optinal), some(Optional) 2가지 케이스: @frozen
