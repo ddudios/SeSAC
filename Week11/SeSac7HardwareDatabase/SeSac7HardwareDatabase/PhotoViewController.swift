@@ -12,9 +12,9 @@ import SnapKit
  캠이 없는 아이폰이 있을 수 있음
  
  카메라 관련 기능:
- 1. 카메라로 촬영
- 2. 갤러리에서 사진 가져오기
- 3. 사진을 갤러리에 저장하기
+ 1. 카메라로 촬영 (실기기 필요)
+ 2. 갤러리에서 사진 가져오기 (접근)
+ 3. 사진을 갤러리에 저장하기 (추가)
  => 이 3가지 기능을 iOS 13까지 UIImagePickerController 클래스가 담당하다가 (시스템UI)
     - 카메라 기능을 만들어야겠다, 라이브 필름 앱을 만들어야겠다, 갤러리에서 사진을 가져와야겠다 등
     - 갤러리에서 여러장 선택하는 것 불가능
@@ -24,12 +24,23 @@ import SnapKit
     - 여러장 선택 가능
  
  시뮬에서 option키로 줌 등을 할 수 있음
+ 
+ #Out of Process: 앱에서 접근할 수 없는 상태로 갤러리가 뜬다
+ 단순히 사진을 갤러리에서 가져오는 것(읽는 행위)은 권한이 필요가 없다
+ - ImagePicker를 쓰고 있지만 버전상 적용되고 있음
+ - 개인정보와 관련된 건데 우리 앱에서 갤러리에 접근해서 사진을 띄워주는데,
+ - 사진 박스 하나하나를 컬렉션뷰나 커스텀한 것이 아니라 갤러리 자체를 그냥 통으로 보여준 것임
+ - 아이폰 기준으로 인스타 등의 앱을 프로그램이라고 하면, 앱을 실행시키면 프로그램 공간 자체를 프로세스라고 한다
+ - 앱을 실행하면 어떤 프로세스 공간과 갤러리가 띄워지는 앱은 별개임
+ - 띄우고 있지만 내 앱에는 접근 권한이 없는 상태, 눈으로 봤을 때만 갤러리가 뜨는 것이고 별개의 앱이 띄워지고 있는 것임
+ - 내 프로세스 공간과 떨어져 있기 때문에 개발자가 그 공간에 접근할 수 없어서 Out of Process (비공개 접근)
+ - 사용자의 갤러리가 앱에 나타날 수 있으나, 이 앱은 오직 사용자가 선택한 사진에만 접근할 수 있음, 개인 정보 보호 접근 권한을 받지 않음
  */
 
 class PhotoViewController: UIViewController {
     
     // ImagePicker 기준으로 만듦
-    let manager = UIImagePickerController()
+    let manager = UIImagePickerController()  // 1. 갤러리 요소를 가지고 있는 걸 가져옴
     // 카메라에 관련된 모든 것을 담당: 시스템 UI까지 담당
         // Poodie 등 커스텀하게 촬영하는 앱은 AVFoundation프레임워크 사용하는데, 그냥 간단하게 내 앱에서 촬영하는 기능을 만들고싶다면 (기본 카메라 어플과 같은 UI띄우고싶다) UIImagePickerController사용하면 됨
     let imageView = UIImageView()
@@ -38,6 +49,7 @@ class PhotoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        // 3. 연결
         manager.delegate = self
         
         view.addSubview(imageView)
@@ -50,6 +62,7 @@ class PhotoViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // 2. 뭐를 할 지 타입 고름
         // manager를 present하기 전에 내부의 프로퍼티 변경
         manager.sourceType = .photoLibrary        /**
                                                    default로 sourceType이 photoLibrary로 되어있어서 갤러리를 띄울 수 있었음
@@ -57,6 +70,7 @@ class PhotoViewController: UIViewController {
                                                    - .camera외에 .photoLibrary와 .savedPhotosAlbum이 디프리케이티드된 이유는 iOS 14이상으로 오면서 imagePickerController가 더이상 사용되지 않기 때문
                                                    - 그렇지만 지금 .photoLibrary를 사용하고 있는 중임
                                                    */
+        // edting시, originalImage Vs. eidtImage
         manager.allowsEditing = true        /**
                                              사진을 체크하면 정방형으로 편집할 수 있는 기능이 생김
                                              - 크롭했는데 크롭 전의 원본 이미지가 뜸: info[.originalImage]로 설정했기 때문
@@ -83,6 +97,7 @@ class PhotoViewController: UIViewController {
     }
 }
 
+// 4. 연결하면 어떻게 되는지
 /**
  UIImagePickerControllerDelegate하려면 UINavigationControllerDelegate도 필요함
  - Navigation에 관련된 건데 왜 필요하지? 둘 다 작성을 해야되게끔 만들어져 있다

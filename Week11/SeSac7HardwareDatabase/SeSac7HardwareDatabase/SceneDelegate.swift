@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
 //        window?.rootViewController = LocationViewController()
-        let nav = UINavigationController(rootViewController: PhotoViewController())
+        let nav = UINavigationController(rootViewController: NetworkViewController())
         window?.rootViewController = nav
         
         window?.makeKeyAndVisible()
