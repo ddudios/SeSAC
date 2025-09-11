@@ -23,7 +23,8 @@ class NetworkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        callRequest()
+//        callRequest()
+        callLotto()
     }
     
     func callRequest() {
@@ -145,5 +146,47 @@ class NetworkViewController: UIViewController {
             }
         }
         .resume()  // Task 실행하라는 메서드: 없으면 네트워크 요청이 서버에 가지 않음, resume이 있어야 트리거가 돼서 요청할 수 있음
+    }
+    
+    func callLotto() {
+        
+        let url = URL(string: "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=1150")!
+        
+        // URLSession.shared 여기까지가 환경설정
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            // data: JSON 형태
+            // response: 상태코드
+            // error: 오류
+            // completionHandler: data, response, error 3개 다 옵셔널이기 때문에 옵셔널을 해제하는 과정이 필요하다
+            guard error == nil else {
+                print("Failed Request")
+                return
+            }
+            
+            guard let data = data else {
+                print("No Data Returned")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                print("Unable Response")
+                return
+            }
+            
+            guard response.statusCode == 200 else {
+                print("Status Code Error")
+                return
+            }
+            
+            print("이제 식판에 담을 수 있는 상태")
+            
+            do {
+                let result = try JSONDecoder().decode(Lotto.self, from: data)
+                print("success", result)
+            } catch {
+                print("error")
+            }
+            
+        }.resume()
     }
 }
